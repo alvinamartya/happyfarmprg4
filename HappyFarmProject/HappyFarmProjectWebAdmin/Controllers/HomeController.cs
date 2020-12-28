@@ -26,5 +26,12 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
             return View();
         }
+
+        public ActionResult TestLayout()
+        {
+            ViewBag.Message = "Test layout.";
+
+            return View();
+        }
     }
 }
