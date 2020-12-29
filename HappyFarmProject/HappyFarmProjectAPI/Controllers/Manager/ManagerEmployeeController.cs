@@ -48,8 +48,6 @@ namespace HappyFarmProjectAPI.Controllers.Manager
                             .FirstOrDefault()
                             .Id;
 
-                        System.Diagnostics.Debug.WriteLine("Id: " + lastUserLoginId);
-
                         // create new employee
                         Employee newEmployee = new Employee()
                         {
