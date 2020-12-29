@@ -22,7 +22,14 @@ namespace HappyFarmProjectAPI.Models
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public int CreatedBy { get; set; }
+        public int ModifiedBy { get; set; }
+        public System.DateTime CreatedAt { get; set; }
+        public System.DateTime ModifiedAt { get; set; }
+        public string RowStatus { get; set; }
     
+        public virtual Employee Employee { get; set; }
+        public virtual Employee Employee1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Good> Goods { get; set; }
     }

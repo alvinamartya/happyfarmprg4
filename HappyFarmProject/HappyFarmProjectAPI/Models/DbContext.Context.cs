@@ -41,6 +41,7 @@ namespace HappyFarmProjectAPI.Models
         public virtual DbSet<Region> Regions { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Selling> Sellings { get; set; }
+        public virtual DbSet<SellingActivity> SellingActivities { get; set; }
         public virtual DbSet<SellingDetail> SellingDetails { get; set; }
         public virtual DbSet<SellingStatu> SellingStatus { get; set; }
         public virtual DbSet<SubDistrict> SubDistricts { get; set; }

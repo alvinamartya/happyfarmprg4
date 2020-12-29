@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFarmProjectAPI", "Happ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFarmProjectWebAdmin", "HappyFarmProjectWebAdmin\HappyFarmProjectWebAdmin.csproj", "{757034F1-B05A-4723-901B-DE9A55DFE81F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFarmProjectAPITest", "HappyFarmProjectApiTest\HappyFarmProjectAPITest.csproj", "{B2D375E8-271D-4BE6-BC8D-C2B823266351}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{757034F1-B05A-4723-901B-DE9A55DFE81F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{757034F1-B05A-4723-901B-DE9A55DFE81F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{757034F1-B05A-4723-901B-DE9A55DFE81F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2D375E8-271D-4BE6-BC8D-C2B823266351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2D375E8-271D-4BE6-BC8D-C2B823266351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2D375E8-271D-4BE6-BC8D-C2B823266351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2D375E8-271D-4BE6-BC8D-C2B823266351}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

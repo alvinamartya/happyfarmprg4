@@ -31,12 +31,34 @@ namespace HappyFarmProjectAPI.Controllers
                         // validate user password must be same with user password in database
                         if (Helper.EncryptStringSha256Hash(loginRequest.Password) != user.Password)
                         {
-                            return BadRequest("Kata sandi tidak valid");
+                            ResponseWithoutData passwordIsNotValidResponse = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.BadRequest,
+                                Message = "Kata sandi tidak valid"
+                            };
+                            return Ok(passwordIsNotValidResponse);
                         }
                         else
                         {
-                            ResponseLogin<Object> response = new ResponseLogin<Object>()
+                            var isCustomer = db.Customers.Where(x => x.UserLoginId == user.Id).FirstOrDefault() != null;
+
+                            if(!isCustomer)
                             {
+                                var employee = db.Employees.Where(x => x.UserLoginId == user.Id).FirstOrDefault();
+                                if(employee.RowStatus == "D")
+                                {
+                                    ResponseWithoutData deactiveAccountResponse = new ResponseWithoutData()
+                                    {
+                                        StatusCode = HttpStatusCode.Unauthorized,
+                                        Message = "Akun anda tidak dapat login ke aplikasi"
+                                    };
+                                    return Ok(deactiveAccountResponse);
+                                }
+                            }
+
+                            ResponseLogin response = new ResponseLogin()
+                            {
+                                StatusCode = HttpStatusCode.OK,
                                 Message = "Login Berhasil",
                                 Role = user.Role.Name,
                                 UserId = user.Id,
@@ -52,7 +74,12 @@ namespace HappyFarmProjectAPI.Controllers
                     }
                     else
                     {
-                        return BadRequest("Akun tidak tersedia");
+                        ResponseWithoutData userNotAvailableResponse = new ResponseWithoutData()
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            Message = "Akun tidak tersedia"
+                        };
+                        return Ok(userNotAvailableResponse);
                     }
                 }
             }

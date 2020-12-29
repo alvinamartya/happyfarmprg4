@@ -8,6 +8,11 @@
           <ScalarProperty Name="PromoId" ColumnName="PromoId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+          <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -16,6 +21,11 @@
         <MappingFragment StoreEntitySet="Category">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+          <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -74,6 +84,11 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+          <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -87,6 +102,7 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+          <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -99,6 +115,9 @@
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+          <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -128,6 +147,7 @@
           <ScalarProperty Name="MaxDiscount" ColumnName="MaxDiscount" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+          <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -159,6 +179,11 @@
         <MappingFragment StoreEntitySet="Region">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+          <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -184,6 +209,17 @@
           <ScalarProperty Name="ShippingCharges" ColumnName="ShippingCharges" />
           <ScalarProperty Name="TotalSalePrice" ColumnName="TotalSalePrice" />
           <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SellingActivities">
+      <EntityTypeMapping TypeName="HappyFarmPRG4Model.SellingActivity">
+        <MappingFragment StoreEntitySet="SellingActivity">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SellingId" ColumnName="SellingId" />
+          <ScalarProperty Name="SellingStatusid" ColumnName="SellingStatusid" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -213,6 +249,11 @@
           <ScalarProperty Name="RegionId" ColumnName="RegionId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ShippingCharges" ColumnName="ShippingCharges" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+          <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
