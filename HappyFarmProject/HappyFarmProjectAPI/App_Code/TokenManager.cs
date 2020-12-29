@@ -9,7 +9,7 @@ namespace HappyFarmProjectAPI
 {
     public class TokenManager
     {
-        // secret key
+        // secret key for each roles
         private static string SuperAdminSecretKey = "F3038B6A350494F5C5125B53943A733B1E74DD1C8F7913282A0EE2029E3EABC0";
         private static string ManagerSecretKey = "828CF3F840FCE64F0499E2875E45D7662D592EF9AAB110CDADEE1AEC1EFA22D0";
         private static string MarketingAdminSecretKey = "11BF4ED1A3F499F2806FD4F568C939FE7F1B121CD5B696B92BB83D8763DA4193";
@@ -80,6 +80,12 @@ namespace HappyFarmProjectAPI
             }
         }
 
+        /// <summary>
+        /// get claims principal using secret key
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         public static ClaimsPrincipal GetPrincipal(string token, string role)
         {
             try
@@ -140,6 +146,12 @@ namespace HappyFarmProjectAPI
             }
         }
 
+        /// <summary>
+        /// validate token using claims identity
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         public static bool ValidateToken(string token, string role)
         {
             string username = null;

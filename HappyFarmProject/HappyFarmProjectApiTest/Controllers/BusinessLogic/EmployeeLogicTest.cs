@@ -27,7 +27,6 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 Email = "manager1@happyfarm.id",
                 Gender = "M",
                 Name = "Manager",
-                Password = "verysecret",
                 PhoneNumber = "0821",
                 RoleId = 2,
                 Username = "manager1"
@@ -45,7 +44,6 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 Email = "manager@happyfarm.id",
                 Gender = "M",
                 Name = "Manager",
-                Password = "verysecret",
                 PhoneNumber = "0821",
                 RoleId = 2,
                 Username = "sa"
@@ -63,7 +61,6 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 Email = "sa@happyfarm",
                 Gender = "M",
                 Name = "Manager",
-                Password = "verysecret",
                 PhoneNumber = "0821",
                 RoleId = 2,
                 Username = "manager1"
@@ -81,7 +78,6 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 Email = "manager1@happyfarm.id",
                 Gender = "M",
                 Name = "Manager",
-                Password = "verysecret",
                 PhoneNumber = "0821",
                 RoleId = 2,
                 Username = "manager1"
@@ -99,7 +95,6 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 Email = "sa@happyfarm",
                 Gender = "M",
                 Name = "Manager",
-                Password = "verysecret",
                 PhoneNumber = "0821",
                 RoleId = 2,
                 Username = "manager1"
@@ -117,7 +112,6 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 Email = "sa@happyfarm.id",
                 Gender = "M",
                 Name = "Manager",
-                Password = "verysecret",
                 PhoneNumber = "0821a",
                 RoleId = 2,
                 Username = "manager1"
