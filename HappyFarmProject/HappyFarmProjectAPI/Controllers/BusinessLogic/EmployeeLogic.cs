@@ -20,12 +20,14 @@ namespace HappyFarmProjectAPI.Controllers
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get user
-                bool userIsAvailable = db.Employees.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault() != null;
+                var user = db.Employees.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
 
                 // validate user must be available
-                if (userIsAvailable)
+                if (user != null)
                 {
-                    if (role != "Manager" && role != "Super Admin")
+                    if ((role != "Manager" && role != "Super Admin") ||
+                        (role == "Manager" && (user.UserLogin.Role.Name == "Super Admin" || user.UserLogin.Role.Name == "Manager")) ||
+                        (role == "Super Admin" && user.UserLogin.Role.Name == "Super Admin"))
                     {
                         // unauthroized
                         return new ResponseModel()
@@ -49,7 +51,7 @@ namespace HappyFarmProjectAPI.Controllers
                     // employee is not found
                     return new ResponseModel()
                     {
-                        Message = "Akun karyawan tidak tersedia",
+                        Message = "Data karyawan tidak tersedia",
                         StatusCode = HttpStatusCode.BadRequest
                     };
                 }
@@ -65,67 +67,99 @@ namespace HappyFarmProjectAPI.Controllers
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                // get user
-                bool userIsAvailable = db.UserLogins.Where(x => x.Id == id).FirstOrDefault() != null;
-
-                // validate user must be available
-                if (userIsAvailable)
+                // get employee
+                var employee = db.Employees.Where(x => x.Id == id).FirstOrDefault();
+                if(employee != null)
                 {
-                    // get region
-                    bool regionIsAvailable = db.Regions.Where(x => x.Id == employeeRequest.RegionId).FirstOrDefault() != null;
+                    // get user
+                    var user = db.UserLogins.Where(x => x.Id == employee.UserLoginId).FirstOrDefault();
 
-                    // validate region must be available
-                    if (regionIsAvailable)
+                    // validate user must be available
+                    if (user != null)
                     {
-                        if (Helper.ValidateEmail(employeeRequest.Email))
+                        // get region
+                        bool regionIsAvailable = user.Role.Name == "Manager" ? true : db.Regions.Where(x => x.Id == employeeRequest.RegionId).FirstOrDefault() != null;
+
+                        // validate region must be available
+                        if (regionIsAvailable)
                         {
-                            if (Helper.ValidatePhoneNumber(employeeRequest.PhoneNumber))
+                            // validate email 
+                            bool emailAlreadyExists = db.Employees
+                                .Where(x => x.Email.ToLower().Equals(employeeRequest.Email.ToLower()) && x.Id != id)
+                                .FirstOrDefault() != null;
+                            if (emailAlreadyExists)
                             {
-                                if (role != "Manager" && role != "Super Admin")
+                                // email is exists
+                                return new ResponseModel()
                                 {
-                                    // unauthroized
-                                    return new ResponseModel()
-                                    {
-                                        StatusCode = HttpStatusCode.Unauthorized,
-                                        Message = "Anda tidak memiliki hak akses"
-                                    };
-                                }
-                                else
-                                {
-                                    // return ok
-                                    return new ResponseModel()
-                                    {
-                                        Message = "Berhasil",
-                                        StatusCode = HttpStatusCode.OK
-                                    };
-                                }
+                                    Message = "Email sudah tersedia",
+                                    StatusCode = HttpStatusCode.BadRequest
+                                };
                             }
                             else
                             {
-                                // phone number is not valid
-                                return new ResponseModel()
+                                if (Helper.ValidateEmail(employeeRequest.Email))
                                 {
-                                    Message = "Format No Hp tidak valid",
-                                    StatusCode = HttpStatusCode.BadRequest
-                                };
+                                    if (Helper.ValidatePhoneNumber(employeeRequest.PhoneNumber))
+                                    {
+                                        if ((role != "Manager" && role != "Super Admin") ||
+                                            (role == "Manager" && (user.Role.Name == "Super Admin" || user.Role.Name == "Manager")) ||
+                                            (role == "Super Admin" && user.Role.Name == "Super Admin"))
+                                        {
+                                            // unauthroized
+                                            return new ResponseModel()
+                                            {
+                                                StatusCode = HttpStatusCode.Unauthorized,
+                                                Message = "Anda tidak memiliki hak akses"
+                                            };
+                                        }
+                                        else
+                                        {
+                                            // return ok
+                                            return new ResponseModel()
+                                            {
+                                                Message = "Berhasil",
+                                                StatusCode = HttpStatusCode.OK
+                                            };
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // phone number is not valid
+                                        return new ResponseModel()
+                                        {
+                                            Message = "Format No Hp tidak valid",
+                                            StatusCode = HttpStatusCode.BadRequest
+                                        };
+                                    }
+                                }
+                                else
+                                {
+                                    // email is not valid
+                                    return new ResponseModel()
+                                    {
+                                        Message = "Format Email tidak valid",
+                                        StatusCode = HttpStatusCode.BadRequest
+                                    };
+                                }
                             }
                         }
                         else
                         {
-                            // email is not valid
+                            // region is not found
                             return new ResponseModel()
                             {
-                                Message = "Format Email tidak valid",
+                                Message = "Wilayah tidak tersedia",
                                 StatusCode = HttpStatusCode.BadRequest
                             };
                         }
                     }
                     else
                     {
-                        // region is not found
+                        // user is not found
                         return new ResponseModel()
                         {
-                            Message = "Wilayah tidak tersedia",
+                            Message = "Pengguna tidak tersedia",
                             StatusCode = HttpStatusCode.BadRequest
                         };
                     }
@@ -135,7 +169,7 @@ namespace HappyFarmProjectAPI.Controllers
                     // user is not found
                     return new ResponseModel()
                     {
-                        Message = "Pengguna tidak tersedia",
+                        Message = "Data karyawan tidak tersedia",
                         StatusCode = HttpStatusCode.BadRequest
                     };
                 }
@@ -152,8 +186,9 @@ namespace HappyFarmProjectAPI.Controllers
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                // validate username
-                bool usernameAlreadyExists = db.UserLogins.Where(x => x.Username == employeeRequest.Username).FirstOrDefault() != null;
+                // validate username and email
+                bool usernameAlreadyExists = db.UserLogins.Where(x => x.Username.ToLower() == employeeRequest.Username.ToLower()).FirstOrDefault() != null;
+                bool emailAlreadyExists = db.Employees.Where(x => x.Email.ToLower() == employeeRequest.Email.ToLower()).FirstOrDefault() != null;
                 if (usernameAlreadyExists)
                 {
                     // username is exists
@@ -163,16 +198,28 @@ namespace HappyFarmProjectAPI.Controllers
                         StatusCode = HttpStatusCode.BadRequest
                     };
                 }
+                else if (emailAlreadyExists)
+                {
+                    // email is exists
+                    return new ResponseModel()
+                    {
+                        Message = "Email sudah tersedia",
+                        StatusCode = HttpStatusCode.BadRequest
+                    };
+                }
                 else
                 {
+                    // get region
+
                     // validate of accress rights
                     var getRole = db.Roles.Where(x => x.Id == employeeRequest.RoleId).FirstOrDefault();
                     var isSuperAdmin = getRole.Name == "Super Admin";
                     var isCustomer = getRole.Name == "Customer";
 
-                    if (role == "Manager" || role == "Super Admin")
+                    bool regionIsAvailable = getRole.Name == "Manager" ? true : db.Regions.Where(x => x.Id == employeeRequest.RegionId).FirstOrDefault() != null;
+                    if(regionIsAvailable)
                     {
-                        if (isSuperAdmin || isCustomer)
+                        if ((role == "Manager" || role == "Super Admin") && (isSuperAdmin || isCustomer))
                         {
                             // unauthorized
                             return new ResponseModel()
@@ -181,44 +228,55 @@ namespace HappyFarmProjectAPI.Controllers
                                 Message = "Anda tidak memiliki hak akses"
                             };
                         }
-                    }
-                    else if (role != "Manager" && role != "Super Admin")
-                    {
-                        // unautorized
-                        return new ResponseModel()
+                        else if (role != "Manager" && role != "Super Admin")
                         {
-                            StatusCode = HttpStatusCode.Unauthorized,
-                            Message = "Anda tidak memiliki hak akses"
-                        };
-                    }
-
-                    if (Helper.ValidateEmail(employeeRequest.Email))
-                    {
-                        if (Helper.ValidatePhoneNumber(employeeRequest.PhoneNumber))
-                        {
-                            // response created
+                            // unautorized
                             return new ResponseModel()
                             {
-                                Message = "Berhasil",
-                                StatusCode = HttpStatusCode.Created
+                                StatusCode = HttpStatusCode.Unauthorized,
+                                Message = "Anda tidak memiliki hak akses"
                             };
                         }
                         else
                         {
-                            // phone number is not valid
-                            return new ResponseModel()
+                            if (Helper.ValidateEmail(employeeRequest.Email))
                             {
-                                Message = "Format No Hp tidak valid",
-                                StatusCode = HttpStatusCode.BadRequest
-                            };
+                                if (Helper.ValidatePhoneNumber(employeeRequest.PhoneNumber))
+                                {
+                                    // response created
+                                    return new ResponseModel()
+                                    {
+                                        Message = "Berhasil",
+                                        StatusCode = HttpStatusCode.Created
+                                    };
+                                }
+                                else
+                                {
+                                    // phone number is not valid
+                                    return new ResponseModel()
+                                    {
+                                        Message = "Format No Hp tidak valid",
+                                        StatusCode = HttpStatusCode.BadRequest
+                                    };
+                                }
+                            }
+                            else
+                            {
+                                // email is not valid
+                                return new ResponseModel()
+                                {
+                                    Message = "Format Email tidak valid",
+                                    StatusCode = HttpStatusCode.BadRequest
+                                };
+                            }
                         }
                     }
                     else
                     {
-                        // email is not valid
+                        // region is not found
                         return new ResponseModel()
                         {
-                            Message = "Format Email tidak valid",
+                            Message = "Wilayah tidak tersedia",
                             StatusCode = HttpStatusCode.BadRequest
                         };
                     }
@@ -236,26 +294,40 @@ namespace HappyFarmProjectAPI.Controllers
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get user
-                bool userIsAvailable = db.UserLogins.Where(x => x.Id == id).FirstOrDefault() != null;
-
-                if (userIsAvailable)
+                var employee = db.Employees.Where(x => x.Id == id).FirstOrDefault();
+                if(employee != null)
                 {
-                    if (role != "Manager" && role != "Super Admin")
+                    var user = db.UserLogins.Where(x => x.Id == employee.UserLoginId).FirstOrDefault();
+                    if (user != null)
                     {
-                        // unauthroized
-                        return new ResponseModel()
+                        if ((role != "Manager" && role != "Super Admin") ||
+                            (role == "Manager" && (user.Role.Name == "Super Admin" || user.Role.Name == "Manager")) ||
+                            (role == "Super Admin" && user.Role.Name == "Super Admin"))
                         {
-                            StatusCode = HttpStatusCode.Unauthorized,
-                            Message = "Anda tidak memiliki hak akses"
-                        };
+                            // unauthroized
+                            return new ResponseModel()
+                            {
+                                StatusCode = HttpStatusCode.Unauthorized,
+                                Message = "Anda tidak memiliki hak akses"
+                            };
+                        }
+                        else
+                        {
+                            // return ok
+                            return new ResponseModel()
+                            {
+                                Message = "Berhasil",
+                                StatusCode = HttpStatusCode.OK
+                            };
+                        }
                     }
                     else
                     {
-                        // return ok
+                        // user is not found
                         return new ResponseModel()
                         {
-                            Message = "Berhasil",
-                            StatusCode = HttpStatusCode.OK
+                            Message = "Pengguna tidak tersedia",
+                            StatusCode = HttpStatusCode.BadRequest
                         };
                     }
                 }
@@ -264,7 +336,7 @@ namespace HappyFarmProjectAPI.Controllers
                     // user is not found
                     return new ResponseModel()
                     {
-                        Message = "Pengguna tidak tersedia",
+                        Message = "Data karyawan tidak tersedia",
                         StatusCode = HttpStatusCode.BadRequest
                     };
                 }

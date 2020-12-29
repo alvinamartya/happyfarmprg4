@@ -11,6 +11,271 @@
 				{
 					"name": "AddEmployee",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Username",
+									"value": "adminpromosi",
+									"type": "text"
+								},
+								{
+									"key": "Password",
+									"value": "verysecret",
+									"type": "text"
+								},
+								{
+									"key": "RoleId",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "Name",
+									"value": "Admin Promosi",
+									"type": "text"
+								},
+								{
+									"key": "PhoneNumber",
+									"value": "0812",
+									"type": "text"
+								},
+								{
+									"key": "Email",
+									"value": "marketingadmin@happyfarm.id",
+									"type": "text"
+								},
+								{
+									"key": "Address",
+									"value": "Jakarta",
+									"type": "text"
+								},
+								{
+									"key": "Gender",
+									"value": "M",
+									"type": "text"
+								},
+								{
+									"key": "CreatedBy",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "RegionId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{manager_url}}/Employee/Add",
+							"host": [
+								"{{manager_url}}"
+							],
+							"path": [
+								"Employee",
+								"Add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEmployee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{manager_url}}/Employee/Delete/1",
+							"host": [
+								"{{manager_url}}"
+							],
+							"path": [
+								"Employee",
+								"Delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditEmployee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "RegionId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "Name",
+									"value": "Admin Promosi",
+									"type": "text"
+								},
+								{
+									"key": "PhoneNumber",
+									"value": "0812",
+									"type": "text"
+								},
+								{
+									"key": "Email",
+									"value": "marketingadmin@happyfarm.id",
+									"type": "text"
+								},
+								{
+									"key": "Address",
+									"value": "Jakarta",
+									"type": "text"
+								},
+								{
+									"key": "Gender",
+									"value": "M",
+									"type": "text"
+								},
+								{
+									"key": "ModifiedBy",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{manager_url}}/Employee/Edit/4",
+							"host": [
+								"{{manager_url}}"
+							],
+							"path": [
+								"Employee",
+								"Edit",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEmployeeById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{manager_url}}/Employee/4",
+							"host": [
+								"{{manager_url}}"
+							],
+							"path": [
+								"Employee",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEmployees",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "CurrentPage",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "LimitPage",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "Search",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{manager_url}}/Employee",
+							"host": [
+								"{{manager_url}}"
+							],
+							"path": [
+								"Employee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customer",
+			"item": []
+		},
+		{
+			"name": "super admin",
+			"item": [
+				{
+					"name": "AddEmployee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNhIiwibmJmIjoxNjA5MjU5NTUwLCJleHAiOjE2MDk4NjQzNTAsImlhdCI6MTYwOTI1OTU1MH0.qaY-OLsS0BV6J6KTv002E5NadEVtUX-zBQ_3iDeWuhA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -28,7 +293,7 @@
 								},
 								{
 									"key": "RoleId",
-									"value": "3",
+									"value": "2",
 									"type": "text"
 								},
 								{
@@ -55,20 +320,203 @@
 									"key": "Gender",
 									"value": "M",
 									"type": "text"
+								},
+								{
+									"key": "CreatedBy",
+									"value": "1",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{url}}/api/v1/Manager/Employee/Create",
+							"raw": "{{sa_url}}/Employee/Add",
 							"host": [
-								"{{url}}"
+								"{{sa_url}}"
 							],
 							"path": [
-								"api",
-								"v1",
-								"Manager",
 								"Employee",
-								"Create"
+								"Add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEmployee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNhIiwibmJmIjoxNjA5MjU5NTUwLCJleHAiOjE2MDk4NjQzNTAsImlhdCI6MTYwOTI1OTU1MH0.qaY-OLsS0BV6J6KTv002E5NadEVtUX-zBQ_3iDeWuhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{sa_url}}/Employee/Delete/2",
+							"host": [
+								"{{sa_url}}"
+							],
+							"path": [
+								"Employee",
+								"Delete",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditEmployee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNhIiwibmJmIjoxNjA5MjU5NTUwLCJleHAiOjE2MDk4NjQzNTAsImlhdCI6MTYwOTI1OTU1MH0.qaY-OLsS0BV6J6KTv002E5NadEVtUX-zBQ_3iDeWuhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "RegionId",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Name",
+									"value": "Manager",
+									"type": "text"
+								},
+								{
+									"key": "PhoneNumber",
+									"value": "0812",
+									"type": "text"
+								},
+								{
+									"key": "Email",
+									"value": "manager@happyfarm.id",
+									"type": "text"
+								},
+								{
+									"key": "Address",
+									"value": "Jakarta",
+									"type": "text"
+								},
+								{
+									"key": "Gender",
+									"value": "M",
+									"type": "text"
+								},
+								{
+									"key": "ModifiedBy",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{sa_url}}/Employee/Edit/2",
+							"host": [
+								"{{sa_url}}"
+							],
+							"path": [
+								"Employee",
+								"Edit",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEmployeeById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNhIiwibmJmIjoxNjA5MjU5NTUwLCJleHAiOjE2MDk4NjQzNTAsImlhdCI6MTYwOTI1OTU1MH0.qaY-OLsS0BV6J6KTv002E5NadEVtUX-zBQ_3iDeWuhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sa_url}}/Employee/4",
+							"host": [
+								"{{sa_url}}"
+							],
+							"path": [
+								"Employee",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEmployees",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNhIiwibmJmIjoxNjA5MjU5NTUwLCJleHAiOjE2MDk4NjQzNTAsImlhdCI6MTYwOTI1OTU1MH0.qaY-OLsS0BV6J6KTv002E5NadEVtUX-zBQ_3iDeWuhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authori",
+								"value": "B",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "CurrentPage",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "LimitPage",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "Search",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{sa_url}}/Employee",
+							"host": [
+								"{{sa_url}}"
+							],
+							"path": [
+								"Employee"
 							]
 						}
 					},
@@ -77,11 +525,19 @@
 			]
 		},
 		{
-			"name": "customer",
+			"name": "marketingadmin",
 			"item": []
 		},
 		{
-			"name": "admin",
+			"name": "customerservice",
+			"item": []
+		},
+		{
+			"name": "productionadmin",
+			"item": []
+		},
+		{
+			"name": "salesadmin",
 			"item": []
 		},
 		{
@@ -94,12 +550,12 @@
 					"urlencoded": [
 						{
 							"key": "Username",
-							"value": "test",
+							"value": "manager",
 							"type": "text"
 						},
 						{
 							"key": "Password",
-							"value": "test",
+							"value": "verysecret",
 							"type": "text"
 						}
 					],
@@ -110,9 +566,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/api/v1/User/Login",
+					"raw": "{{base_url}}/api/v1/User/Login",
 					"host": [
-						"{{url}}"
+						"{{base_url}}"
 					],
 					"path": [
 						"api",

@@ -192,6 +192,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="App_Code\Helper.cs" />
+    <Compile Include="Models\Request\GetListDataRequest.cs" />
     <Compile Include="Models\Request\EditEmployeeRequest.cs" />
     <Compile Include="Models\Request\AddEmployeeRequest.cs" />
     <Compile Include="Models\Banner.cs">
