@@ -52,11 +52,13 @@ namespace HappyFarmProjectAPI.Controllers
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
+                string newPassword = Helper.RandomPassword();
+
                 // create new user login
                 UserLogin newUserLogin = new UserLogin()
                 {
                     Username = employeeRequest.Username,
-                    Password = Helper.EncryptStringSha256Hash(employeeRequest.Password),
+                    Password = Helper.EncryptStringSha256Hash(newPassword),
                     RoleId = employeeRequest.RoleId
                 };
 
@@ -88,6 +90,18 @@ namespace HappyFarmProjectAPI.Controllers
                 if (employeeRequest.RegionId != null) newEmployee.RegionId = employeeRequest.RegionId;
                 db.Employees.Add(newEmployee);
                 db.SaveChanges();
+
+                // send email async
+                Helper.SendMailAsync(employeeRequest.Email, "Pendaftaran Akun Karyawan Happy Farm",
+                    "<div>" +
+                    "Hai <span style = \"font-weight: bold;\">"+ employeeRequest.Name +"</span>," +
+                    "<br>" +
+                    "Akun karyawan kamu telah berhasil didaftarkan, login ke aplikasi <span style=\"font-weight: bold;\">HappyFarm</span> segera dengan menggunakan akun anda:" +
+                    "<br><br>" +
+                    "<div>Nama Pengguna : "+ employeeRequest.Username +"<br>Kata Sandi : "+ newPassword +"</div><br>" +
+                    "<div>Segala bentuk informasi seperti nomor kontak, alamat e-mail, atau password kamu bersifat rahasia. Jangan " +
+                    "menginformasikan data - data tersebut kepada siapapun, termasuk kepada pihak yang mengatasnamakan perusahaan.</div>" +
+                    "</div>");
             }
         }
 
@@ -131,7 +145,7 @@ namespace HappyFarmProjectAPI.Controllers
 
                 // get total employees
                 var totalPages = Math.Ceiling((decimal)db.Employees.Count() / limitPage);
-                
+
                 // return employees
                 return new ResponsePagingModel<List<Employee>>()
                 {
