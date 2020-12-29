@@ -18,6 +18,7 @@ namespace HappyFarmProjectAPI.Models
         public Selling()
         {
             this.CustomerFeedbacks = new HashSet<CustomerFeedback>();
+            this.SellingActivities = new HashSet<SellingActivity>();
             this.SellingDetails = new HashSet<SellingDetail>();
         }
     
@@ -35,7 +36,8 @@ namespace HappyFarmProjectAPI.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerFeedback> CustomerFeedbacks { get; set; }
-        public virtual SellingStatu SellingStatu { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SellingActivity> SellingActivities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SellingDetail> SellingDetails { get; set; }
     }

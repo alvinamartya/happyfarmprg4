@@ -33,6 +33,7 @@ namespace HappyFarmProjectAPI.Models
         public decimal MaxDiscount { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public System.DateTime ModifiedAt { get; set; }
+        public string RowStatus { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Banner> Banners { get; set; }

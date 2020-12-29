@@ -30,6 +30,7 @@ namespace HappyFarmProjectAPI.Models
         public string Name { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public System.DateTime ModifiedAt { get; set; }
+        public string RowStatus { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual Employee Employee { get; set; }

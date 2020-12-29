@@ -20,8 +20,12 @@ namespace HappyFarmProjectAPI.Models
         public int CreatedBy { get; set; }
         public decimal Price { get; set; }
         public System.DateTime CreatedAt { get; set; }
+        public int ModifiedBy { get; set; }
+        public System.DateTime ModifiedAt { get; set; }
+        public string RowStatus { get; set; }
     
         public virtual Employee Employee { get; set; }
+        public virtual Employee Employee1 { get; set; }
         public virtual Good Good { get; set; }
         public virtual Region Region { get; set; }
     }

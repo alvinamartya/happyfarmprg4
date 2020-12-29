@@ -1,10 +1,9 @@
 Super Admin -> Region, Employee, Promo, Banner, Category, Goods, Purchasing, SubDistrict
-Manager -> Region, Admin
+Manager -> Region, Admin, SubDistrict
 Admin Promosi -> Promo, Banner
 Admin Produksi -> Category, Goods, Purchasing
 Customer Service -> Chat, Lihat Customer Feedback
-Admin Penjualan -> Update Status Penjualan, SubDistrict
-Driver -> Lihat Barang yang akan diantar, Update Status Penjualan
+Admin Penjualan -> Update Status Penjualan, Lihat Barang yang akan diantar
 Customer -> Selling, Customer FeedBack, Chat, Registrasi Customer
 
 

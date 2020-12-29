@@ -10,8 +10,12 @@ namespace HappyFarmProjectAPI
     public class TokenManager
     {
         // secret key
+        private static string SuperAdminSecretKey = "F3038B6A350494F5C5125B53943A733B1E74DD1C8F7913282A0EE2029E3EABC0";
         private static string ManagerSecretKey = "828CF3F840FCE64F0499E2875E45D7662D592EF9AAB110CDADEE1AEC1EFA22D0";
-        private static string AdminSecretKey = "A6875AAED894AEDA0FABF244CC19B7233471179EF0FFFEA121C36DB5217487F6";
+        private static string MarketingAdminSecretKey = "11BF4ED1A3F499F2806FD4F568C939FE7F1B121CD5B696B92BB83D8763DA4193";
+        private static string ProductionAdminSecretKey = "3A3BDE7559AF8C28746DAAC9A2294CA57E917E8F613520FCA82EF2E68B4C3B36";
+        private static string CustomerServiceSecretKey = "0A40485B90F688CD5DA9C95A06D12E9D5EEA28DC3EF134F68633B67C3369F5FB";
+        private static string SalesAdminSecretKey = "23936AE0C77BD8EB6C32E62954B4383A8ACA5E6410542A54171DFE19778ACC48";
         private static string CustomerSecretKey = "BBAEC56FC52E6871591454EDAD4C3E2B2C42F0FA90BEEDC7F460A9731239D0CE";
 
         /// <summary>
@@ -26,7 +30,7 @@ namespace HappyFarmProjectAPI
                 // get user by username
                 var user = db.UserLogins
                     .Where(x => x.Username == username)
-                    .Select(x => new {id=x.Id, username = x.Username, Role = x.Role.Name})
+                    .Select(x => new { id = x.Id, username = x.Username, Role = x.Role.Name })
                     .FirstOrDefault();
 
                 // get secret key
@@ -35,9 +39,25 @@ namespace HappyFarmProjectAPI
                 {
                     secretKey = ManagerSecretKey;
                 }
-                else if (user.Role == "Admin")
+                else if (user.Role == "Super Admin")
                 {
-                    secretKey = AdminSecretKey;
+                    secretKey = SuperAdminSecretKey;
+                }
+                else if (user.Role == "Admin Promosi")
+                {
+                    secretKey = MarketingAdminSecretKey;
+                }
+                else if (user.Role == "Admin Produksi")
+                {
+                    secretKey = ProductionAdminSecretKey;
+                }
+                else if (user.Role == "Customer Service")
+                {
+                    secretKey = CustomerServiceSecretKey;
+                }
+                else if (user.Role == "Admin Penjualan")
+                {
+                    secretKey = SalesAdminSecretKey;
                 }
                 else
                 {
@@ -75,9 +95,25 @@ namespace HappyFarmProjectAPI
                 {
                     secretKey = ManagerSecretKey;
                 }
-                else if (role == "Admin")
+                else if (role == "Super Admin")
                 {
-                    secretKey = AdminSecretKey;
+                    secretKey = SuperAdminSecretKey;
+                }
+                else if (role == "Admin Promosi")
+                {
+                    secretKey = MarketingAdminSecretKey;
+                }
+                else if (role == "Admin Produksi")
+                {
+                    secretKey = ProductionAdminSecretKey;
+                }
+                else if (role == "Customer Service")
+                {
+                    secretKey = CustomerServiceSecretKey;
+                }
+                else if (role == "Admin Penjualan")
+                {
+                    secretKey = SalesAdminSecretKey;
                 }
                 else
                 {
@@ -104,12 +140,12 @@ namespace HappyFarmProjectAPI
             }
         }
 
-        public static string ValidateToken(string token, string role)
+        public static bool ValidateToken(string token, string role)
         {
             string username = null;
             ClaimsPrincipal principal = GetPrincipal(token, role);
             if (principal == null)
-                return null;
+                return false;
 
             ClaimsIdentity identity = null;
 
@@ -117,14 +153,14 @@ namespace HappyFarmProjectAPI
             {
                 identity = (ClaimsIdentity)principal.Identity;
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
-                return null;
+                return false;
             }
 
             Claim usernameClaim = identity.FindFirst(ClaimTypes.Name);
             username = usernameClaim.Value;
-            return username;
+            return username != "" && username != String.Empty;
         }
     }
 }
