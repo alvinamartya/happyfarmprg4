@@ -38,6 +38,8 @@ namespace HappyFarmProjectAPI.Controllers
                 employee.Email = employeeRequest.Email;
                 employee.Address = employeeRequest.Address;
                 employee.Gender = employeeRequest.Gender;
+                employee.ModifiedAt = DateTime.Now;
+                employee.ModifiedBy = employeeRequest.ModifiedBy;
                 db.SaveChanges();
             }
         }
@@ -78,8 +80,12 @@ namespace HappyFarmProjectAPI.Controllers
                     Address = employeeRequest.Address,
                     CreatedAt = DateTime.Now,
                     ModifiedAt = DateTime.Now,
+                    CreatedBy = employeeRequest.CreatedBy,
+                    ModifiedBy = employeeRequest.CreatedBy,
                     RowStatus = "A"
                 };
+
+                if (employeeRequest.RegionId != null) newEmployee.RegionId = employeeRequest.RegionId;
                 db.Employees.Add(newEmployee);
                 db.SaveChanges();
             }
@@ -92,22 +98,41 @@ namespace HappyFarmProjectAPI.Controllers
         /// <param name="limitPage"></param>
         /// <param name="search"></param>
         /// <returns></returns>
-        public ResponsePagingModel<List<Employee>> GetEmployees(int currentPage, int limitPage, string search)
+        public ResponsePagingModel<List<Employee>> GetEmployees(int currentPage, int limitPage, string search, string role)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                var employees = db.Employees
+                // get employees
+                var employees = search == null ? db.Employees
+                    .OrderBy(x => x.Id)
+                    .Skip((currentPage - 1) * limitPage)
+                    .Take(limitPage)
+                    .ToList() : db.Employees
                     .Where(x =>
                         x.Name.ToLower().Contains(search.ToLower()) ||
                         x.PhoneNumber.ToLower().Contains(search.ToLower()) ||
                         x.Email.ToLower().Contains(search.ToLower()) ||
                         x.Address.ToLower().Contains(search.ToLower())
                     )
+                    .OrderBy(x => x.Id)
                     .Skip((currentPage - 1) * limitPage)
                     .Take(limitPage)
                     .ToList();
 
+                // filter employees by role
+                if (role == "Super Admin")
+                {
+                    employees = employees.Where(x => x.UserLogin.Role.Name != "Super Admin").ToList();
+                }
+                else if (role == "Manager")
+                {
+                    employees = employees.Where(x => x.UserLogin.Role.Name != "Super Admin" && x.UserLogin.Role.Name != "Manager").ToList();
+                }
+
+                // get total employees
                 var totalPages = Math.Ceiling((decimal)db.Employees.Count() / limitPage);
+                
+                // return employees
                 return new ResponsePagingModel<List<Employee>>()
                 {
                     Data = employees,
@@ -122,11 +147,22 @@ namespace HappyFarmProjectAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Employee GetEmployeeById(int id)
+        public Object GetEmployeeById(int id)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                var employee = db.Employees.Where(x => x.Id == id).FirstOrDefault();
+                var employee = db.Employees
+                    .Where(x => x.Id == id)
+                     .Select(x => new
+                     {
+                         x.Id,
+                         x.Name,
+                         x.PhoneNumber,
+                         x.Email,
+                         x.Address,
+                         x.Gender
+                     })
+                    .FirstOrDefault();
                 return employee;
             }
         }

@@ -27,7 +27,7 @@ namespace HappyFarmProjectAPI.Controllers.SuperAdmin
         /// <param name="id"></param>
         /// <returns></returns>
         [Route("api/v1/SA/Employee/Delete/{id}")]
-        [HttpPut]
+        [HttpDelete]
         public async Task<IHttpActionResult> DeleteEmployee(int id)
         {
             try
@@ -45,7 +45,7 @@ namespace HappyFarmProjectAPI.Controllers.SuperAdmin
                         // response success
                         var response = new ResponseWithoutData()
                         {
-                            StatusCode = HttpStatusCode.Created,
+                            StatusCode = HttpStatusCode.OK,
                             Message = "Berhasil menghapus akun"
                         };
 
@@ -62,6 +62,17 @@ namespace HappyFarmProjectAPI.Controllers.SuperAdmin
 
                         return Ok(unAuthorizedResponse);
                     }
+                }
+                else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    // unauthorized
+                    var unAuthorizedResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        Message = "Anda tidak memiliki hak akses"
+                    };
+
+                    return Ok(unAuthorizedResponse);
                 }
                 else
                 {
@@ -107,7 +118,7 @@ namespace HappyFarmProjectAPI.Controllers.SuperAdmin
                         // response success
                         var response = new ResponseWithoutData()
                         {
-                            StatusCode = HttpStatusCode.Created,
+                            StatusCode = HttpStatusCode.OK,
                             Message = "Berhasil mengubah akun"
                         };
 
@@ -246,12 +257,12 @@ namespace HappyFarmProjectAPI.Controllers.SuperAdmin
                     if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
                         // get employee by id
-                        Employee employee = await Task.Run(() => repo.GetEmployeeById(id));
+                        Object employee = await Task.Run(() => repo.GetEmployeeById(id));
 
                         // response success
-                        var response = new ResponseWithData<Employee>()
+                        var response = new ResponseWithData<Object>()
                         {
-                            StatusCode = HttpStatusCode.Created,
+                            StatusCode = HttpStatusCode.OK,
                             Message = "Berhasil",
                             Data = employee
                         };
@@ -296,9 +307,9 @@ namespace HappyFarmProjectAPI.Controllers.SuperAdmin
         /// <param name="limitPage"></param>
         /// <param name="search"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Employee/{currentPage}/{limitPage}/{search}")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetEmployees(int currentPage, int limitPage, string search)
+        [Route("api/v1/SA/Employee")]
+        [HttpPost]
+        public async Task<IHttpActionResult> GetEmployees(GetListDataRequest getListData)
         {
             try
             {
@@ -306,14 +317,25 @@ namespace HappyFarmProjectAPI.Controllers.SuperAdmin
                 if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                 {
                     // get employee by id
-                    ResponsePagingModel<List<Employee>> employeesPaging = await Task.Run(() => repo.GetEmployees(currentPage, limitPage, search));
+                    ResponsePagingModel<List<Employee>> employeesPaging = await Task.Run(() => repo.GetEmployees(getListData.CurrentPage, getListData.LimitPage, getListData.Search, "Super Admin"));
 
                     // response success
-                    var response = new ResponseDataWithPaging<List<Employee>>()
+                    var response = new ResponseDataWithPaging<Object>()
                     {
-                        StatusCode = HttpStatusCode.Created,
+                        StatusCode = HttpStatusCode.OK,
                         Message = "Berhasil",
-                        Data = employeesPaging.Data,
+                        Data = employeesPaging
+                            .Data
+                            .Select(x => new
+                            {
+                                x.Id,
+                                x.Name,
+                                x.PhoneNumber,
+                                x.Email,
+                                x.Address,
+                                x.Gender
+                            })
+                            .ToList(),
                         CurrentPage = employeesPaging.CurrentPage,
                         TotalPage = employeesPaging.TotalPage
                     };

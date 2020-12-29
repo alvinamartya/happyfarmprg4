@@ -24,7 +24,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
             var employeeRequest = new AddEmployeeRequest()
             {
                 Address = "Jakarta",
-                Email = "sa@happyfarm.id",
+                Email = "manager1@happyfarm.id",
                 Gender = "M",
                 Name = "Manager",
                 Password = "verysecret",
@@ -37,7 +37,25 @@ namespace HappyFarmProjectAPI.Controllers.Tests
         }
 
         [TestMethod()]
-        public void AddEmployeeTestEmailFailed()
+        public void AddEmployeeTestUsernameIsExists()
+        {
+            var employeeRequest = new AddEmployeeRequest()
+            {
+                Address = "Jakarta",
+                Email = "manager@happyfarm.id",
+                Gender = "M",
+                Name = "Manager",
+                Password = "verysecret",
+                PhoneNumber = "0821",
+                RoleId = 2,
+                Username = "sa"
+            };
+
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest, "Super Admin").StatusCode);
+        }
+
+        [TestMethod()]
+        public void AddEmployeeTestEmailIsExists()
         {
             var employeeRequest = new AddEmployeeRequest()
             {
@@ -55,7 +73,43 @@ namespace HappyFarmProjectAPI.Controllers.Tests
         }
 
         [TestMethod()]
-        public void AddEmployeeTestPhoneFailed()
+        public void AddEmployeeTestUnAuthorized()
+        {
+            var employeeRequest = new AddEmployeeRequest()
+            {
+                Address = "Jakarta",
+                Email = "manager1@happyfarm.id",
+                Gender = "M",
+                Name = "Manager",
+                Password = "verysecret",
+                PhoneNumber = "0821",
+                RoleId = 2,
+                Username = "manager1"
+            };
+
+            Assert.AreEqual(HttpStatusCode.Unauthorized, employeeLogic.AddEmployee(employeeRequest, "Admin Promosi").StatusCode);
+        }
+
+        [TestMethod()]
+        public void AddEmployeeTestEmailInvalidFormat()
+        {
+            var employeeRequest = new AddEmployeeRequest()
+            {
+                Address = "Jakarta",
+                Email = "sa@happyfarm",
+                Gender = "M",
+                Name = "Manager",
+                Password = "verysecret",
+                PhoneNumber = "0821",
+                RoleId = 2,
+                Username = "manager1"
+            };
+
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest, "Super Admin").StatusCode);
+        }
+
+        [TestMethod()]
+        public void AddEmployeeTestPhoneInvalidFormat()
         {
             var employeeRequest = new AddEmployeeRequest()
             {
@@ -72,48 +126,12 @@ namespace HappyFarmProjectAPI.Controllers.Tests
             Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest, "Super Admin").StatusCode);
         }
 
-        [TestMethod()]
-        public void AddEmployeeTestBadRequest()
-        {
-            var employeeRequest = new AddEmployeeRequest()
-            {
-                Address = "Jakarta",
-                Email = "sa@happyfarm.id",
-                Gender = "M",
-                Name = "Super Admin",
-                Password = "verysecret",
-                PhoneNumber = "0821",
-                RoleId = 1,
-                Username = "sa"
-            };
-
-            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest, "Super Admin").StatusCode);
-        }
-
-        [TestMethod()]
-        public void AddEmployeeTestUnAuthorized()
-        {
-            var employeeRequest = new AddEmployeeRequest()
-            {
-                Address = "Jakarta",
-                Email = "sa@happyfarm.id",
-                Gender = "M",
-                Name = "Manager",
-                Password = "verysecret",
-                PhoneNumber = "0821",
-                RoleId = 2,
-                Username = "manager1"
-            };
-
-            Assert.AreEqual(HttpStatusCode.Unauthorized, employeeLogic.AddEmployee(employeeRequest, "Admin Promosi").StatusCode);
-        }
-
         [TestMethod]
         public void EditEmployeeTestSuccess()
         {
             var employeeRequest = new EditEmployeeRequest()
             {
-                Email = "sa@happyfarm.id",
+                Email = "manager1@happyfarm.id",
                 Address = "Jakarta",
                 Gender = "M",
                 Name = "Manager",
@@ -121,8 +139,9 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 RegionId = 1
             };
 
-            Assert.AreEqual(HttpStatusCode.OK, employeeLogic.EditEmployee(1, employeeRequest, "Manager").StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, employeeLogic.EditEmployee(2, employeeRequest, "Super Admin").StatusCode);
         }
+
 
         [TestMethod]
         public void EditEmployeeTestUserNotFound()
@@ -141,7 +160,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
         }
 
         [TestMethod]
-        public void EditEmployeeTestBadRequest()
+        public void EditEmployeeTestRegionNotFound()
         {
             var employeeRequest = new EditEmployeeRequest()
             {
@@ -173,7 +192,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
         }
 
         [TestMethod()]
-        public void EditEmployeeTestEmailFailed()
+        public void EditEmployeeTestEmailInvalidFormat()
         {
             var employeeRequest = new EditEmployeeRequest()
             {
@@ -189,7 +208,23 @@ namespace HappyFarmProjectAPI.Controllers.Tests
         }
 
         [TestMethod()]
-        public void EditEmployeeTestPhoneFailed()
+        public void EditEmployeeTestEmailIsExists()
+        {
+            var employeeRequest = new EditEmployeeRequest()
+            {
+                Email = "sa@happyfarm",
+                Address = "Jakarta",
+                Gender = "M",
+                Name = "Manager",
+                PhoneNumber = "0821",
+                RegionId = 1
+            };
+
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.EditEmployee(2, employeeRequest, "Super Admin").StatusCode);
+        }
+
+        [TestMethod()]
+        public void EditEmployeeTestPhoneInvalidFormat()
         {
             var employeeRequest = new EditEmployeeRequest()
             {
@@ -207,7 +242,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
         [TestMethod()]
         public void DeleteEmployeeTestSuccess()
         {
-            Assert.AreEqual(HttpStatusCode.OK, employeeLogic.DeleteEmployee(1, "Manager").StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, employeeLogic.DeleteEmployee(2, "Super Admin").StatusCode);
         }
 
         [TestMethod()]
@@ -225,7 +260,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
         [TestMethod()]
         public void GetEmployeeByIdTestSuccess()
         {
-            Assert.AreEqual(HttpStatusCode.OK, employeeLogic.GetEmployeeById(1, "Manager").StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, employeeLogic.GetEmployeeById(2, "Super Admin").StatusCode);
         }
 
         [TestMethod()]
