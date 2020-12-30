@@ -32,7 +32,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 Username = "manager1"
             };
 
-            Assert.AreEqual(HttpStatusCode.Created, employeeLogic.AddEmployee(employeeRequest, "Super Admin").StatusCode);
+            Assert.AreEqual(HttpStatusCode.Created, employeeLogic.AddEmployee(employeeRequest).StatusCode);
         }
 
         [TestMethod()]
@@ -49,7 +49,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 Username = "sa"
             };
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest, "Super Admin").StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest).StatusCode);
         }
 
         [TestMethod()]
@@ -66,7 +66,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 Username = "manager1"
             };
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest, "Super Admin").StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest).StatusCode);
         }
 
         [TestMethod()]
@@ -81,9 +81,10 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 PhoneNumber = "0821",
                 RoleId = 2,
                 Username = "manager1"
+
             };
 
-            Assert.AreEqual(HttpStatusCode.Unauthorized, employeeLogic.AddEmployee(employeeRequest, "Admin Promosi").StatusCode);
+            Assert.AreEqual(HttpStatusCode.Unauthorized, employeeLogic.AddEmployee(employeeRequest).StatusCode);
         }
 
         [TestMethod()]
@@ -100,7 +101,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 Username = "manager1"
             };
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest, "Super Admin").StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest).StatusCode);
         }
 
         [TestMethod()]
@@ -117,7 +118,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 Username = "manager1"
             };
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest, "Super Admin").StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.AddEmployee(employeeRequest).StatusCode);
         }
 
         [TestMethod]
@@ -133,7 +134,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 RegionId = 1
             };
 
-            Assert.AreEqual(HttpStatusCode.OK, employeeLogic.EditEmployee(2, employeeRequest, "Super Admin").StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, employeeLogic.EditEmployee(2, employeeRequest).StatusCode);
         }
 
 
@@ -150,7 +151,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 RegionId = 1
             };
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.EditEmployee(0, employeeRequest, "Manager").StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.EditEmployee(0, employeeRequest).StatusCode);
         }
 
         [TestMethod]
@@ -166,7 +167,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 RegionId = 0
             };
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.EditEmployee(1, employeeRequest,"Manager").StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.EditEmployee(1, employeeRequest).StatusCode);
         }
 
         [TestMethod]
@@ -182,7 +183,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 RegionId = 1
             };
 
-            Assert.AreEqual(HttpStatusCode.Unauthorized, employeeLogic.EditEmployee(1, employeeRequest, "Admin Promosi").StatusCode);
+            Assert.AreEqual(HttpStatusCode.Unauthorized, employeeLogic.EditEmployee(1, employeeRequest).StatusCode);
         }
 
         [TestMethod()]
@@ -198,7 +199,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 RegionId = 1
             };
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.EditEmployee(1, employeeRequest, "Manager").StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.EditEmployee(1, employeeRequest).StatusCode);
         }
 
         [TestMethod()]
@@ -214,7 +215,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 RegionId = 1
             };
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.EditEmployee(2, employeeRequest, "Super Admin").StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.EditEmployee(2, employeeRequest).StatusCode);
         }
 
         [TestMethod()]
@@ -230,7 +231,7 @@ namespace HappyFarmProjectAPI.Controllers.Tests
                 RegionId = 1
             };
 
-            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.EditEmployee(1, employeeRequest, "Manager").StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, employeeLogic.EditEmployee(1, employeeRequest).StatusCode);
         }
 
         [TestMethod()]

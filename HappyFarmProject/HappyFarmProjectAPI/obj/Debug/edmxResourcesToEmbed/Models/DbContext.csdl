@@ -132,6 +132,7 @@
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="RowStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Category" Relationship="Self.FK__Goods__CategoryI__6E01572D" FromRole="Goods" ToRole="Category" />
     <NavigationProperty Name="Employee" Relationship="Self.FK__Goods__CreatedBy__6EF57B66" FromRole="Goods" ToRole="Employee" />

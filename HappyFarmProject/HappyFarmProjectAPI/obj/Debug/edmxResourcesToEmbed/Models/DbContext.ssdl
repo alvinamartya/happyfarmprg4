@@ -95,6 +95,7 @@
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
     <Property Name="ModifiedAt" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="RowStatus" Type="char" MaxLength="1" Nullable="false" />
   </EntityType>
   <EntityType Name="GoodsPriceRegion">

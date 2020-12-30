@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFarmProject", "HappyFa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFarmProjectAPI", "HappyFarmProjectAPI\HappyFarmProjectAPI.csproj", "{0DA24A39-3B8A-4E16-8EEB-2D681805BA18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFarmProjectWebAdmin", "HappyFarmProjectWebAdmin\HappyFarmProjectWebAdmin.csproj", "{757034F1-B05A-4723-901B-DE9A55DFE81F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyFarmProjectAPITest", "HappyFarmProjectApiTest\HappyFarmProjectAPITest.csproj", "{B2D375E8-271D-4BE6-BC8D-C2B823266351}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{0DA24A39-3B8A-4E16-8EEB-2D681805BA18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DA24A39-3B8A-4E16-8EEB-2D681805BA18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DA24A39-3B8A-4E16-8EEB-2D681805BA18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{757034F1-B05A-4723-901B-DE9A55DFE81F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{757034F1-B05A-4723-901B-DE9A55DFE81F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{757034F1-B05A-4723-901B-DE9A55DFE81F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{757034F1-B05A-4723-901B-DE9A55DFE81F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B2D375E8-271D-4BE6-BC8D-C2B823266351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B2D375E8-271D-4BE6-BC8D-C2B823266351}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2D375E8-271D-4BE6-BC8D-C2B823266351}.Release|Any CPU.ActiveCfg = Release|Any CPU

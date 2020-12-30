@@ -63,13 +63,13 @@ namespace HappyFarmProjectAPI.Controllers
         /// </summary>
         /// <param name="employeeRequest"></param>
         /// <returns></returns>
-        public ResponseModel EditEmployee(int id, EditEmployeeRequest employeeRequest, string role)
+        public ResponseModel EditEmployee(int id, EditEmployeeRequest employeeRequest)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get employee
                 var employee = db.Employees.Where(x => x.Id == id).FirstOrDefault();
-                if(employee != null)
+                if (employee != null)
                 {
                     // get user
                     var user = db.UserLogins.Where(x => x.Id == employee.UserLoginId).FirstOrDefault();
@@ -102,24 +102,36 @@ namespace HappyFarmProjectAPI.Controllers
                                 {
                                     if (Helper.ValidatePhoneNumber(employeeRequest.PhoneNumber))
                                     {
-                                        if ((role != "Manager" && role != "Super Admin") ||
-                                            (role == "Manager" && (user.Role.Name == "Super Admin" || user.Role.Name == "Manager")) ||
-                                            (role == "Super Admin" && user.Role.Name == "Super Admin"))
+                                        var modifiedEmployee = db.Employees.Where(x => x.Id == employeeRequest.ModifiedBy).FirstOrDefault();
+                                        if (modifiedEmployee != null)
                                         {
-                                            // unauthroized
-                                            return new ResponseModel()
+                                            if ((modifiedEmployee.UserLogin.Role.Name != "Manager" && modifiedEmployee.UserLogin.Role.Name != "Super Admin") ||
+                                            (modifiedEmployee.UserLogin.Role.Name == "Manager" && (user.Role.Name == "Super Admin" || user.Role.Name == "Manager")) ||
+                                            (modifiedEmployee.UserLogin.Role.Name == "Super Admin" && user.Role.Name == "Super Admin"))
                                             {
-                                                StatusCode = HttpStatusCode.Unauthorized,
-                                                Message = "Anda tidak memiliki hak akses"
-                                            };
+                                                // unauthroized
+                                                return new ResponseModel()
+                                                {
+                                                    StatusCode = HttpStatusCode.Unauthorized,
+                                                    Message = "Anda tidak memiliki hak akses"
+                                                };
+                                            }
+                                            else
+                                            {
+                                                // return ok
+                                                return new ResponseModel()
+                                                {
+                                                    Message = "Berhasil",
+                                                    StatusCode = HttpStatusCode.OK
+                                                };
+                                            }
                                         }
                                         else
                                         {
-                                            // return ok
                                             return new ResponseModel()
                                             {
-                                                Message = "Berhasil",
-                                                StatusCode = HttpStatusCode.OK
+                                                Message = "Data karyawan tidak ditemukan",
+                                                StatusCode = HttpStatusCode.BadRequest
                                             };
                                         }
                                     }
@@ -182,7 +194,7 @@ namespace HappyFarmProjectAPI.Controllers
         /// <param name="employeeRequest"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public ResponseModel AddEmployee(AddEmployeeRequest employeeRequest, string role)
+        public ResponseModel AddEmployee(AddEmployeeRequest employeeRequest)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
@@ -217,58 +229,62 @@ namespace HappyFarmProjectAPI.Controllers
                     var isCustomer = getRole.Name == "Customer";
 
                     bool regionIsAvailable = getRole.Name == "Manager" ? true : db.Regions.Where(x => x.Id == employeeRequest.RegionId).FirstOrDefault() != null;
-                    if(regionIsAvailable)
+                    if (regionIsAvailable)
                     {
-                        if ((role == "Manager" || role == "Super Admin") && (isSuperAdmin || isCustomer))
+                        var createdEmployee = db.Employees.Where(x => x.Id == employeeRequest.CreatedBy).FirstOrDefault();
+                        if (createdEmployee != null)
                         {
-                            // unauthorized
-                            return new ResponseModel()
+                            if (((createdEmployee.UserLogin.Role.Name == "Manager" || createdEmployee.UserLogin.Role.Name == "Super Admin") && (isSuperAdmin || isCustomer)) ||
+                                (createdEmployee.UserLogin.Role.Name != "Manager" && createdEmployee.UserLogin.Role.Name != "Super Admin"))
                             {
-                                StatusCode = HttpStatusCode.Unauthorized,
-                                Message = "Anda tidak memiliki hak akses"
-                            };
-                        }
-                        else if (role != "Manager" && role != "Super Admin")
-                        {
-                            // unautorized
-                            return new ResponseModel()
-                            {
-                                StatusCode = HttpStatusCode.Unauthorized,
-                                Message = "Anda tidak memiliki hak akses"
-                            };
-                        }
-                        else
-                        {
-                            if (Helper.ValidateEmail(employeeRequest.Email))
-                            {
-                                if (Helper.ValidatePhoneNumber(employeeRequest.PhoneNumber))
+                                // unauthorized
+                                return new ResponseModel()
                                 {
-                                    // response created
-                                    return new ResponseModel()
+                                    StatusCode = HttpStatusCode.Unauthorized,
+                                    Message = "Anda tidak memiliki hak akses"
+                                };
+                            }
+                            else
+                            {
+                                if (Helper.ValidateEmail(employeeRequest.Email))
+                                {
+                                    if (Helper.ValidatePhoneNumber(employeeRequest.PhoneNumber))
                                     {
-                                        Message = "Berhasil",
-                                        StatusCode = HttpStatusCode.Created
-                                    };
+                                        // response created
+                                        return new ResponseModel()
+                                        {
+                                            Message = "Berhasil",
+                                            StatusCode = HttpStatusCode.Created
+                                        };
+                                    }
+                                    else
+                                    {
+                                        // phone number is not valid
+                                        return new ResponseModel()
+                                        {
+                                            Message = "Format No Hp tidak valid",
+                                            StatusCode = HttpStatusCode.BadRequest
+                                        };
+                                    }
                                 }
                                 else
                                 {
-                                    // phone number is not valid
+                                    // email is not valid
                                     return new ResponseModel()
                                     {
-                                        Message = "Format No Hp tidak valid",
+                                        Message = "Format Email tidak valid",
                                         StatusCode = HttpStatusCode.BadRequest
                                     };
                                 }
                             }
-                            else
+                        }
+                        else
+                        {
+                            return new ResponseModel()
                             {
-                                // email is not valid
-                                return new ResponseModel()
-                                {
-                                    Message = "Format Email tidak valid",
-                                    StatusCode = HttpStatusCode.BadRequest
-                                };
-                            }
+                                Message = "Data karyawan tidak ditemukan",
+                                StatusCode = HttpStatusCode.BadRequest
+                            };
                         }
                     }
                     else
@@ -295,7 +311,7 @@ namespace HappyFarmProjectAPI.Controllers
             {
                 // get user
                 var employee = db.Employees.Where(x => x.Id == id).FirstOrDefault();
-                if(employee != null)
+                if (employee != null)
                 {
                     var user = db.UserLogins.Where(x => x.Id == employee.UserLoginId).FirstOrDefault();
                     if (user != null)
