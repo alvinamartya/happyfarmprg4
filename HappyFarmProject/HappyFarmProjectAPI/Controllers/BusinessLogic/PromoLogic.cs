@@ -2,45 +2,90 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Net;
+using System.Web;
 
 namespace HappyFarmProjectAPI.Controllers.BusinessLogic
 {
-    public class BannerLogic
+    public class PromoLogic
     {
         /// <summary>
-        /// Validate data when Add Banner
+        /// Validate data when Add Promo
         /// </summary>
-        /// <param name="bannerRequest"></param>
+        /// <param name="promoRequest"></param>
         /// <returns></returns>
-        public ResponseModel AddBanner(AddBannerRequest bannerRequest)
+        public ResponseModel AddPromo(AddPromoRequest promoRequest)
         {
-            return checkAuthorization(bannerRequest.CreatedBy, HttpStatusCode.Created);
-        }
-
-        /// <summary>
-        /// Validate data when Edit Banner
-        /// </summary>
-        /// <param name="bannerRequest"></param>
-        /// <returns></returns>
-        public ResponseModel EditBanner(int id, EditBannerRequest bannerRequest)
-        {
-            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            if(promoRequest.StartDate > now)
             {
-                // get banner
-                var banner = db.Banners.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
-
-                // validate banner must be exists
-                if(banner != null)
+                if(promoRequest.EndDate > promoRequest.StartDate)
                 {
-                    return checkAuthorization(bannerRequest.ModifiedBy, HttpStatusCode.OK);
+                    return checkAuthorization(promoRequest.CreatedBy, HttpStatusCode.Created);
                 }
                 else
                 {
                     return new ResponseModel()
                     {
-                        Message = "Banner tidak tersedia",
+                        StatusCode = HttpStatusCode.BadRequest,
+                        Message = "Tanggal berakhir promo tidak valid"
+                    };
+                }
+            }
+            else
+            {
+                return new ResponseModel()
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Message = "Tanggal mulai promo tidak valid"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Validate data when Edit Banner
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="promoRequest"></param>
+        /// <returns></returns>
+        public ResponseModel EditPromo(int id, EditPromoRequest promoRequest)
+        {
+            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                // get promo
+                var promo = db.Promoes.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
+                if(promo != null)
+                {
+                    DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                    if (promoRequest.StartDate > now)
+                    {
+                        if (promoRequest.EndDate > promoRequest.StartDate)
+                        {
+                            return checkAuthorization(promoRequest.ModifiedBy, HttpStatusCode.OK);
+                        }
+                        else
+                        {
+                            return new ResponseModel()
+                            {
+                                StatusCode = HttpStatusCode.BadRequest,
+                                Message = "Tanggal berakhir promo tidak valid"
+                            };
+                        }
+                    }
+                    else
+                    {
+                        return new ResponseModel()
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            Message = "Tanggal mulai promo tidak valid"
+                        };
+                    }
+                }
+                else
+                {
+                    return new ResponseModel()
+                    {
+                        Message = "Promo tidak tersedia",
                         StatusCode = HttpStatusCode.BadRequest
                     };
                 }
@@ -54,12 +99,12 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
         /// <returns></returns>
         private ResponseModel checkAuthorization(int id, HttpStatusCode responseSuccess)
         {
-            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 var employee = db.Employees.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
                 if (employee != null)
                 {
-                    if (employee.UserLogin.Role.Name != "Super Admin" && employee.UserLogin.Role.Name != "Admin Produksi")
+                    if (employee.UserLogin.Role.Name != "Super Admin" && employee.UserLogin.Role.Name != "Admin Promosi")
                     {
                         // unauthroized
                         return new ResponseModel()
@@ -96,17 +141,17 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
         /// <param name="id"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public ResponseModel GetBannerById(int id, string role)
+        public ResponseModel GetPromoById(int id, string role)
         {
             using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                // get banner
-                var banner = db.Banners.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
+                // get promo
+                var promo = db.Promoes.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
 
-                // validate banner must be available
-                if(banner != null)
+                // validate promo must be available
+                if(promo != null)
                 {
-                    if (role != "Super Admin" && role != "Admin Promosi")
+                    if(role != "Super Admin" && role != "Admin Promosi")
                     {
                         // unauthroized
                         return new ResponseModel()
@@ -127,10 +172,10 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
                 }
                 else
                 {
-                    // banner not found
+                    // promo not found
                     return new ResponseModel()
                     {
-                        Message = "Banner tidak tersedia",
+                        Message = "Promo tidak tersedia",
                         StatusCode = HttpStatusCode.BadRequest
                     };
                 }

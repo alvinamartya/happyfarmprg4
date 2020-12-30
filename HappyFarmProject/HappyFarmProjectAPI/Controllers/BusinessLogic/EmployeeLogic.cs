@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Net;
+using System.Web;
 
-namespace HappyFarmProjectAPI.Controllers
+namespace HappyFarmProjectAPI.Controllers.BusinessLogic
 {
     public class EmployeeLogic
     {
@@ -68,7 +68,7 @@ namespace HappyFarmProjectAPI.Controllers
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get employee
-                var employee = db.Employees.Where(x => x.Id == id).FirstOrDefault();
+                var employee = db.Employees.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
                 if (employee != null)
                 {
                     // get user
@@ -310,7 +310,7 @@ namespace HappyFarmProjectAPI.Controllers
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get user
-                var employee = db.Employees.Where(x => x.Id == id).FirstOrDefault();
+                var employee = db.Employees.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
                 if (employee != null)
                 {
                     var user = db.UserLogins.Where(x => x.Id == employee.UserLoginId).FirstOrDefault();

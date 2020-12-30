@@ -1,4 +1,6 @@
-﻿using HappyFarmProjectAPI.Models;
+﻿using HappyFarmProjectAPI.Controllers.BusinessLogic;
+using HappyFarmProjectAPI.Controllers.Repository;
+using HappyFarmProjectAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

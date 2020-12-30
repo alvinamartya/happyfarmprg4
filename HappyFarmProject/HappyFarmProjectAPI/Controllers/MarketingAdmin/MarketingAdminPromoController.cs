@@ -11,44 +11,44 @@ using System.Web.Http;
 
 namespace HappyFarmProjectAPI.Controllers
 {
-    public class SuperAdminBannerController : ApiController
+    public class MarketingAdminPromoController : ApiController
     {
         #region Variable
         // logic
-        private BannerLogic bannerLogic = new BannerLogic();
+        private PromoLogic promoLogic = new PromoLogic();
         private TokenLogic tokenLogic = new TokenLogic();
 
         // repo
-        private BannerRepository repo = new BannerRepository();
+        private PromoRepository repo = new PromoRepository();
         #endregion
 
         #region Action
         /// <summary>
-        /// To delete banner using super admin
+        /// To delete promo using marketing admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Banner/Delete/{id}")]
+        [Route("api/v1/MA/Promo/Delete/{id}")]
         [HttpDelete]
-        public async Task<IHttpActionResult> DeleteBanner(int id)
+        public async Task<IHttpActionResult> DeletePromo(int id)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = bannerLogic.GetBannerById(id, "Super Admin");
+                ResponseModel responseModel = promoLogic.GetPromoById(id, "Admin Promosi");
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Promosi"))
                     {
-                        // delete banner
-                        await Task.Run(() => repo.DeleteBanner(id));
+                        // delete promo
+                        await Task.Run(() => repo.DeletePromo(id));
 
                         // response success
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.OK,
-                            Message = "Berhasil menghapus banner"
+                            Message = "Berhasil menghapus promo"
                         };
 
                         return Ok(response);
@@ -96,32 +96,32 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To edit banner using super admin account
+        /// To edit promo using marketing admin account
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="bannerRequest"></param>
+        /// <param name="promoRequest"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Banner/Edit/{id}")]
+        [Route("api/v1/MA/Promo/Edit/{id}")]
         [HttpPut]
-        public async Task<IHttpActionResult> EditBanner(int id, EditBannerRequest bannerRequest)
+        public async Task<IHttpActionResult> EditPromo(int id, EditPromoRequest promoRequest)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = bannerLogic.EditBanner(id, bannerRequest);
+                ResponseModel responseModel = promoLogic.EditPromo(id, promoRequest);
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Promosi"))
                     {
-                        // update banner
-                        await Task.Run(() => repo.EditBanner(id, bannerRequest));
+                        // update promo
+                        await Task.Run(() => repo.EditPromo(id, promoRequest));
 
                         // response success
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.OK,
-                            Message = "Berhasil mengubah banner"
+                            Message = "Berhasil mengubah promo"
                         };
 
                         return Ok(response);
@@ -169,31 +169,31 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To create new banner using super admin account
+        /// To create new promo using marketing admin account
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Banner/Add")]
+        [Route("api/v1/MA/Promo/Add")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddGoods(AddBannerRequest bannerRequest)
+        public async Task<IHttpActionResult> AddPromo(AddPromoRequest promoRequest)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = bannerLogic.AddBanner(bannerRequest);
+                ResponseModel responseModel = promoLogic.AddPromo(promoRequest);
                 if (responseModel.StatusCode == HttpStatusCode.Created)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Promosi"))
                     {
-                        // create banner
-                        await Task.Run(() => repo.AddBanner(bannerRequest));
+                        // create promo
+                        await Task.Run(() => repo.AddPromo(promoRequest));
 
                         // response success
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.Created,
-                            Message = "Berhasil menambah banner"
+                            Message = "Berhasil menambah promo"
                         };
 
                         return Ok(response);
@@ -241,32 +241,32 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To get banner by id
+        /// To get promo by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Banner/{id}")]
+        [Route("api/v1/MA/Promo/{id}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetBannerById(int id)
+        public async Task<IHttpActionResult> GetPromoById(int id)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = bannerLogic.GetBannerById(id, "Super Admin");
+                ResponseModel responseModel = promoLogic.GetPromoById(id, "Admin Promosi");
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Promosi"))
                     {
                         // get goods by id
-                        Object banner = await Task.Run(() => repo.GetBannerById(id));
+                        Object promo = await Task.Run(() => repo.GetPromoById(id));
 
                         // response success
                         var response = new ResponseWithData<Object>()
                         {
                             StatusCode = HttpStatusCode.OK,
                             Message = "Berhasil",
-                            Data = banner
+                            Data = promo
                         };
 
                         return Ok(response);
@@ -303,40 +303,45 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To get banners
+        /// To get promoes
         /// </summary>
         /// <param name="getListData"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Banner")]
+        [Route("api/v1/MA/Promo")]
         [HttpPost]
-        public async Task<IHttpActionResult> GetBanners(GetListDataRequest getListData)
+        public async Task<IHttpActionResult> GetPromoes(GetListDataRequest getListData)
         {
             try
             {
                 // validate token
-                if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                if (tokenLogic.ValidateTokenInHeader(Request, "Admin Promosi"))
                 {
                     // get employee by id
-                    ResponsePagingModel<List<Banner>> listBannerPaging = await Task.Run(() => repo.GetBanners(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
+                    ResponsePagingModel<List<Promo>> listPromoesPaging = await Task.Run(() => repo.GetPromoes(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
 
                     // response success
                     var response = new ResponseDataWithPaging<Object>()
                     {
                         StatusCode = HttpStatusCode.OK,
                         Message = "Berhasil",
-                        Data = listBannerPaging
+                        Data = listPromoesPaging
                             .Data
                             .Select(x => new
                             {
                                 x.Id,
+                                x.Code,
                                 x.Name,
-                                x.PromoId,
-                                PromoName = x.PromoId == null ? "-" : x.Promo.Name,
-                                x.Image
+                                x.Image,
+                                x.StartDate,
+                                x.EndDate,
+                                x.IsFreeDelivery,
+                                x.Discount,
+                                x.MinTransaction,
+                                x.MaxDiscount
                             })
                             .ToList(),
-                        CurrentPage = listBannerPaging.CurrentPage,
-                        TotalPage = listBannerPaging.TotalPage
+                        CurrentPage = listPromoesPaging.CurrentPage,
+                        TotalPage = listPromoesPaging.TotalPage
                     };
 
                     return Ok(response);
