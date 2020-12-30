@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace HappyFarmProjectAPI.Controllers.ProductionAdmin
+namespace HappyFarmProjectAPI.Controllers
 {
     public class ProductionAdminGoodsController : ApiController
     {
@@ -41,7 +41,7 @@ namespace HappyFarmProjectAPI.Controllers.ProductionAdmin
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
-                        // delete employee
+                        // delete goods
                         await Task.Run(() => repo.DeleteGoods(id));
 
                         // response success
@@ -111,17 +111,32 @@ namespace HappyFarmProjectAPI.Controllers.ProductionAdmin
                 ResponseModel responseModel = goodsLogic.EditGoods(id, goodsRequest);
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
-                    // update employee
-                    await Task.Run(() => repo.EditGoods(id, goodsRequest));
-
-                    // response success
-                    var response = new ResponseWithoutData()
+                    // validate token
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
-                        StatusCode = HttpStatusCode.OK,
-                        Message = "Berhasil mengubah produk"
-                    };
+                        // update goods
+                        await Task.Run(() => repo.EditGoods(id, goodsRequest));
 
-                    return Ok(response);
+                        // response success
+                        var response = new ResponseWithoutData()
+                        {
+                            StatusCode = HttpStatusCode.OK,
+                            Message = "Berhasil mengubah produk"
+                        };
+
+                        return Ok(response);
+                    }
+                    else
+                    {
+                        // unauthorized
+                        var unAuthorizedResponse = new ResponseWithoutData()
+                        {
+                            StatusCode = HttpStatusCode.Unauthorized,
+                            Message = "Anda tidak memiliki hak akses"
+                        };
+
+                        return Ok(unAuthorizedResponse);
+                    }
                 }
                 else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
                 {
@@ -171,7 +186,7 @@ namespace HappyFarmProjectAPI.Controllers.ProductionAdmin
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
-                        // create new employee
+                        // create new goods
                         await Task.Run(() => repo.AddGoods(goodsRequest));
 
                         // response success
@@ -243,15 +258,15 @@ namespace HappyFarmProjectAPI.Controllers.ProductionAdmin
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
-                        // get employee by id
-                        Object employee = await Task.Run(() => repo.GetGoodsById(id));
+                        // get goods by id
+                        Object goods = await Task.Run(() => repo.GetGoodsById(id));
 
                         // response success
                         var response = new ResponseWithData<Object>()
                         {
                             StatusCode = HttpStatusCode.OK,
                             Message = "Berhasil",
-                            Data = employee
+                            Data = goods
                         };
 
                         return Ok(response);

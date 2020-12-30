@@ -7,7 +7,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PromoId" Type="int" />
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="Image" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Image" Type="text" Nullable="false" />
     <Property Name="CreatedBy" Type="int" Nullable="false" />
     <Property Name="ModifiedBy" Type="int" Nullable="false" />
     <Property Name="CreatedAt" Type="datetime" Nullable="false" />
@@ -128,8 +128,9 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CreatedBy" Type="int" Nullable="false" />
     <Property Name="ModifiedBy" Type="int" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="Image" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Image" Type="text" Nullable="false" />
     <Property Name="StartDate" Type="date" Nullable="false" />
     <Property Name="EndDate" Type="date" Nullable="false" />
     <Property Name="IsFreeDelivery" Type="char" MaxLength="1" Nullable="false" />

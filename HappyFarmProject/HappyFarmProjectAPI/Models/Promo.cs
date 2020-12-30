@@ -23,8 +23,9 @@ namespace HappyFarmProjectAPI.Models
         public int Id { get; set; }
         public int CreatedBy { get; set; }
         public int ModifiedBy { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public string IsFreeDelivery { get; set; }

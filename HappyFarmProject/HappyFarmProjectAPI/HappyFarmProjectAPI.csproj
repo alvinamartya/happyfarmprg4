@@ -181,14 +181,18 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\BusinessLogic\BannerLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\EmployeeLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\GoodsLogic.cs" />
+    <Compile Include="Controllers\ManagerEmployeeController.cs" />
+    <Compile Include="Controllers\MarketingAdmin\MarketingAdminBannerController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminGoodsController.cs" />
+    <Compile Include="Controllers\Repository\BannerRepository.cs" />
     <Compile Include="Controllers\Repository\EmployeeRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Manager\ManagerEmployeeController.cs" />
     <Compile Include="Controllers\Repository\GoodsRepository.cs" />
     <Compile Include="Controllers\BusinessLogic\TokenLogic.cs" />
+    <Compile Include="Controllers\SuperAdmin\SuperAdminBannerController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminGoodsController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminEmployeeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -229,6 +233,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbContext.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\EditBannerRequest.cs" />
     <Compile Include="Models\Employee.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
@@ -253,6 +258,7 @@
     <Compile Include="Models\Region.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\AddBannerRequest.cs" />
     <Compile Include="Models\Request\EditGoodsRequest.cs" />
     <Compile Include="Models\Request\AddGoodsRequest.cs" />
     <Compile Include="Models\Request\GetListDataRequest.cs" />
@@ -362,7 +368,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\CustomerService\" />
     <Folder Include="Controllers\Customer\" />
-    <Folder Include="Controllers\MarketingAdmin\" />
+    <Folder Include="Controllers\Manager\" />
     <Folder Include="Controllers\SalesAdmin\" />
   </ItemGroup>
   <ItemGroup>

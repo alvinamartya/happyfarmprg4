@@ -92,11 +92,11 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     .Take(limitPage)
                     .ToList();
 
-                // get total list of goods
-                var totalPages = Math.Ceiling((decimal)listGoods.Count / limitPage);
-
                 // filter goods by row status
                 listGoods = listGoods.Where(x => x.RowStatus != "D").ToList();
+
+                // get total list of goods
+                var totalPages = Math.Ceiling((decimal)listGoods.Count / limitPage);
 
                 // return list of goods
                 return new ResponsePagingModel<List<Good>>()

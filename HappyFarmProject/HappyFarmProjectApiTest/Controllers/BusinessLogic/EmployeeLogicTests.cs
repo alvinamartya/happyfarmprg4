@@ -11,7 +11,7 @@ using System.Net;
 namespace HappyFarmProjectAPI.Controllers.Tests
 {
     [TestClass()]
-    public class EmployeeLogicTest
+    public class EmployeeLogicTests
     {
         #region Variable
         private EmployeeLogic employeeLogic = new EmployeeLogic();
