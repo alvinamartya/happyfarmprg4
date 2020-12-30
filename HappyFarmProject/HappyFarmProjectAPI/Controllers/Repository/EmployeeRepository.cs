@@ -9,7 +9,7 @@ namespace HappyFarmProjectAPI.Controllers
     public class EmployeeRepository
     {
         /// <summary>
-        /// Delete Employee Repository
+        /// Delete Employee using repository
         /// </summary>
         /// <param name="id"></param>
         public void DeleteEmployee(int id)
@@ -23,7 +23,7 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// Edit Employee Repository
+        /// Edit Employee using repository
         /// </summary>
         /// <param name="id"></param>
         /// <param name="employeeRequest"></param>
@@ -45,7 +45,7 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// Add Employee Repository
+        /// Add Employee using repository
         /// </summary>
         /// <param name="employeeRequest"></param>
         public void AddEmployee(AddEmployeeRequest employeeRequest)
@@ -143,8 +143,11 @@ namespace HappyFarmProjectAPI.Controllers
                     employees = employees.Where(x => x.UserLogin.Role.Name != "Super Admin" && x.UserLogin.Role.Name != "Manager").ToList();
                 }
 
+                // filter employees by row status
+                employees = employees.Where(x => x.RowStatus != "D").ToList();
+
                 // get total employees
-                var totalPages = Math.Ceiling((decimal)db.Employees.Count() / limitPage);
+                var totalPages = Math.Ceiling((decimal)employees.Count / limitPage);
 
                 // return employees
                 return new ResponsePagingModel<List<Employee>>()
@@ -166,7 +169,7 @@ namespace HappyFarmProjectAPI.Controllers
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 var employee = db.Employees
-                    .Where(x => x.Id == id)
+                    .Where(x => x.Id == id && x.RowStatus != "D")
                      .Select(x => new
                      {
                          x.Id,

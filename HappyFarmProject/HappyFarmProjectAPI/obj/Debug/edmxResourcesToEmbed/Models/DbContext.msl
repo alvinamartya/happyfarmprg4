@@ -102,6 +102,7 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
           <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
         </MappingFragment>
       </EntityTypeMapping>

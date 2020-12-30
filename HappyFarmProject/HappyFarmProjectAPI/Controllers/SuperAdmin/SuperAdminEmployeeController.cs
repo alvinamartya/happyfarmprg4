@@ -7,9 +7,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace HappyFarmProjectAPI.Controllers.Manager
+namespace HappyFarmProjectAPI.Controllers
 {
-    public class ManagerEmployeeController : ApiController
+    public class SuperAdminEmployeeController : ApiController
     {
         #region Variable
         // logic
@@ -22,22 +22,22 @@ namespace HappyFarmProjectAPI.Controllers.Manager
 
         #region Action
         /// <summary>
-        /// To delete employee using manager account
+        /// To delete employee using super admin account
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("api/v1/Manager/Employee/Delete/{id}")]
+        [Route("api/v1/SA/Employee/Delete/{id}")]
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteEmployee(int id)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = employeeLogic.DeleteEmployee(id, "Manager");
+                ResponseModel responseModel = employeeLogic.DeleteEmployee(id, "Super Admin");
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
                         // delete employee
                         await Task.Run(() => repo.DeleteEmployee(id));
@@ -46,7 +46,7 @@ namespace HappyFarmProjectAPI.Controllers.Manager
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.OK,
-                            Message = "Berhasil menghapus akun"
+                            Message = "Berhasil menghapus data karyawan"
                         };
 
                         return Ok(response);
@@ -94,11 +94,12 @@ namespace HappyFarmProjectAPI.Controllers.Manager
         }
 
         /// <summary>
-        /// To edit employee using manager account
+        /// To edit employee using super admin account
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="employeeRequest"></param>
         /// <returns></returns>
-        [Route("api/v1/Manager/Employee/Edit/{id}")]
+        [Route("api/v1/SA/Employee/Edit/{id}")]
         [HttpPut]
         public async Task<IHttpActionResult> EditEmployee(int id, EditEmployeeRequest employeeRequest)
         {
@@ -109,7 +110,7 @@ namespace HappyFarmProjectAPI.Controllers.Manager
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
                         // update employee
                         await Task.Run(() => repo.EditEmployee(id, employeeRequest));
@@ -118,7 +119,7 @@ namespace HappyFarmProjectAPI.Controllers.Manager
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.OK,
-                            Message = "Berhasil mengubah akun"
+                            Message = "Berhasil mengubah data karyawan"
                         };
 
                         return Ok(response);
@@ -166,11 +167,11 @@ namespace HappyFarmProjectAPI.Controllers.Manager
         }
 
         /// <summary>
-        /// To create new employee using manager account
+        /// To create new employee using super admin account
         /// </summary>
         /// <param name="employeeRequest"></param>
         /// <returns></returns>
-        [Route("api/v1/Manager/Employee/Add")]
+        [Route("api/v1/SA/Employee/Add")]
         [HttpPost]
         public async Task<IHttpActionResult> AddEmployee(AddEmployeeRequest employeeRequest)
         {
@@ -181,7 +182,7 @@ namespace HappyFarmProjectAPI.Controllers.Manager
                 if (responseModel.StatusCode == HttpStatusCode.Created)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
                         // create new employee
                         await Task.Run(() => repo.AddEmployee(employeeRequest));
@@ -190,7 +191,7 @@ namespace HappyFarmProjectAPI.Controllers.Manager
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.Created,
-                            Message = "Berhasil menambah akun"
+                            Message = "Berhasil menambah data karyawan"
                         };
 
                         return Ok(response);
@@ -242,18 +243,18 @@ namespace HappyFarmProjectAPI.Controllers.Manager
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("api/v1/Manager/Employee/{id}")]
+        [Route("api/v1/SA/Employee/{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetEmployeeById(int id)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = employeeLogic.GetEmployeeById(id, "Manager");
+                ResponseModel responseModel = employeeLogic.GetEmployeeById(id, "Super Admin");
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
                         // get employee by id
                         Object employee = await Task.Run(() => repo.GetEmployeeById(id));
@@ -306,17 +307,17 @@ namespace HappyFarmProjectAPI.Controllers.Manager
         /// <param name="limitPage"></param>
         /// <param name="search"></param>
         /// <returns></returns>
-        [Route("api/v1/Manager/Employee")]
+        [Route("api/v1/SA/Employee")]
         [HttpPost]
         public async Task<IHttpActionResult> GetEmployees(GetListDataRequest getListData)
         {
             try
             {
                 // validate token
-                if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
+                if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                 {
                     // get employee by id
-                    ResponsePagingModel<List<Employee>> employeesPaging = await Task.Run(() => repo.GetEmployees(getListData.CurrentPage, getListData.LimitPage, getListData.Search, "Manager"));
+                    ResponsePagingModel<List<Employee>> employeesPaging = await Task.Run(() => repo.GetEmployees(getListData.CurrentPage, getListData.LimitPage, getListData.Search, "Super Admin"));
 
                     // response success
                     var response = new ResponseDataWithPaging<Object>()

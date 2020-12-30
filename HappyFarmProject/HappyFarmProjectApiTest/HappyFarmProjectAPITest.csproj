@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BusinessLogic\EmployeeLogicTest.cs" />
+    <Compile Include="Controllers\BusinessLogic\GoodsLogicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
