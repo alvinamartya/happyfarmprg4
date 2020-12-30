@@ -1,20 +1,19 @@
-﻿using HappyFarmProjectAPI.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
 
-namespace HappyFarmProjectAPI.Controllers
+namespace HappyFarmProjectAPI.Controllers.BusinessLogic
 {
     public class TokenLogic
     {
-       /// <summary>
-       /// Validate Token In Header
-       /// </summary>
-       /// <param name="request"></param>
-       /// <param name="role"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// Validate Token In Header
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         public bool ValidateTokenInHeader(HttpRequestMessage request, string role)
         {
             if (request.Headers.Contains("Authorization"))

@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HappyFarmProjectAPI.Controllers;
+using HappyFarmProjectAPI.Controllers.BusinessLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HappyFarmProjectAPI.Models;
 using System.Net;
+using HappyFarmProjectAPI.Models;
 
-namespace HappyFarmProjectAPI.Controllers.Tests
+namespace HappyFarmProjectAPI.Controllers.BusinessLogic.Tests
 {
     [TestClass()]
     public class EmployeeLogicTests

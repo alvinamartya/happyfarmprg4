@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HappyFarmProjectAPI.Controllers
+namespace HappyFarmProjectAPI.Controllers.Repository
 {
     public class EmployeeRepository
     {
@@ -94,11 +94,11 @@ namespace HappyFarmProjectAPI.Controllers
                 // send email async
                 Helper.SendMailAsync(employeeRequest.Email, "Pendaftaran Akun Karyawan Happy Farm",
                     "<div>" +
-                    "Hai <span style = \"font-weight: bold;\">"+ employeeRequest.Name +"</span>," +
+                    "Hai <span style = \"font-weight: bold;\">" + employeeRequest.Name + "</span>," +
                     "<br>" +
                     "Akun karyawan kamu telah berhasil didaftarkan, login ke aplikasi <span style=\"font-weight: bold;\">HappyFarm</span> segera dengan menggunakan akun anda:" +
                     "<br><br>" +
-                    "<div>Nama Pengguna : "+ employeeRequest.Username +"<br>Kata Sandi : "+ newPassword +"</div><br>" +
+                    "<div>Nama Pengguna : " + employeeRequest.Username + "<br>Kata Sandi : " + newPassword + "</div><br>" +
                     "<div>Segala bentuk informasi seperti nomor kontak, alamat e-mail, atau password kamu bersifat rahasia. Jangan " +
                     "menginformasikan data - data tersebut kepada siapapun, termasuk kepada pihak yang mengatasnamakan perusahaan.</div>" +
                     "</div>");

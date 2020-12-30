@@ -31,7 +31,7 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
                 else
                 {
                     // get employee
-                    var employee = db.Employees.Where(x => x.Id == goodsRequest.CreatedBy).FirstOrDefault();
+                    var employee = db.Employees.Where(x => x.Id == goodsRequest.CreatedBy && x.RowStatus == "A").FirstOrDefault();
                     if(employee != null)
                     {
                         if (employee.UserLogin.Role.Name != "Super Admin" && employee.UserLogin.Role.Name != "Admin Produksi")
@@ -77,7 +77,7 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
             using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get goods by id
-                var goods = db.Goods.Where(x => x.Id == id).FirstOrDefault();
+                var goods = db.Goods.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
                 if(goods != null)
                 {
                     // validate name must be not exists
@@ -94,7 +94,7 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
                     else
                     {
                         // get employee
-                        var employee = db.Employees.Where(x => x.Id == goodsRequest.ModifiedBy).FirstOrDefault();
+                        var employee = db.Employees.Where(x => x.Id == goodsRequest.ModifiedBy && x.RowStatus == "A").FirstOrDefault();
                         if(employee != null)
                         {
                             if (employee.UserLogin.Role.Name != "Super Admin" && employee.UserLogin.Role.Name != "Admin Produksi")
@@ -149,7 +149,7 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get goods by id
-                var goods = db.Goods.Where(x => x.Id == id).FirstOrDefault();
+                var goods = db.Goods.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
                 if (goods != null)
                 {
                     if (role != "Super Admin" && role != "Admin Produksi")
