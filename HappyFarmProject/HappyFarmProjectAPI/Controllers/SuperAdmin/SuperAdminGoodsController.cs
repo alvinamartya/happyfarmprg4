@@ -302,7 +302,7 @@ namespace HappyFarmProjectAPI.Controllers
                 if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                 {
                     // get employee by id
-                    ResponsePagingModel<List<Good>> listGoodsPaging = await Task.Run(() => repo.GetGoods(getListData.CurrentPage, getListData.LimitPage, getListData.Search, "Super Admin"));
+                    ResponsePagingModel<List<Good>> listGoodsPaging = await Task.Run(() => repo.GetGoods(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
 
                     // response success
                     var response = new ResponseDataWithPaging<Object>()

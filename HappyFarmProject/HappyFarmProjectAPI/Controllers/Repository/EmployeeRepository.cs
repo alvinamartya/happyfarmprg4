@@ -84,10 +84,10 @@ namespace HappyFarmProjectAPI.Controllers
                     ModifiedAt = DateTime.Now,
                     CreatedBy = employeeRequest.CreatedBy,
                     ModifiedBy = employeeRequest.CreatedBy,
+                    RegionId = employeeRequest.RegionId,
                     RowStatus = "A"
                 };
 
-                if (employeeRequest.RegionId != null) newEmployee.RegionId = employeeRequest.RegionId;
                 db.Employees.Add(newEmployee);
                 db.SaveChanges();
 

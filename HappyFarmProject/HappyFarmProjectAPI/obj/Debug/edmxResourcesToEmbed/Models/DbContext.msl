@@ -138,6 +138,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Image" ColumnName="Image" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />

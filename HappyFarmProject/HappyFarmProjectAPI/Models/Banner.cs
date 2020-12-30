@@ -17,7 +17,7 @@ namespace HappyFarmProjectAPI.Models
         public int Id { get; set; }
         public Nullable<int> PromoId { get; set; }
         public string Name { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public int CreatedBy { get; set; }
         public int ModifiedBy { get; set; }
         public System.DateTime CreatedAt { get; set; }
