@@ -24,9 +24,27 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
         /// </summary>
         /// <param name="bannerRequest"></param>
         /// <returns></returns>
-        public ResponseModel EditBanner(EditBannerRequest bannerRequest)
+        public ResponseModel EditBanner(int id, EditBannerRequest bannerRequest)
         {
-            return checkAuthorized(bannerRequest.ModifiedBy, HttpStatusCode.OK);
+            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                // get banner
+                var banner = db.Banners.Where(x => x.Id == id);
+
+                // validate banner must be exists
+                if(banner != null)
+                {
+                    return checkAuthorized(bannerRequest.ModifiedBy, HttpStatusCode.OK);
+                }
+                else
+                {
+                    return new ResponseModel()
+                    {
+                        Message = "Banner tidak tersedia",
+                        StatusCode = HttpStatusCode.BadRequest
+                    };
+                }
+            }
         }
 
         /// <summary>
@@ -38,25 +56,40 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
         {
             using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                var employee = db.Employees.Where(x => x.Id == id).FirstOrDefault();
-                if (employee != null)
+                // get banner
+                var banner = db.Banners.Where(x => x.Id == id);
+
+                // validate banner must be exists
+                if (banner != null)
                 {
-                    if (employee.UserLogin.Role.Name != "Super Admin" && employee.UserLogin.Role.Name != "Admin Produksi")
+                    var employee = db.Employees.Where(x => x.Id == id).FirstOrDefault();
+                    if (employee != null)
                     {
-                        // unauthroized
-                        return new ResponseModel()
+                        if (employee.UserLogin.Role.Name != "Super Admin" && employee.UserLogin.Role.Name != "Admin Produksi")
                         {
-                            StatusCode = HttpStatusCode.Unauthorized,
-                            Message = "Anda tidak memiliki hak akses"
-                        };
+                            // unauthroized
+                            return new ResponseModel()
+                            {
+                                StatusCode = HttpStatusCode.Unauthorized,
+                                Message = "Anda tidak memiliki hak akses"
+                            };
+                        }
+                        else
+                        {
+                            // return ok
+                            return new ResponseModel()
+                            {
+                                Message = "Berhasil",
+                                StatusCode = responseSuccess
+                            };
+                        }
                     }
                     else
                     {
-                        // return ok
                         return new ResponseModel()
                         {
-                            Message = "Berhasil",
-                            StatusCode = responseSuccess
+                            Message = "Data karyawan tidak ditemukan",
+                            StatusCode = HttpStatusCode.BadRequest
                         };
                     }
                 }
@@ -64,7 +97,7 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
                 {
                     return new ResponseModel()
                     {
-                        Message = "Data karyawan tidak ditemukan",
+                        Message = "Banner tidak tersedia",
                         StatusCode = HttpStatusCode.BadRequest
                     };
                 }

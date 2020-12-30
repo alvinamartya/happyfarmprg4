@@ -11,44 +11,44 @@ using System.Web.Http;
 
 namespace HappyFarmProjectAPI.Controllers
 {
-    public class SuperAdminGoodsController : ApiController
+    public class SuperAdminBannerController : ApiController
     {
         #region Variable
         // logic
-        private GoodsLogic goodsLogic = new GoodsLogic();
+        private BannerLogic bannerLogic = new BannerLogic();
         private TokenLogic tokenLogic = new TokenLogic();
 
         // repo
-        private GoodsRepository repo = new GoodsRepository();
+        private BannerRepository repo = new BannerRepository();
         #endregion
 
         #region Action
         /// <summary>
-        /// To delete goods using super admin account
+        /// To delete banner using super admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Goods/Delete/{id}")]
+        [Route("api/v1/SA/Banner/Delete/{id}")]
         [HttpDelete]
-        public async Task<IHttpActionResult> DeleteGoods(int id)
+        public async Task<IHttpActionResult> DeleteBanner(int id)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = goodsLogic.GetGoodsById(id, "Super Admin");
+                ResponseModel responseModel = bannerLogic.GetBannerById(id, "Super Admin");
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
-                        // delete goods
-                        await Task.Run(() => repo.DeleteGoods(id));
+                        // delete banner
+                        await Task.Run(() => repo.DeleteBanner(id));
 
                         // response success
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.OK,
-                            Message = "Berhasil menghapus produk"
+                            Message = "Berhasil menghapus banner"
                         };
 
                         return Ok(response);
@@ -99,29 +99,29 @@ namespace HappyFarmProjectAPI.Controllers
         /// To edit goods using super admin account
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="goodsRequest"></param>
+        /// <param name="bannerRequest"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Goods/Edit/{id}")]
+        [Route("api/v1/SA/Banner/Edit/{id}")]
         [HttpPut]
-        public async Task<IHttpActionResult> EditGoods(int id, EditGoodsRequest goodsRequest)
+        public async Task<IHttpActionResult> EditBanner(int id, EditBannerRequest bannerRequest)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = goodsLogic.EditGoods(id, goodsRequest);
+                ResponseModel responseModel = bannerLogic.EditBanner(id, bannerRequest);
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
-                        // update goods
-                        await Task.Run(() => repo.EditGoods(id, goodsRequest));
+                        // update banner
+                        await Task.Run(() => repo.EditBanner(id, bannerRequest));
 
                         // response success
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.OK,
-                            Message = "Berhasil mengubah produk"
+                            Message = "Berhasil mengubah banner"
                         };
 
                         return Ok(response);
@@ -173,27 +173,27 @@ namespace HappyFarmProjectAPI.Controllers
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Goods/Add")]
+        [Route("api/v1/SA/Banner/Add")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddGoods(AddGoodsRequest goodsRequest)
+        public async Task<IHttpActionResult> AddGoods(AddBannerRequest bannerRequest)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = goodsLogic.AddGoods(goodsRequest);
+                ResponseModel responseModel = bannerLogic.AddBanner(bannerRequest);
                 if (responseModel.StatusCode == HttpStatusCode.Created)
                 {
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
-                        // create new goods
-                        await Task.Run(() => repo.AddGoods(goodsRequest));
+                        // create banner
+                        await Task.Run(() => repo.AddBanner(bannerRequest));
 
                         // response success
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.Created,
-                            Message = "Berhasil menambah produk"
+                            Message = "Berhasil menambah banner"
                         };
 
                         return Ok(response);
@@ -241,32 +241,32 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To get goods by id
+        /// To get banner by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Goods/{id}")]
+        [Route("api/v1/SA/Banner/{id}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetGoodsById(int id)
+        public async Task<IHttpActionResult> GetBannerById(int id)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = goodsLogic.GetGoodsById(id, "Super Admin");
+                ResponseModel responseModel = bannerLogic.GetBannerById(id, "Super Admin");
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
                         // get goods by id
-                        Object goods = await Task.Run(() => repo.GetGoodsById(id));
+                        Object banner = await Task.Run(() => repo.GetBannerById(id));
 
                         // response success
                         var response = new ResponseWithData<Object>()
                         {
                             StatusCode = HttpStatusCode.OK,
                             Message = "Berhasil",
-                            Data = goods
+                            Data = banner
                         };
 
                         return Ok(response);
@@ -303,13 +303,13 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To get list goods
+        /// To get banners
         /// </summary>
         /// <param name="getListData"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Goods")]
+        [Route("api/v1/SA/Banner")]
         [HttpPost]
-        public async Task<IHttpActionResult> GetGoods(GetListDataRequest getListData)
+        public async Task<IHttpActionResult> GetBanners(GetListDataRequest getListData)
         {
             try
             {
@@ -317,25 +317,26 @@ namespace HappyFarmProjectAPI.Controllers
                 if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                 {
                     // get employee by id
-                    ResponsePagingModel<List<Good>> listGoodsPaging = await Task.Run(() => repo.GetGoods(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
+                    ResponsePagingModel<List<Banner>> listBannerPaging = await Task.Run(() => repo.GetBanners(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
 
                     // response success
                     var response = new ResponseDataWithPaging<Object>()
                     {
                         StatusCode = HttpStatusCode.OK,
                         Message = "Berhasil",
-                        Data = listGoodsPaging
+                        Data = listBannerPaging
                             .Data
                             .Select(x => new
                             {
                                 x.Id,
                                 x.Name,
-                                CategoryId = x.CategoryId,
-                                CategoryName = x.Category.Name
+                                x.PromoId,
+                                PromoName = x.PromoId == null ? "-" : x.Promo.Name,
+                                x.Image
                             })
                             .ToList(),
-                        CurrentPage = listGoodsPaging.CurrentPage,
-                        TotalPage = listGoodsPaging.TotalPage
+                        CurrentPage = listBannerPaging.CurrentPage,
+                        TotalPage = listBannerPaging.TotalPage
                     };
 
                     return Ok(response);

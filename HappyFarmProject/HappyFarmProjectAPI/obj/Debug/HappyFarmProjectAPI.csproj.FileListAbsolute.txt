@@ -182,3 +182,4 @@ D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectAPI\obj\Debug\H
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectAPI\obj\Debug\HappyFarmProjectAPI.csproj.CopyComplete
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectAPI\obj\Debug\HappyFarmProjectAPI.dll
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectAPI\obj\Debug\HappyFarmProjectAPI.pdb
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectAPI\obj\Debug\HappyFarmProjectAPI.csprojAssemblyReference.cache

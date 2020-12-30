@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace HappyFarmProjectAPI.Controllers.Manager
+namespace HappyFarmProjectAPI.Controllers
 {
     public class ManagerEmployeeController : ApiController
     {
