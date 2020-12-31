@@ -9,6 +9,5 @@ namespace HappyFarmProjectAPI.Models
     {
         public string Name { get; set; }
         public int ModifiedBy { get; set; }
-        public System.DateTime ModifiedAt { get; set; }
     }
 }
