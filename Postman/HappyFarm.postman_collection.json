@@ -9,251 +9,402 @@
 			"name": "manager",
 			"item": [
 				{
-					"name": "AddEmployee",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
-									"type": "string"
+					"name": "employee",
+					"item": [
+						{
+							"name": "AddEmployee",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "Username",
+											"value": "adminpromosi",
+											"type": "text"
+										},
+										{
+											"key": "Password",
+											"value": "verysecret",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "RoleId",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "Name",
+											"value": "Admin Promosi",
+											"type": "text"
+										},
+										{
+											"key": "PhoneNumber",
+											"value": "0812",
+											"type": "text"
+										},
+										{
+											"key": "Email",
+											"value": "marketingadmin@happyfarm.id",
+											"type": "text"
+										},
+										{
+											"key": "Address",
+											"value": "Jakarta",
+											"type": "text"
+										},
+										{
+											"key": "Gender",
+											"value": "M",
+											"type": "text"
+										},
+										{
+											"key": "CreatedBy",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "RegionId",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{manager_url}}/Employee/Add",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"Employee",
+										"Add"
+									]
 								}
-							]
+							},
+							"response": []
 						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "Username",
-									"value": "adminpromosi",
-									"type": "text"
-								},
-								{
-									"key": "Password",
-									"value": "verysecret",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "RoleId",
-									"value": "3",
-									"type": "text"
-								},
-								{
-									"key": "Name",
-									"value": "Admin Promosi",
-									"type": "text"
-								},
-								{
-									"key": "PhoneNumber",
-									"value": "0812",
-									"type": "text"
-								},
-								{
-									"key": "Email",
-									"value": "marketingadmin@happyfarm.id",
-									"type": "text"
-								},
-								{
-									"key": "Address",
-									"value": "Jakarta",
-									"type": "text"
-								},
-								{
-									"key": "Gender",
-									"value": "M",
-									"type": "text"
-								},
-								{
-									"key": "CreatedBy",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "RegionId",
-									"value": "1",
-									"type": "text"
+						{
+							"name": "DeleteEmployee",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{manager_url}}/Employee/Delete/1",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"Employee",
+										"Delete",
+										"1"
+									]
 								}
-							]
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{manager_url}}/Employee/Add",
-							"host": [
-								"{{manager_url}}"
-							],
-							"path": [
-								"Employee",
-								"Add"
-							]
+						{
+							"name": "EditEmployee",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "RegionId",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "Name",
+											"value": "Admin Promosi",
+											"type": "text"
+										},
+										{
+											"key": "PhoneNumber",
+											"value": "0812",
+											"type": "text"
+										},
+										{
+											"key": "Email",
+											"value": "marketingadmin@happyfarm.id",
+											"type": "text"
+										},
+										{
+											"key": "Address",
+											"value": "Jakarta",
+											"type": "text"
+										},
+										{
+											"key": "Gender",
+											"value": "M",
+											"type": "text"
+										},
+										{
+											"key": "ModifiedBy",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{manager_url}}/Employee/Edit/4",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"Employee",
+										"Edit",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetEmployeeById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{manager_url}}/Employee/4",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"Employee",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetEmployees",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "CurrentPage",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "LimitPage",
+											"value": "10",
+											"type": "text"
+										},
+										{
+											"key": "Search",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{manager_url}}/Employee",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"Employee"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "DeleteEmployee",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{manager_url}}/Employee/Delete/1",
-							"host": [
-								"{{manager_url}}"
-							],
-							"path": [
-								"Employee",
-								"Delete",
-								"1"
-							]
+					"name": "region",
+					"item": [
+						{
+							"name": "AddRegion",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "CreatedBy",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "Name",
+											"value": "Jakarta",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{manager_url}}/Region/Add",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"Region",
+										"Add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteRegion",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{manager_url}}/Region/Delete/1",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"Region",
+										"Delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EditRegion",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "ModifiedBy",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "Name",
+											"value": "Jakarta",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{manager_url}}/Region/Edit/1",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"Region",
+										"Edit",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetRegionById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{manager_url}}/Region/1",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"Region",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetRegions",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "CurrentPage",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "LimitPage",
+											"value": "10",
+											"type": "text"
+										},
+										{
+											"key": "Search",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{manager_url}}/Region",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"Region"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "EditEmployee",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "RegionId",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "Name",
-									"value": "Admin Promosi",
-									"type": "text"
-								},
-								{
-									"key": "PhoneNumber",
-									"value": "0812",
-									"type": "text"
-								},
-								{
-									"key": "Email",
-									"value": "marketingadmin@happyfarm.id",
-									"type": "text"
-								},
-								{
-									"key": "Address",
-									"value": "Jakarta",
-									"type": "text"
-								},
-								{
-									"key": "Gender",
-									"value": "M",
-									"type": "text"
-								},
-								{
-									"key": "ModifiedBy",
-									"value": "2",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{manager_url}}/Employee/Edit/4",
-							"host": [
-								"{{manager_url}}"
-							],
-							"path": [
-								"Employee",
-								"Edit",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetEmployeeById",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{manager_url}}/Employee/4",
-							"host": [
-								"{{manager_url}}"
-							],
-							"path": [
-								"Employee",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetEmployees",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im1hbmFnZXIiLCJuYmYiOjE2MDkyNjM2NjYsImV4cCI6MTYwOTg2ODQ2NiwiaWF0IjoxNjA5MjYzNjY2fQ.mBt82qrkKADsfg-Ft-LyD8ryr48DCK4PVvJP5GTtdGQ",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "CurrentPage",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "LimitPage",
-									"value": "10",
-									"type": "text"
-								},
-								{
-									"key": "Search",
-									"value": "",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{manager_url}}/Employee",
-							"host": [
-								"{{manager_url}}"
-							],
-							"path": [
-								"Employee"
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -1059,6 +1210,152 @@
 									],
 									"path": [
 										"Banners"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "region",
+					"item": [
+						{
+							"name": "AddRegion",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "CreatedBy",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "Name",
+											"value": "Jakarta",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{sa_url}}/Region/Add",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"Region",
+										"Add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteRegion",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{sa_url}}/Region/Delete/1",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"Region",
+										"Delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EditRegion",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "ModifiedBy",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "Name",
+											"value": "Jakarta",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{sa_url}}/Region/Edit/1",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"Region",
+										"Edit",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetRegionById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sa_url}}/Region/1",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"Region",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetRegions",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "CurrentPage",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "LimitPage",
+											"value": "10",
+											"type": "text"
+										},
+										{
+											"key": "Search",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{sa_url}}/Region",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"Region"
 									]
 								}
 							},
