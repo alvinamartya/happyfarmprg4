@@ -2,81 +2,81 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Net;
+using System.Web;
 
 namespace HappyFarmProjectAPI.Controllers.BusinessLogic
 {
-    public class GoodsLogic
+    public class RegionLogic
     {
         /// <summary>
-        /// Validate data when Add Goods
+        /// Validate Data When Add Region
         /// </summary>
+        /// <param name="regionRequest"></param>
         /// <returns></returns>
-        public ResponseModel AddGoods(AddGoodsRequest goodsRequest)
+        public ResponseModel AddRegion(AddRegionRequest regionRequest)
         {
-            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                // validate name must be not exists
-                var nameAlreadyExists = db.Goods.Where(x => x.Name.ToLower().Equals(goodsRequest.Name.ToLower())).FirstOrDefault() != null;
-                if(nameAlreadyExists)
+                // validate name
+                bool nameAlreadyExists = db.Regions.Where(x => x.Name.ToLower() == regionRequest.Name.ToLower()).FirstOrDefault() != null;
+                if (nameAlreadyExists)
                 {
                     // name is exists
                     return new ResponseModel()
                     {
-                        Message = "Nama produk sudah tersedia",
+                        Message = "Nama region sudah tersedia",
                         StatusCode = HttpStatusCode.BadRequest
                     };
                 }
                 else
                 {
                     // check authorization
-                    return checkAuthorization(goodsRequest.CreatedBy, HttpStatusCode.Created);
+                    return checkAuthorization(regionRequest.CreatedBy, HttpStatusCode.Created);
                 }
             }
         }
 
         /// <summary>
-        /// Validate data when Edit Goods
+        /// Validate Data when Edit Region
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="goodsRequest"></param>
-        /// <param name="role"></param>
+        /// <param name="regionRequest"></param>
+        /// /// <param name="id"></param>
         /// <returns></returns>
-        public ResponseModel EditGoods(int id, EditGoodsRequest goodsRequest)
+        public ResponseModel EditRegion(int id, EditRegionRequest regionRequest)
         {
-            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                // get goods by id
-                var goods = db.Goods.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
-                if(goods != null)
+                // get employee
+                var region = db.Regions.Where(x => x.Id == id).FirstOrDefault();
+                if (region != null)
                 {
-                    // validate name must be not exists
-                    var nameAlreadyExists = db.Goods.Where(x => x.Name.ToLower().Equals(goodsRequest.Name.ToLower()) && x.Id != id).FirstOrDefault() != null;
-                    if(nameAlreadyExists)
+                    // validate name 
+                    bool nameAlreadyExists = db.Regions
+                        .Where(x => x.Name.ToLower().Equals(regionRequest.Name.ToLower()) && x.Id != id)
+                        .FirstOrDefault() != null;
+                    if (nameAlreadyExists)
                     {
                         // name is exists
                         return new ResponseModel()
                         {
-                            Message = "Nama produk sudah tersedia",
+                            Message = "Nama sudah tersedia",
                             StatusCode = HttpStatusCode.BadRequest
                         };
                     }
                     else
                     {
                         // check authorization
-                        return checkAuthorization(goodsRequest.ModifiedBy, HttpStatusCode.OK);
+                        return checkAuthorization(regionRequest.ModifiedBy, HttpStatusCode.OK);
                     }
                 }
                 else
-                {
-                    // employee is not found
+                    // region is not found
                     return new ResponseModel()
                     {
-                        Message = "Produk tidak tersedia",
+                        Message = "Wilayah tidak tersedia",
                         StatusCode = HttpStatusCode.BadRequest
                     };
-                }
             }
         }
 
@@ -92,7 +92,7 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
                 var employee = db.Employees.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
                 if (employee != null)
                 {
-                    if (employee.UserLogin.Role.Name != "Super Admin" && employee.UserLogin.Role.Name != "Admin Produksi")
+                    if (employee.UserLogin.Role.Name != "Super Admin" && employee.UserLogin.Role.Name != "Manager")
                     {
                         // unauthroized
                         return new ResponseModel()
@@ -124,22 +124,22 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
         }
 
         /// <summary>
-        /// Validate data for getting goods by id
+        /// Validate data for getting region by id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public ResponseModel GetGoodsById(int id, string role)
+        public ResponseModel GetRegionById(int id, string role)
         {
-            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                // get goods by id
-                var goods = db.Goods.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
-                if (goods != null)
+                // get region
+                var region = db.Regions.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
+                if(region != null)
                 {
-                    if (role != "Super Admin" && role != "Admin Produksi")
+                    if(role != "Super Admin" && role != "Manager")
                     {
-                        // unauthroized
+                        // unauthorized
                         return new ResponseModel()
                         {
                             StatusCode = HttpStatusCode.Unauthorized,
@@ -158,10 +158,10 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
                 }
                 else
                 {
-                    // employee is not found
+                    // region is not found
                     return new ResponseModel()
                     {
-                        Message = "Produk tidak tersedia",
+                        Message = "Wilayah tidak tersedia",
                         StatusCode = HttpStatusCode.BadRequest
                     };
                 }

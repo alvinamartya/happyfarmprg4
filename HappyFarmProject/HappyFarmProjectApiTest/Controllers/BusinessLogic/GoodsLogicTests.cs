@@ -131,19 +131,19 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic.Tests
         }
 
         [TestMethod()]
-        public void GetEmployeeByIdTestSuccess()
+        public void GetGoodsByIdTestSuccess()
         {
             Assert.AreEqual(HttpStatusCode.OK, goodsLogic.GetGoodsById(1, "Super Admin").StatusCode);
         }
 
         [TestMethod()]
-        public void GetEmployeeByIdTestProductNotFound()
+        public void GetGoodsByIdTestNotFound()
         {
             Assert.AreEqual(HttpStatusCode.BadRequest, goodsLogic.GetGoodsById(0, "Super Admin").StatusCode);
         }
 
         [TestMethod()]
-        public void GetEmployeeByIdUnAuthorized()
+        public void GetGoodsByIdUnAuthorized()
         {
             Assert.AreEqual(HttpStatusCode.BadRequest, goodsLogic.GetGoodsById(1, "Manager").StatusCode);
         }

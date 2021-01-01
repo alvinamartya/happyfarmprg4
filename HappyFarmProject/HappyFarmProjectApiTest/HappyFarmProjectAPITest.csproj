@@ -61,6 +61,7 @@
     <Compile Include="Controllers\BusinessLogic\EmployeeLogicTests.cs" />
     <Compile Include="Controllers\BusinessLogic\GoodsLogicTests.cs" />
     <Compile Include="Controllers\BusinessLogic\PromoLogicTests.cs" />
+    <Compile Include="Controllers\BusinessLogic\RegionLogicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
