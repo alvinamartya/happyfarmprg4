@@ -151,7 +151,6 @@ D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\bin\System.Web
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\bin\Newtonsoft.Json.xml
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\bin\Antlr3.Runtime.pdb
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\obj\Debug\HappyFarmProject.csprojAssemblyReference.cache
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\obj\Debug\HappyFarmProject.csproj.CoreCompileInputs.cache
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\obj\Debug\HappyFarmProject.csproj.CopyComplete
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\obj\Debug\HappyFarmProject.dll

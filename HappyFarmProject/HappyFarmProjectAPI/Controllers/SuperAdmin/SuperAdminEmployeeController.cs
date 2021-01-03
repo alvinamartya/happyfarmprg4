@@ -21,7 +21,6 @@ namespace HappyFarmProjectAPI.Controllers
         // repo
         private EmployeeRepository repo = new EmployeeRepository();
         #endregion
-
         #region Action
         /// <summary>
         /// To delete employee using super admin account

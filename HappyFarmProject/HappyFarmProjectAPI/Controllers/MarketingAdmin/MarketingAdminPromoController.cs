@@ -21,7 +21,6 @@ namespace HappyFarmProjectAPI.Controllers
         // repo
         private PromoRepository repo = new PromoRepository();
         #endregion
-
         #region Action
         /// <summary>
         /// To delete promo using marketing admin
