@@ -101,7 +101,7 @@ namespace HappyFarmProjectAPI.Controllers.Manager
         /// <param name="id"></param>
         /// <param name="subDistrictRequest"></param>
         /// <returns></returns>
-        [Route("api/v1/Manager/Region/Edit/{id}")]
+        [Route("api/v1/Manager/SubDistrict/Edit/{id}")]
         [HttpPut]
         public async Task<IHttpActionResult> EditSubDistrict(int id, EditSubDistrictRequest subDistrictRequest)
         {

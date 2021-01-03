@@ -187,12 +187,15 @@
     <Compile Include="Controllers\BusinessLogic\GoodsLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\PromoLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\RegionLogic.cs" />
+    <Compile Include="Controllers\BusinessLogic\SubDistrictLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\TokenLogic.cs" />
     <Compile Include="Controllers\Manager\ManagerCategoryController.cs" />
     <Compile Include="Controllers\Manager\ManagerRegionController.cs" />
     <Compile Include="Controllers\Manager\ManagerEmployeeController.cs" />
+    <Compile Include="Controllers\Manager\ManagerSubDistrictController.cs" />
     <Compile Include="Controllers\MarketingAdmin\MarketingAdminPromoController.cs" />
     <Compile Include="Controllers\MarketingAdmin\MarketingAdminBannerController.cs" />
+    <Compile Include="Controllers\ProductionAdmin\ProductionAdminCategoryController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminGoodsController.cs" />
     <Compile Include="Controllers\Repository\BannerRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />

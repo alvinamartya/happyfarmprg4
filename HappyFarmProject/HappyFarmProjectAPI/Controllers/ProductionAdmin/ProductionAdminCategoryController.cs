@@ -9,9 +9,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace HappyFarmProjectAPI.Controllers
+namespace HappyFarmProjectAPI.Controllers.ProductionAdmin
 {
-    public class ManagerCategoryController : ApiController
+    public class ProductionAdminCategoryController : ApiController
     {
         #region Variable
         // logic
@@ -24,22 +24,22 @@ namespace HappyFarmProjectAPI.Controllers
 
         #region Action
         /// <summary>
-        /// To delete category using manager
+        /// To delete category using Admin Produksi
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("api/v1/Manager/Category/Delete/{id}")]
+        [Route("api/v1/PA/Category/Delete/{id}")]
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteCategory(int id)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = categoryLogic.GetCategoryById(id, "Manager");
+                ResponseModel responseModel = categoryLogic.GetCategoryById(id, "Admin Produksi");
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
                         // delete region
                         await Task.Run(() => repo.DeleteCategory(id));
@@ -96,12 +96,12 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To edit category using manager account
+        /// To edit category using Admin Produksi account
         /// </summary>
         /// <param name="id"></param>
         /// <param name="categoryRequest"></param>
         /// <returns></returns>
-        [Route("api/v1/Manager/Category/Edit/{id}")]
+        [Route("api/v1/PA/Category/Edit/{id}")]
         [HttpPut]
         public async Task<IHttpActionResult> EditCategory(int id, EditCategoryRequest categoryRequest)
         {
@@ -112,7 +112,7 @@ namespace HappyFarmProjectAPI.Controllers
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
                         // update region
                         await Task.Run(() => repo.EditCategory(id, categoryRequest));
@@ -169,11 +169,11 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To create new category using manager account
+        /// To create new category using Admin Produksi account
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        [Route("api/v1/Manager/Category/Add")]
+        [Route("api/v1/PA/Category/Add")]
         [HttpPost]
         public async Task<IHttpActionResult> AddCategory(AddCategoryRequest categoryRequest)
         {
@@ -184,7 +184,7 @@ namespace HappyFarmProjectAPI.Controllers
                 if (responseModel.StatusCode == HttpStatusCode.Created)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
                         // create region
                         await Task.Run(() => repo.AddCategory(categoryRequest));
@@ -245,18 +245,18 @@ namespace HappyFarmProjectAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("api/v1/Manager/Category/{id}")]
+        [Route("api/v1/PA/Category/{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetCategoryById(int id)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = categoryLogic.GetCategoryById(id, "Manager");
+                ResponseModel responseModel = categoryLogic.GetCategoryById(id, "Admin Produksi");
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
                         // get goods by id
                         Object region = await Task.Run(() => repo.GetCategoryById(id));
@@ -307,14 +307,14 @@ namespace HappyFarmProjectAPI.Controllers
         /// </summary>
         /// <param name="getListData"></param>
         /// <returns></returns>
-        [Route("api/v1/Manager/Category")]
+        [Route("api/v1/PA/Category")]
         [HttpPost]
         public async Task<IHttpActionResult> GetCategories(GetListDataRequest getListData)
         {
             try
             {
                 // validate token
-                if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
+                if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                 {
                     // get employee by id
                     ResponsePagingModel<List<Category>> listCategoryPaging = await Task.Run(() => repo.GetCategories(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
