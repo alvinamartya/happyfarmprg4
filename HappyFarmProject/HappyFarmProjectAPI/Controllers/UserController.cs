@@ -61,7 +61,9 @@ namespace HappyFarmProjectAPI.Controllers
                                 StatusCode = HttpStatusCode.OK,
                                 Message = "Login Berhasil",
                                 Role = user.Role.Name,
-                                UserId = user.Id,
+                                UserId = user.Role.Name == "Customer" ? 
+                                    db.Customers.Where(x=>x.UserLoginId == user.Id).FirstOrDefault().Id :
+                                    db.Employees.Where(x => x.UserLoginId == user.Id).FirstOrDefault().Id,
                                 Token = new AuthModel()
                                 {
                                     Token = TokenManager.GenerateToken(loginRequest.Username),

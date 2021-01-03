@@ -1,4 +1,4 @@
-Super Admin -> Region, Employee, Promo, Banner, Category, Goods, Purchasing, SubDistrict
+Super Admin -> Region, Employee, Promo, Banner, Category, Goods, SubDistrict
 Manager -> Region, Admin, SubDistrict
 Admin Promosi -> Promo, Banner
 Admin Produksi -> Category, Goods, Purchasing

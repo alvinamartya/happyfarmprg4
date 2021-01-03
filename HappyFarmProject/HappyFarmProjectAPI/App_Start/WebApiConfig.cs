@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace HappyFarmProjectAPI
 {
@@ -9,7 +11,12 @@ namespace HappyFarmProjectAPI
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            //var cors = new EnableCorsAttribute("https://localhost:44301", "*", "*");
+            //config.EnableCors(cors);
+
+            //// Web API configuration and services
+            //config.Formatters.Clear();
+            //config.Formatters.Add(new JsonMediaTypeFormatter());
 
             // Web API routes
             config.MapHttpAttributeRoutes();
