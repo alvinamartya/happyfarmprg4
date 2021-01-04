@@ -57,7 +57,14 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Gender == "M" ? "Laki-Laki" : "Perempuan")
+                @if (item.Gender == "M")
+                {
+                    @Html.Raw("Laki-Laki")
+                }
+                else
+                {
+                    @Html.Raw("Perempuan")
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Role)

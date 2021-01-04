@@ -57,6 +57,8 @@ namespace HappyFarmProjectWebAdmin.Controllers
                     ViewBag.CurrentPage = displayData.Result.CurrentPage;
                     ViewBag.TotalPage = displayData.Result.TotalPage;
 
+                    System.Diagnostics.Debug.WriteLine(Json(displayData.Result).ToString());
+
                     if (employees == null || employees.Count == 0)
                     {
                         TempData["ErrMessage"] = "Data belum tersedia";

@@ -117,27 +117,19 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get employees
-                var employees = search == null ? db.Employees
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .OrderBy(x=>x.UserLogin.RoleId)
-                    .ThenBy(x=>x.Region.Name)
-                    .ThenBy(x=>x.Name)
-                    .ToList() : db.Employees
-                    .Where(x =>
-                        x.Name.ToLower().Contains(search.ToLower()) ||
-                        x.PhoneNumber.ToLower().Contains(search.ToLower()) ||
-                        x.Email.ToLower().Contains(search.ToLower()) ||
-                        x.Address.ToLower().Contains(search.ToLower())
-                    )
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .OrderBy(x => x.UserLogin.RoleId)
-                    .ThenBy(x => x.Region.Name)
-                    .ThenBy(x => x.Name)
-                    .ToList();
+                var employees = db.Employees.ToList();
+
+                if (search != null || search != "")
+                {
+                    employees = employees
+                                     .Where(x =>
+                                         x.Name.ToLower().Contains(search.ToLower()) ||
+                                         x.PhoneNumber.ToLower().Contains(search.ToLower()) ||
+                                         x.Email.ToLower().Contains(search.ToLower()) ||
+                                         x.Address.ToLower().Contains(search.ToLower())
+                                     )
+                                     .ToList();
+                }
 
                 // filter employees by role
                 if (role == "Super Admin")
@@ -150,7 +142,13 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 }
 
                 // filter employees by row status
-                employees = employees.Where(x => x.RowStatus != "D").ToList();
+                employees = employees.Where(x => x.RowStatus != "D")
+                    .Skip((currentPage - 1) * limitPage)
+                    .Take(limitPage)
+                    .OrderBy(x => x.UserLogin.RoleId)
+                    .ThenBy(x => x.Region.Name)
+                    .ThenBy(x => x.Name)
+                    .ToList();
 
                 // get total employees
                 var totalPages = Math.Ceiling((decimal)employees.Count / limitPage);
