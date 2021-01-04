@@ -44,8 +44,6 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 apiLogin.Wait();
 
                 var loginData = apiLogin.Result;
-
-                System.Diagnostics.Debug.WriteLine(apiLogin.Result.StatusCode);
                 if (loginData.IsSuccessStatusCode)
                 {
                     var loginResponse = loginData.Content.ReadAsAsync<LoginResponse>();

@@ -66,7 +66,7 @@ namespace HappyFarmProjectAPI
         {
             try
             {
-                int.Parse(phoneNumber);
+                long.Parse(phoneNumber);
                 return true;
             }
             catch (Exception ex)

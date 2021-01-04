@@ -6,7 +6,7 @@ using System.Web;
 
 namespace HappyFarmProjectWebAdmin.Models
 {
-    public class ResponsWithData<T>
+    public class ResponseWithData<T>
     {
         public HttpStatusCode StatusCode { get; set; }
         public string Message { get; set; }

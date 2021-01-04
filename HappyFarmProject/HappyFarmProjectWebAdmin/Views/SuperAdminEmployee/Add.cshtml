@@ -29,22 +29,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RoleId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RegionId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RegionId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RegionId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
@@ -71,17 +55,87 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                <div style="display: flex; align-items: center">
+                    @Html.RadioButtonFor(model => model.Gender, "M", new { @class = "rb-male" })
+                    Laki-Laki
+
+                    @Html.RadioButtonFor(model => model.Gender, "F", new { @class = "rb-female" })
+                    Perempuan
+                </div>
+                <br />
                 @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.RoleId, ViewBag.Roles as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RegionId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.RegionId, ViewBag.Regions as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RegionId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group btn-box">
+            <div class="col-md-offset-2 col-md-10" style="display:flex">
+                @Html.ActionLink("Kembali", "Index", "SuperAdminEmployee", null, new { @class = "btn btn-danger" })
+                <input type="submit" value="Tambah" class="btn btn-primary btn-margin-left" />
             </div>
         </div>
     </div>
+}
+
+@if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
+{
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-content--header">
+                <span class="close">&times;</span>
+                <p>@TempData["ErrHeader"]</p>
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--description">
+                @TempData["ErrMessage"]
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--footer">
+                <a href="#" class="btn btn-danger" onclick="closeModal();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        modal.style.display = "block";
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+    </script>
 }
 
 @section Scripts {
