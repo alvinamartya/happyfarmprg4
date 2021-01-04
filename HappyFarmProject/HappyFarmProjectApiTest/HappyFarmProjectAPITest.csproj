@@ -58,10 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BusinessLogic\BannerLogicTests.cs" />
+    <Compile Include="Controllers\BusinessLogic\CategoryLogicTests.cs" />
     <Compile Include="Controllers\BusinessLogic\EmployeeLogicTests.cs" />
     <Compile Include="Controllers\BusinessLogic\GoodsLogicTests.cs" />
     <Compile Include="Controllers\BusinessLogic\PromoLogicTests.cs" />
     <Compile Include="Controllers\BusinessLogic\RegionLogicTests.cs" />
+    <Compile Include="Controllers\BusinessLogic\SubDistrictLogicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

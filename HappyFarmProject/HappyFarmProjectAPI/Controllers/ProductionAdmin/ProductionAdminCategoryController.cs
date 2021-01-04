@@ -11,43 +11,44 @@ using System.Web.Http;
 
 namespace HappyFarmProjectAPI.Controllers
 {
-    public class SuperAdminEmployeeController : ApiController
+    public class ProductionAdminCategoryController : ApiController
     {
         #region Variable
         // logic
-        private EmployeeLogic employeeLogic = new EmployeeLogic();
+        private CategoryLogic categoryLogic = new CategoryLogic();
         private TokenLogic tokenLogic = new TokenLogic();
 
         // repo
-        private EmployeeRepository repo = new EmployeeRepository();
+        private CategoryRepository repo = new CategoryRepository();
         #endregion
+
         #region Action
         /// <summary>
-        /// To delete employee using super admin account
+        /// To delete category using Admin Produksi
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Employee/Delete/{id}")]
+        [Route("api/v1/PA/Category/Delete/{id}")]
         [HttpDelete]
-        public async Task<IHttpActionResult> DeleteEmployee(int id)
+        public async Task<IHttpActionResult> DeleteCategory(int id)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = employeeLogic.DeleteEmployee(id, "Super Admin");
+                ResponseModel responseModel = categoryLogic.GetCategoryById(id, "Admin Produksi");
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
-                        // delete employee
-                        await Task.Run(() => repo.DeleteEmployee(id));
+                        // delete region
+                        await Task.Run(() => repo.DeleteCategory(id));
 
                         // response success
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.OK,
-                            Message = "Berhasil menghapus data karyawan"
+                            Message = "Berhasil menghapus kategori"
                         };
 
                         return Ok(response);
@@ -95,32 +96,32 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To edit employee using super admin account
+        /// To edit category using Admin Produksi account
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="employeeRequest"></param>
+        /// <param name="categoryRequest"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Employee/Edit/{id}")]
+        [Route("api/v1/PA/Category/Edit/{id}")]
         [HttpPut]
-        public async Task<IHttpActionResult> EditEmployee(int id, EditEmployeeRequest employeeRequest)
+        public async Task<IHttpActionResult> EditCategory(int id, EditCategoryRequest categoryRequest)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = employeeLogic.EditEmployee(id, employeeRequest);
+                ResponseModel responseModel = categoryLogic.EditCategory(id, categoryRequest);
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
-                        // update employee
-                        await Task.Run(() => repo.EditEmployee(id, employeeRequest));
+                        // update region
+                        await Task.Run(() => repo.EditCategory(id, categoryRequest));
 
                         // response success
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.OK,
-                            Message = "Berhasil mengubah data karyawan"
+                            Message = "Berhasil mengubah kategori"
                         };
 
                         return Ok(response);
@@ -168,31 +169,31 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To create new employee using super admin account
+        /// To create new category using Admin Produksi account
         /// </summary>
-        /// <param name="employeeRequest"></param>
+        /// <param name=""></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Employee/Add")]
+        [Route("api/v1/PA/Category/Add")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddEmployee(AddEmployeeRequest employeeRequest)
+        public async Task<IHttpActionResult> AddCategory(AddCategoryRequest categoryRequest)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = employeeLogic.AddEmployee(employeeRequest);
+                ResponseModel responseModel = categoryLogic.AddCategory(categoryRequest);
                 if (responseModel.StatusCode == HttpStatusCode.Created)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
-                        // create new employee
-                        await Task.Run(() => repo.AddEmployee(employeeRequest));
+                        // create region
+                        await Task.Run(() => repo.AddCategory(categoryRequest));
 
                         // response success
                         var response = new ResponseWithoutData()
                         {
                             StatusCode = HttpStatusCode.Created,
-                            Message = "Berhasil menambah data karyawan"
+                            Message = "Berhasil menambah kategori"
                         };
 
                         return Ok(response);
@@ -240,32 +241,32 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To get employee by id
+        /// To get category by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Employee/{id}")]
+        [Route("api/v1/PA/Category/{id}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetEmployeeById(int id)
+        public async Task<IHttpActionResult> GetCategoryById(int id)
         {
             try
             {
                 // validate data
-                ResponseModel responseModel = employeeLogic.GetEmployeeById(id, "Super Admin");
+                ResponseModel responseModel = categoryLogic.GetCategoryById(id, "Admin Produksi");
                 if (responseModel.StatusCode == HttpStatusCode.OK)
                 {
                     // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
-                        // get employee by id
-                        Object employee = await Task.Run(() => repo.GetEmployeeById(id));
+                        // get goods by id
+                        Object region = await Task.Run(() => repo.GetCategoryById(id));
 
                         // response success
                         var response = new ResponseWithData<Object>()
                         {
                             StatusCode = HttpStatusCode.OK,
                             Message = "Berhasil",
-                            Data = employee
+                            Data = region
                         };
 
                         return Ok(response);
@@ -302,47 +303,37 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To get list employee
+        /// To get categories
         /// </summary>
-        /// <param name="currentPage"></param>
-        /// <param name="limitPage"></param>
-        /// <param name="search"></param>
+        /// <param name="getListData"></param>
         /// <returns></returns>
-        [Route("api/v1/SA/Employee")]
+        [Route("api/v1/PA/Category")]
         [HttpPost]
-        public async Task<IHttpActionResult> GetEmployees(GetListDataRequest getListData)
+        public async Task<IHttpActionResult> GetCategories(GetListDataRequest getListData)
         {
             try
             {
                 // validate token
-                if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                 {
                     // get employee by id
-                    ResponsePagingModel<List<Employee>> employeesPaging = await Task.Run(() => repo.GetEmployees(getListData.CurrentPage, getListData.LimitPage, getListData.Search, "Super Admin"));
+                    ResponsePagingModel<List<Category>> listCategoryPaging = await Task.Run(() => repo.GetCategories(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
 
                     // response success
                     var response = new ResponseDataWithPaging<Object>()
                     {
                         StatusCode = HttpStatusCode.OK,
                         Message = "Berhasil",
-                        Data = employeesPaging
+                        Data = listCategoryPaging
                             .Data
                             .Select(x => new
                             {
                                 x.Id,
-                                x.Name,
-                                x.PhoneNumber,
-                                x.Email,
-                                x.Address,
-                                x.Gender,
-                                Role = x.UserLogin.Role.Name,
-                                x.UserLogin.RoleId,
-                                Region = x.Region.Name,
-                                x.RegionId
+                                x.Name
                             })
                             .ToList(),
-                        CurrentPage = employeesPaging.CurrentPage,
-                        TotalPage = employeesPaging.TotalPage
+                        CurrentPage = listCategoryPaging.CurrentPage,
+                        TotalPage = listCategoryPaging.TotalPage
                     };
 
                     return Ok(response);

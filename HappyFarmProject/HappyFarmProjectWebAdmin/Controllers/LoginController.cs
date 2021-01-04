@@ -15,19 +15,26 @@ namespace HappyFarmProjectWebAdmin.Controllers
         private HttpClient hc = APIHelper.GetHttpClient("User/Login");
         #endregion
 
+        #region Action
         public ActionResult Index()
         {
+            if (Session["ErrMessage"] != null)
+            {
+                TempData["ErrMessage"] = Session["ErrMessage"];
+                Session["ErrMessage"] = null;
+            }
+
             return View();
         }
 
         [HttpPost]
         public ActionResult Login(LoginRequest login)
         {
-            if(login.Username == null)
+            if (login.Username == null)
             {
                 TempData["ErrMessage"] = "Nama pengguna belum diisi";
             }
-            else if(login.Password == null)
+            else if (login.Password == null)
             {
                 TempData["ErrMessage"] = "Kata sandi belum diisi";
             }
@@ -49,7 +56,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
                         Session["UserId"] = loginResponse.Result.UserId;
                         Session["Token"] = loginResponse.Result.Token.Token;
 
-                        if(loginResponse.Result.Role == "Super Admin")
+                        if (loginResponse.Result.Role == "Super Admin")
                         {
                             return RedirectToAction("Index", "SuperAdminEmployee");
                         }
@@ -66,5 +73,6 @@ namespace HappyFarmProjectWebAdmin.Controllers
             }
             return View("Index");
         }
+        #endregion
     }
 }

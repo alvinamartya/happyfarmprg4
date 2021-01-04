@@ -121,6 +121,9 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     .OrderBy(x => x.Id)
                     .Skip((currentPage - 1) * limitPage)
                     .Take(limitPage)
+                    .OrderBy(x=>x.UserLogin.RoleId)
+                    .ThenBy(x=>x.Region.Name)
+                    .ThenBy(x=>x.Name)
                     .ToList() : db.Employees
                     .Where(x =>
                         x.Name.ToLower().Contains(search.ToLower()) ||
@@ -131,6 +134,9 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     .OrderBy(x => x.Id)
                     .Skip((currentPage - 1) * limitPage)
                     .Take(limitPage)
+                    .OrderBy(x => x.UserLogin.RoleId)
+                    .ThenBy(x => x.Region.Name)
+                    .ThenBy(x => x.Name)
                     .ToList();
 
                 // filter employees by role
@@ -177,7 +183,11 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                          x.PhoneNumber,
                          x.Email,
                          x.Address,
-                         x.Gender
+                         x.Gender,
+                         Role = x.UserLogin.Role.Name,
+                         x.UserLogin.RoleId,
+                         Region = x.Region.Name,
+                         x.RegionId
                      })
                     .FirstOrDefault();
                 return employee;

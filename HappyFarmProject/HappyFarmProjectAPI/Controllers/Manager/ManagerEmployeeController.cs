@@ -334,7 +334,11 @@ namespace HappyFarmProjectAPI.Controllers
                                 x.PhoneNumber,
                                 x.Email,
                                 x.Address,
-                                x.Gender
+                                x.Gender,
+                                Role = x.UserLogin.Role.Name,
+                                x.UserLogin.RoleId,
+                                Region = x.Region.Name,
+                                x.RegionId
                             })
                             .ToList(),
                         CurrentPage = employeesPaging.CurrentPage,
