@@ -36,7 +36,7 @@ namespace HappyFarmProjectAPI.Controllers
                 if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                 {
                     // get employee by id
-                    List<Role> roles = await Task.Run(() => repo.GetRoles());
+                    List<Role> roles = await Task.Run(() => repo.GetRoles("Super Admin"));
 
                     // response success
                     var response = new ResponseWithData<Object>()

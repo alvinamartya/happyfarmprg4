@@ -321,11 +321,13 @@ namespace HappyFarmProjectAPI.Controllers
                     ResponsePagingModel<List<Employee>> employeesPaging = await Task.Run(() => repo.GetEmployees(getListData.CurrentPage, getListData.LimitPage, getListData.Search, "Super Admin"));
 
                     // response success
-                    var response = new ResponseDataWithPaging<Object>()
+                    using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
                     {
-                        StatusCode = HttpStatusCode.OK,
-                        Message = "Berhasil",
-                        Data = employeesPaging
+                        var response = new ResponseDataWithPaging<Object>()
+                        {
+                            StatusCode = HttpStatusCode.OK,
+                            Message = "Berhasil",
+                            Data = employeesPaging
                             .Data
                             .Select(x => new
                             {
@@ -337,15 +339,16 @@ namespace HappyFarmProjectAPI.Controllers
                                 x.Gender,
                                 Role = x.UserLogin.Role.Name,
                                 x.UserLogin.RoleId,
-                                Region = x.Region.Name,
+                                Region = db.Regions.Where(z=>z.Id == x.RegionId).FirstOrDefault() == null ? null : db.Regions.Where(z => z.Id == x.RegionId).FirstOrDefault().Name,
                                 x.RegionId
                             })
                             .ToList(),
-                        CurrentPage = employeesPaging.CurrentPage,
-                        TotalPage = employeesPaging.TotalPage
-                    };
+                            CurrentPage = employeesPaging.CurrentPage,
+                            TotalPage = employeesPaging.TotalPage
+                        };
 
-                    return Ok(response);
+                        return Ok(response);
+                    }
                 }
                 else
                 {

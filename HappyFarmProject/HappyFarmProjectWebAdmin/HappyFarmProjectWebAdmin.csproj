@@ -175,13 +175,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelView\RegionModelView.cs" />
     <Compile Include="Models\Request\AddEmployeeRequest.cs" />
     <Compile Include="Models\Request\GetListDataRequest.cs" />
     <Compile Include="Models\ModelView\EmployeeModelView.cs" />
+    <Compile Include="Models\Response\ResponseWithoutData.cs" />
     <Compile Include="Models\Response\ResponseDataWithPaging.cs" />
     <Compile Include="Models\Response\LoginResponse.cs" />
     <Compile Include="Models\Request\LoginRequest.cs" />
-    <Compile Include="Models\Response\ResponsWithData.cs" />
+    <Compile Include="Models\Response\ResponseWithData.cs" />
     <Compile Include="Models\ModelView\RoleModelView.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
