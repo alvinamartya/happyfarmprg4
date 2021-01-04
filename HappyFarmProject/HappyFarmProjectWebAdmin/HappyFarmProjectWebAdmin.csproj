@@ -175,11 +175,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\AddEmployeeRequest.cs" />
     <Compile Include="Models\Request\GetListDataRequest.cs" />
     <Compile Include="Models\ModelView\EmployeeModelView.cs" />
+    <Compile Include="Models\Response\ResponseDataWithPaging.cs" />
     <Compile Include="Models\Response\LoginResponse.cs" />
     <Compile Include="Models\Request\LoginRequest.cs" />
     <Compile Include="Models\Response\ResponsWithData.cs" />
+    <Compile Include="Models\ModelView\RoleModelView.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -363,6 +366,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\SuperAdminEmployee\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutManager.cshtml" />
+    <Content Include="Views\Shared\_LayoutMA.cshtml" />
+    <Content Include="Views\Shared\_LayoutPA.cshtml" />
+    <Content Include="Views\SuperAdminEmployee\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -127,7 +127,7 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic.Tests
         }
 
         [TestMethod()]
-        public void GetEmployeeByIdTestSuccess()
+        public void GetRegionByIdTestSuccess()
         {
             Assert.AreEqual(HttpStatusCode.OK, regionLogic.GetRegionById(1, "Super Admin").StatusCode);
         }

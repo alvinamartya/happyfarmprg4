@@ -405,6 +405,199 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "subdistrict",
+					"item": [
+						{
+							"name": "AddSubDistrict",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "RegionId",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "Name",
+											"value": "Gading Cempaka",
+											"type": "text"
+										},
+										{
+											"key": "ShippingCharges",
+											"value": "10000",
+											"type": "text"
+										},
+										{
+											"key": "CreatedBy",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{manager_url}}/SubDistrict/Add",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"SubDistrict",
+										"Add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EditSubDistrict",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "RegionId",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "Name",
+											"value": "Gading Cempaka",
+											"type": "text"
+										},
+										{
+											"key": "ShippingCharges",
+											"value": "10000",
+											"type": "text"
+										},
+										{
+											"key": "ModifiedBy",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{manager_url}}/SubDistrict/Edit/1",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"SubDistrict",
+										"Edit",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteSubDistrict",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{manager_url}}/SubDistrict/Delete/1",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"SubDistrict",
+										"Delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetSubDistrictById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{manager_url}}/SubDistrict/1",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"SubDistrict",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetSubDistrict",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "CurrentPage",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "LimitPage",
+											"value": "10",
+											"type": "text"
+										},
+										{
+											"key": "Search",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{manager_url}}/SubDistrict",
+									"host": [
+										"{{manager_url}}"
+									],
+									"path": [
+										"SubDistrict"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "getRole",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNhIiwibmJmIjoxNjA5NzQ1ODg0LCJleHAiOjE2MTAzNTA2ODQsImlhdCI6MTYwOTc0NTg4NH0.egZESZ-Vkyabp_sg6B7oSIR5x_ZQorM2iDN9qiywbVQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{manager_url}}/Role",
+							"host": [
+								"{{manager_url}}"
+							],
+							"path": [
+								"Role"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1362,6 +1555,345 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "category",
+					"item": [
+						{
+							"name": "AddCategory",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "Name",
+											"value": "Buah",
+											"type": "text"
+										},
+										{
+											"key": "CreatedBy",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{sa_url}}/Category/Add",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"Category",
+										"Add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EditCategory",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "Name",
+											"value": "Buah",
+											"type": "text"
+										},
+										{
+											"key": "ModifiedBy",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{sa_url}}/Category/Edit/1",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"Category",
+										"Edit",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteCategory",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{sa_url}}/Category/Delete/1",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"Category",
+										"Delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetCategoryById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sa_url}}/Category/1",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"Category",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetCategories",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "CurrentPage",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "LimitPage",
+											"value": "10",
+											"type": "text"
+										},
+										{
+											"key": "Search",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{sa_url}}/Category",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"Category"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "subdistrict",
+					"item": [
+						{
+							"name": "AddSubDistrict",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "RegionId",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "Name",
+											"value": "Gading Cempaka",
+											"type": "text"
+										},
+										{
+											"key": "ShippingCharges",
+											"value": "10000",
+											"type": "text"
+										},
+										{
+											"key": "CreatedBy",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{sa_url}}/SubDistrict/Add",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"SubDistrict",
+										"Add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EditSubDistrict",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "RegionId",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "Name",
+											"value": "Gading Cempaka",
+											"type": "text"
+										},
+										{
+											"key": "ShippingCharges",
+											"value": "10000",
+											"type": "text"
+										},
+										{
+											"key": "ModifiedBy",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{sa_url}}/SubDistrict/Edit/1",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"SubDistrict",
+										"Edit",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteSubDistrict",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{sa_url}}/SubDistrict/Delete/1",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"SubDistrict",
+										"Delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetSubDistrictById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sa_url}}/SubDistrict/1",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"SubDistrict",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetSubDistrict",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "CurrentPage",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "LimitPage",
+											"value": "10",
+											"type": "text"
+										},
+										{
+											"key": "Search",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{sa_url}}/SubDistrict",
+									"host": [
+										"{{sa_url}}"
+									],
+									"path": [
+										"SubDistrict"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "getRole",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNhIiwibmJmIjoxNjA5NzQ1ODg0LCJleHAiOjE2MTAzNTA2ODQsImlhdCI6MTYwOTc0NTg4NH0.egZESZ-Vkyabp_sg6B7oSIR5x_ZQorM2iDN9qiywbVQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{sa_url}}/Role",
+							"host": [
+								"{{sa_url}}"
+							],
+							"path": [
+								"Role"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1914,6 +2446,152 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "category",
+					"item": [
+						{
+							"name": "AddCategory",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "Name",
+											"value": "Buah",
+											"type": "text"
+										},
+										{
+											"key": "CreatedBy",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{pa_url}}/Category/Add",
+									"host": [
+										"{{pa_url}}"
+									],
+									"path": [
+										"Category",
+										"Add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EditCategory",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "Name",
+											"value": "Buah",
+											"type": "text"
+										},
+										{
+											"key": "ModifiedBy",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{pa_url}}/Category/Edit/1",
+									"host": [
+										"{{pa_url}}"
+									],
+									"path": [
+										"Category",
+										"Edit",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteCategory",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{pa_url}}/Category/Delete/1",
+									"host": [
+										"{{pa_url}}"
+									],
+									"path": [
+										"Category",
+										"Delete",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetCategoryById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pa_url}}/Category/1",
+									"host": [
+										"{{pa_url}}"
+									],
+									"path": [
+										"Category",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetCategories",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "CurrentPage",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "LimitPage",
+											"value": "10",
+											"type": "text"
+										},
+										{
+											"key": "Search",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{pa_url}}/Category",
+									"host": [
+										"{{pa_url}}"
+									],
+									"path": [
+										"Category"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -1931,7 +2609,7 @@
 					"urlencoded": [
 						{
 							"key": "Username",
-							"value": "manager",
+							"value": "sa",
 							"type": "text"
 						},
 						{

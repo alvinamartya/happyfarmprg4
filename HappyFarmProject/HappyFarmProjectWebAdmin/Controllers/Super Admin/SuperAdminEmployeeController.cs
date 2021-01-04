@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
-using System.Web.Http.Cors;
+using System.Net;
 using System.Web.Mvc;
 
 namespace HappyFarmProjectWebAdmin.Controllers
@@ -16,8 +16,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
         HttpClient hc = APIHelper.GetHttpClient(APIHelper.SA + "/Employee");
         #endregion
 
-        // GET: SuperAdminEmployee
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        // GET Employees
         [Route("~/SA/Karyawan")]
         [HttpGet]
         public ActionResult Index()
@@ -40,13 +39,45 @@ namespace HappyFarmProjectWebAdmin.Controllers
             var data = apiGet.Result;
             if (data.IsSuccessStatusCode)
             {
-                var displayData = data.Content.ReadAsAsync<ResponsWithData<List<EmployeeModelView>>>();
+                var displayData = data.Content.ReadAsAsync<ResponseDataWithPaging<List<EmployeeModelView>>>();
                 displayData.Wait();
 
-                employees = displayData.Result.Data;
+                if(displayData.Result.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    Session["ErrMessage"] = displayData.Result.Message;
+                    return RedirectToAction("Index", "Login");
+                }
+                else if(displayData.Result.StatusCode == HttpStatusCode.OK)
+                {
+                    employees = displayData.Result.Data;
+                    ViewBag.CurrentPage = displayData.Result.CurrentPage;
+                    ViewBag.TotalPage = displayData.Result.TotalPage;
+
+                    if (employees == null || employees.Count == 0)
+                    {
+                        TempData["ErrMessage"] = "Data belum tersedia";
+                    }
+                }
+                else
+                {
+                    TempData["ErrMessage"] = displayData.Result.Message;
+                }
+            }
+            else
+            {
+                Session["ErrMessage"] = "Gagal login ke aplikasi";
+                return RedirectToAction("Index", "Login");
             }
 
             return View(employees);
+        }
+
+        // Add Employees
+        [Route("~/SA/Karyawan/Tambah")]
+        [HttpGet]
+        public ActionResult Add()
+        {
+            return View();
         }
     }
 }
