@@ -175,6 +175,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelView\IndexEmployeeModelView.cs" />
     <Compile Include="Models\Request\EditEmployeeRequest.cs" />
     <Compile Include="Models\ModelView\RegionModelView.cs" />
     <Compile Include="Models\Request\AddEmployeeRequest.cs" />
