@@ -1,15 +1,17 @@
-﻿@model HappyFarmProjectWebAdmin.Models.AddEmployeeRequest
+﻿@model HappyFarmProjectWebAdmin.Models.EditEmployeeRequest
 
 @{
-    ViewBag.Title = "Add";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Tambah Data Karyawan</h4>
+        <h4>Ubah Data Karyawan</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -17,14 +19,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -68,17 +62,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.RoleId, ViewBag.Roles as SelectList, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.RegionId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.RegionId, ViewBag.Regions as SelectList, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.RegionId, ViewBag.Regions as SelectList, new { @id = "regionId", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RegionId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -86,11 +72,16 @@
         <div class="form-group btn-box">
             <div class="col-md-offset-2 col-md-10" style="display:flex">
                 @Html.ActionLink("Kembali", "Index", "SuperAdminEmployee", null, new { @class = "btn btn-danger" })
-                <input type="submit" value="Tambah" class="btn btn-primary btn-margin-left" />
+                <input type="submit" value="Ubah" class="btn btn-primary btn-margin-left" />
             </div>
         </div>
     </div>
 }
+
+<script>
+    $(document).ready(function () {
+
+</script>
 
 @if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
 {

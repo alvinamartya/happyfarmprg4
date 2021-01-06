@@ -175,6 +175,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\EditEmployeeRequest.cs" />
     <Compile Include="Models\ModelView\RegionModelView.cs" />
     <Compile Include="Models\Request\AddEmployeeRequest.cs" />
     <Compile Include="Models\Request\GetListDataRequest.cs" />
@@ -334,6 +335,8 @@
     <Content Include="fonts\ubuntu\Ubuntu-Regular.ttf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\countdowntime.js" />
+    <Content Include="Scripts\data-error.js" />
+    <Content Include="Scripts\data-karyawan.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -372,6 +375,7 @@
     <Content Include="Views\Shared\_LayoutMA.cshtml" />
     <Content Include="Views\Shared\_LayoutPA.cshtml" />
     <Content Include="Views\SuperAdminEmployee\Add.cshtml" />
+    <Content Include="Views\SuperAdminEmployee\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
