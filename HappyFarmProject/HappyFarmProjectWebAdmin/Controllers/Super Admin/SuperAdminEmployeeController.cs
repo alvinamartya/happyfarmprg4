@@ -15,6 +15,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
         #region Variable
         HttpClient hcEmployeeAdd = APIHelper.GetHttpClient(APIHelper.SA + "/Employee/Add");
         HttpClient hcEmployeeDelete = APIHelper.GetHttpClient(APIHelper.SA + "/Employee/Delete");
+        HttpClient hcEmployeeEdit = APIHelper.GetHttpClient(APIHelper.SA + "/Employee/Edit");
         #endregion
 
         #region GetEmployees
@@ -63,7 +64,65 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
-            return View(employeesRequest.Data);
+            IndexEmployeeModelView indexViewModel = new IndexEmployeeModelView()
+            {
+                DataPaging = dataPaging,
+                EmployeeModelViews = employeesRequest.Data
+            };
+
+            return View(indexViewModel);
+        }
+
+        [Route("~/SA/Karyawan")]
+        [HttpPost]
+        public ActionResult Index(IndexEmployeeModelView indexEmployee)
+        {
+            if (Session["ErrMessage"] != null)
+            {
+                TempData["ErrMessage"] = Session["ErrMessage"];
+                TempData["ErrHeader"] = Session["ErrHeader"];
+
+                Session["ErrMessage"] = null;
+                Session["ErrHeader"] = null;
+            }
+
+            // default request paging
+            var dataPaging = new GetListDataRequest()
+            {
+                CurrentPage = 1,
+                LimitPage = 10,
+                Search = indexEmployee.DataPaging.Search
+            };
+
+            ResponseDataWithPaging<List<EmployeeModelView>> employeesRequest = GetEmployees(dataPaging);
+            ViewBag.CurrentPage = employeesRequest.CurrentPage;
+            ViewBag.TotalPage = employeesRequest.TotalPage;
+
+            // status code
+            if (employeesRequest.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                Session["ErrMessage"] = employeesRequest.Message;
+                return RedirectToAction("Index", "Login");
+            }
+            else if (employeesRequest.StatusCode != HttpStatusCode.OK)
+            {
+                TempData["ErrMessage"] = employeesRequest.Message;
+                TempData["ErrHeader"] = "Gagal meload data";
+            }
+
+            // data is empty
+            if (employeesRequest.Data.Count == 0)
+            {
+                TempData["ErrMessageData"] = "Data belum tersedia";
+            }
+
+            IndexEmployeeModelView indexViewModel = new IndexEmployeeModelView()
+            {
+                DataPaging = dataPaging,
+                EmployeeModelViews = employeesRequest.Data
+            };
+
+            return View(indexViewModel);
         }
         #endregion
 
@@ -160,6 +219,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
             if (dataSave.IsSuccessStatusCode)
             {
                 var displayDataSave = dataSave.Content.ReadAsAsync<ResponseWithoutData>();
+                displayDataSave.Wait();
                 if (displayDataSave.Result.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     Session["ErrMessage"] = displayDataSave.Result.Message;
@@ -185,29 +245,32 @@ namespace HappyFarmProjectWebAdmin.Controllers
         #endregion
 
         #region Delete Employee
+        [Route("~/SA/Karyawan/Hapus")]
+        [HttpPost]
         public ActionResult Delete(int id)
         {
             hcEmployeeDelete.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
             var apiDelete = hcEmployeeDelete.DeleteAsync("Delete/" + id);
             apiDelete.Wait();
 
-            var dataSave = apiDelete.Result;
-            if (dataSave.IsSuccessStatusCode)
+            var dateDelete = apiDelete.Result;
+            if (dateDelete.IsSuccessStatusCode)
             {
-                var displayDataSave = dataSave.Content.ReadAsAsync<ResponseWithoutData>();
-                if (displayDataSave.Result.StatusCode == HttpStatusCode.Unauthorized)
+                var displayDataDelete = dateDelete.Content.ReadAsAsync<ResponseWithoutData>();
+                displayDataDelete.Wait();
+                if (displayDataDelete.Result.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    Session["ErrMessage"] = displayDataSave.Result.Message;
+                    Session["ErrMessage"] = displayDataDelete.Result.Message;
                     return RedirectToAction("Index", "Login");
                 }
-                else if (displayDataSave.Result.StatusCode == HttpStatusCode.OK)
+                else if (displayDataDelete.Result.StatusCode == HttpStatusCode.OK)
                 {
                     Session["ErrMessage"] = "Berhasil menghapus karyawan";
                     Session["ErrHeader"] = "Berhasil";
                 }
                 else
                 {
-                    Session["ErrMessage"] = displayDataSave.Result.Message;
+                    Session["ErrMessage"] = displayDataDelete.Result.Message;
                     Session["ErrHeader"] = "Gagal menghapus Karyawan";
                 }
             }
@@ -222,6 +285,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
         #region Edit Employee
         [Route("~/SA/Karyawan/Ubah/{id}")]
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             EmployeeModelView employee = null;
@@ -287,6 +351,111 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 PhoneNumber = employee.PhoneNumber,
                 RegionId = employee.RegionId
             };
+
+            return View(editEmployee);
+        }
+
+        [Route("~/SA/Karyawan/Ubah/{id}")]
+        [HttpPost]
+        public ActionResult Edit(int id, EditEmployeeRequest employeeRequest)
+        {
+            EmployeeModelView employee = null;
+
+            // get region
+            ResponseWithData<List<RegionModelView>> regionRequest = GetRegions();
+            if (regionRequest.StatusCode == HttpStatusCode.OK)
+            {
+                ViewBag.Regions = new SelectList(regionRequest.Data, "Id", "Name");
+            }
+            else if (regionRequest.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                Session["ErrMessage"] = regionRequest.Message;
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                TempData["ErrMessage"] = regionRequest.Message;
+                TempData["ErrHeader"] = "Gagal meload wilayah";
+            }
+
+            // get employee
+            HttpClient hcEmployeeGet = APIHelper.GetHttpClient(APIHelper.SA + "/Employee");
+            hcEmployeeGet.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
+
+            var apiGet = hcEmployeeGet.GetAsync("Employee/" + id);
+            apiGet.Wait();
+
+            var data = apiGet.Result;
+            if (data.IsSuccessStatusCode)
+            {
+                var displayData = data.Content.ReadAsAsync<ResponseWithData<EmployeeModelView>>();
+                displayData.Wait();
+
+                if (displayData.Result.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    Session["ErrMessage"] = displayData.Result.Message;
+                    return RedirectToAction("Index", "Login");
+                }
+                else if (displayData.Result.StatusCode != HttpStatusCode.OK)
+                {
+                    TempData["ErrMessage"] = displayData.Result.Message;
+                    TempData["ErrHeader"] = "Gagal meload data karyawan";
+                }
+                else
+                {
+                    employee = displayData.Result.Data;
+                }
+            }
+            else
+            {
+                TempData["ErrMessage"] = "Terjadi kesalahan pada sistem";
+                TempData["ErrHeader"] = "Gagal meload data";
+            }
+
+            EditEmployeeRequest editEmployee = new EditEmployeeRequest()
+            {
+                Address = employee.Address,
+                Email = employee.Email,
+                Gender = employee.Gender,
+                ModifiedBy = (int)Session["UserId"],
+                Name = employee.Name,
+                PhoneNumber = employee.PhoneNumber,
+                RegionId = employee.RegionId
+            };
+
+            // add modified by
+            employeeRequest.ModifiedBy = (int)Session["UserId"];
+
+            // update employee
+            hcEmployeeEdit.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
+            var apiEdit = hcEmployeeEdit.PutAsJsonAsync<EditEmployeeRequest>("Edit/" + id, employeeRequest);
+            apiEdit.Wait();
+
+            var dateEdit = apiEdit.Result;
+            if (dateEdit.IsSuccessStatusCode)
+            {
+                var displayDataEdit = dateEdit.Content.ReadAsAsync<ResponseWithoutData>();
+                displayDataEdit.Wait();
+                if (displayDataEdit.Result.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    Session["ErrMessage"] = displayDataEdit.Result.Message;
+                    return RedirectToAction("Index", "Login");
+                }
+                else if (displayDataEdit.Result.StatusCode == HttpStatusCode.OK)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["ErrMessage"] = displayDataEdit.Result.Message;
+                    TempData["ErrHeader"] = "Gagal Mengubah Data Karyawan";
+                }
+            }
+            else
+            {
+                TempData["ErrMessage"] = "Terjadi kesalahan pada sistem";
+                TempData["ErrHeader"] = "Gagal Mengubah Data Karyawan";
+            }
 
             return View(editEmployee);
         }

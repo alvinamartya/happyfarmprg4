@@ -10,6 +10,11 @@
  */
 
 /* The Modal (background) */
+.search-box__content {
+    height: 35px;
+    width: 100%
+}
+
 .modal-content--footer {
     padding-right: 10px;
     float: right;
