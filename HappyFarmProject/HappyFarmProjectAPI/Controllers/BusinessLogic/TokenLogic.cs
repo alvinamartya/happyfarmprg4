@@ -19,7 +19,6 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
             if (request.Headers.Contains("Authorization"))
             {
                 string token = request.Headers.GetValues("Authorization").First().Split(' ')[1];
-                System.Diagnostics.Debug.WriteLine(token);
                 if (TokenManager.ValidateToken(token, role))
                 {
                     return true;
