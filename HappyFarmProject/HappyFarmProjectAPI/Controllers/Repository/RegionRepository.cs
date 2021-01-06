@@ -64,6 +64,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     ModifiedBy = regionRequest.CreatedBy,
                     RowStatus = "A"
                 };
+                db.Regions.Add(newRegion);
                 db.SaveChanges();
             }
         }

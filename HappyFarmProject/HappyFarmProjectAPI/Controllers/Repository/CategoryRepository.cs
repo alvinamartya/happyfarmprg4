@@ -31,7 +31,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                var category = db.Regions.Where(x => x.Id == id).FirstOrDefault();
+                var category = db.Categories.Where(x => x.Id == id).FirstOrDefault();
                 category.Name = categoryRequest.Name;
                 category.ModifiedAt = DateTime.Now;
                 category.ModifiedBy = categoryRequest.ModifiedBy;
@@ -64,6 +64,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     ModifiedBy = categoryRequest.CreatedBy,
                     RowStatus = "A"
                 };
+                db.Categories.Add(newCategory);
                 db.SaveChanges();
             }
         }
