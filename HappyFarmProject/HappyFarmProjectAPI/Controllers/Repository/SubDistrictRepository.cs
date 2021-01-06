@@ -77,21 +77,34 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get sub district
-                var listSubDistricts = search == null ? db.SubDistricts
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .ToList() : db.SubDistricts
-                    .Where(x =>
-                        x.Name.ToLower().Contains(search.ToLower())
-                    )
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .ToList();
+                var listSubDistricts = db.SubDistricts.ToList();
+
+                if(search != null && search != "")
+                {
+                    listSubDistricts = listSubDistricts
+                        .Where(x =>
+                            x.Name.ToLower().Contains(search.ToLower()) ||
+                            x.Region.Name.ToLower().Contains(search.ToLower())
+                        )
+                        .ToList();
+                }
 
                 // filter goods by row status
-                listSubDistricts = listSubDistricts.Where(x => x.RowStatus != "D").ToList();
+                // with paging
+                //listSubDistricts = listSubDistricts
+                //    .Where(x => x.RowStatus != "D")
+                //    .OrderBy(x => x.Region.Name)
+                //    .ThenBy(x => x.Name)
+                //    .Skip((currentPage - 1) * limitPage)
+                //    .Take(limitPage)
+                //    .ToList();
+
+                // without paging
+                listSubDistricts = listSubDistricts
+                   .Where(x => x.RowStatus != "D")
+                   .OrderBy(x=>x.Region.Name)
+                   .ThenBy(x=>x.Name)
+                   .ToList();
 
                 // get total list of goods
                 var totalPages = Math.Ceiling((decimal)listSubDistricts.Count / limitPage);

@@ -78,22 +78,32 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get goods
-                var listGoods = search == null ? db.Goods
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .ToList() : db.Goods
-                    .Where(x =>
-                        x.Name.ToLower().Contains(search.ToLower()) ||
-                        x.Description.ToLower().Contains(search.ToLower())
-                    )
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .ToList();
+                var listGoods = db.Goods.ToList();
+
+                if(search != null && search == "")
+                {
+                    listGoods = listGoods
+                        .Where(x =>
+                         x.Name.ToLower().Contains(search.ToLower()) ||
+                            x.Description.ToLower().Contains(search.ToLower())
+                        )
+                        .ToList();
+                }
 
                 // filter goods by row status
-                listGoods = listGoods.Where(x => x.RowStatus != "D").ToList();
+                // with paging
+                //listGoods = listGoods
+                //    .Where(x => x.RowStatus != "D")
+                //    .OrderBy(x=>x.Name)
+                //    .Skip((currentPage - 1) * limitPage)
+                //    .Take(limitPage)
+                //    .ToList();
+
+                // without paging
+                listGoods = listGoods
+                    .Where(x => x.RowStatus != "D")
+                    .OrderBy(x => x.Name)
+                    .ToList();
 
                 // get total list of goods
                 var totalPages = Math.Ceiling((decimal)listGoods.Count / limitPage);

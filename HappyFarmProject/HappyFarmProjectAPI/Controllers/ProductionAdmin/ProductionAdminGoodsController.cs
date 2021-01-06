@@ -319,26 +319,29 @@ namespace HappyFarmProjectAPI.Controllers
                     // get employee by id
                     ResponsePagingModel<List<Good>> listGoodsPaging = await Task.Run(() => repo.GetGoods(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
 
-                    // response success
-                    var response = new ResponseDataWithPaging<Object>()
+                    using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
                     {
-                        StatusCode = HttpStatusCode.OK,
-                        Message = "Berhasil",
-                        Data = listGoodsPaging
-                            .Data
-                            .Select(x => new
-                            {
-                                x.Id,
-                                x.Name,
-                                CategoryId = x.CategoryId,
-                                CategoryName = x.Category.Name
-                            })
-                            .ToList(),
-                        CurrentPage = listGoodsPaging.CurrentPage,
-                        TotalPage = listGoodsPaging.TotalPage
-                    };
+                        // response success
+                        var response = new ResponseDataWithPaging<Object>()
+                        {
+                            StatusCode = HttpStatusCode.OK,
+                            Message = "Berhasil",
+                            Data = listGoodsPaging
+                                .Data
+                                .Select(x => new
+                                {
+                                    x.Id,
+                                    x.Name,
+                                    CategoryId = x.CategoryId,
+                                    CategoryName = db.Categories.Where(z => z.Id == x.CategoryId).FirstOrDefault().Name
+                                })
+                                .ToList(),
+                            CurrentPage = listGoodsPaging.CurrentPage,
+                            TotalPage = listGoodsPaging.TotalPage
+                        };
 
-                    return Ok(response);
+                        return Ok(response);
+                    }
                 }
                 else
                 {

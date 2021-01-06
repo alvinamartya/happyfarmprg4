@@ -57,7 +57,8 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     ModifiedBy = bannerRequest.CreatedBy,
                     CreatedAt = DateTime.Now,
                     ModifiedAt = DateTime.Now,
-                    RowStatus = "A"
+                    RowStatus = "A",
+                    Image = bannerRequest.Image
                 };
                 db.Banners.Add(banner);
                 db.SaveChanges();
@@ -76,22 +77,30 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get banners
-                var banners = search == null ? db.Banners
-                    .OrderBy(x=>x.Id)
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .ToList() : db.Banners
-                    .Where(x =>
-                        x.Name.ToLower().Contains(search.ToLower())
-                    )
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .ToList();
+                var banners = db.Banners.ToList();
+
+                if(search != null && search != "")
+                {
+                    banners = banners
+                        .Where(x =>
+                            x.Name.ToLower().Contains(search.ToLower())
+                        )
+                        .ToList();
+                }
 
                 // filter banners by row status
-                banners = banners.Where(x => x.RowStatus != "D").ToList();
+                //// with paging
+                //banners = banners
+                //    .Where(x => x.RowStatus != "D")
+                //    .Skip((currentPage - 1) * limitPage)
+                //    .Take(limitPage)
+                //    .ToList();
+
+                // without paging
+                banners = banners
+                    .Where(x => x.RowStatus != "D")
+                    .OrderBy(x=>x.Name)
+                    .ToList();
 
                 // get total banners
                 var totalPages = Math.Ceiling((decimal)banners.Count / limitPage);

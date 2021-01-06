@@ -16,7 +16,9 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
         /// <returns></returns>
         public ResponseModel AddPromo(AddPromoRequest promoRequest)
         {
-            DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            DateTime now = getNewDate(DateTime.Now);
+            //DateTime start = getNewDate(promoRequest.StartDate);
+            //DateTime end = getNewDate(promoRequest.EndDate);
             if(promoRequest.StartDate > now)
             {
                 if(promoRequest.EndDate > promoRequest.StartDate)
@@ -40,6 +42,11 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
                     Message = "Tanggal mulai promo tidak valid"
                 };
             }
+        }
+
+        private DateTime getNewDate(DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, date.Day);
         }
 
         /// <summary>

@@ -119,7 +119,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 // get employees
                 var employees = db.Employees.ToList();
 
-                if (search != null || search != "")
+                if (search != null && search != "")
                 {
                     employees = employees
                                      .Where(x =>
@@ -142,9 +142,18 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 }
 
                 // filter employees by row status
-                employees = employees.Where(x => x.RowStatus != "D")
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
+                // with paging
+                // employees = employees.Where(x => x.RowStatus != "D")
+                //    .Skip((currentPage - 1) * limitPage)
+                //    .Take(limitPage)
+                //    .OrderBy(x => x.UserLogin.RoleId)
+                //    .ThenBy(x => x.Region.Name)
+                //    .ThenBy(x => x.Name)
+                //    .ToList();
+
+                // without paging
+                employees = employees
+                    .Where(x => x.RowStatus != "D")
                     .OrderBy(x => x.UserLogin.RoleId)
                     .ThenBy(x => x.Region.Name)
                     .ThenBy(x => x.Name)

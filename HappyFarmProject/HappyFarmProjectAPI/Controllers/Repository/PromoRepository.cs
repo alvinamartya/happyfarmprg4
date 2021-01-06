@@ -52,8 +52,19 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         /// <param name="promoRequest"></param>
         public void AddPromo(AddPromoRequest promoRequest)
         {
-            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
+                // generate random code
+                string randomCode = "";
+                bool isGenerated = false;
+                while (!isGenerated)
+                {
+                    randomCode = Helper.RandomCode();
+                    bool IsAlreadyInDb = db.Promoes.Where(x => x.Code.Equals(randomCode)).FirstOrDefault() != null;
+                    if (!IsAlreadyInDb) isGenerated = true;
+                }
+
+                // create new promo
                 var promo = new Promo()
                 {
                     CreatedBy = promoRequest.CreatedBy,
@@ -67,7 +78,9 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     IsFreeDelivery = promoRequest.IsFreeDelivery,
                     Discount = promoRequest.Discount,
                     MinTransaction = promoRequest.MinTransaction,
-                    MaxDiscount = promoRequest.MaxDiscount
+                    MaxDiscount = promoRequest.MaxDiscount,
+                    Code = randomCode,
+                    RowStatus = "A"
                 };
 
                 db.Promoes.Add(promo);
@@ -86,23 +99,34 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                // get banners
-                var promoes = search == null ? db.Promoes
-                    .OrderBy(x => x.Id)
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .ToList() : db.Promoes
-                    .Where(x =>
-                        x.Name.ToLower().Contains(search.ToLower())
-                    )
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .ToList();
+                // get promoes
+                var promoes = db.Promoes.ToList();
+
+                if(search != null && search != "")
+                {
+                    promoes = promoes
+                        .Where(x =>
+                            x.Name.ToLower().Contains(search.ToLower())
+                        )
+                        .ToList();
+                }
 
                 // filter promoes by row status
-                promoes = promoes.Where(x => x.RowStatus != "D").ToList();
+                // with paging
+                //promoes = promoes
+                //    .Where(x => x.RowStatus != "D")
+                //    .OrderBy(x=>x.StartDate)
+                //    .ThenBy(x=>x.EndDate)
+                //    .Skip((currentPage - 1) * limitPage)
+                //    .Take(limitPage)
+                //    .ToList();
+
+                // without paging
+                promoes = promoes
+                    .Where(x => x.RowStatus != "D")
+                    .OrderBy(x => x.StartDate)
+                    .ThenBy(x => x.EndDate)
+                    .ToList();
 
                 // get total banners
                 var totalPages = Math.Ceiling((decimal)promoes.Count / limitPage);

@@ -136,6 +136,11 @@ namespace HappyFarmProjectAPI
             return builder.ToString();
         }
 
+        public static string RandomCode()
+        {
+            return RandomString(7, false);
+        }
+
         public static string RandomPassword()
         {
             StringBuilder builder = new StringBuilder();
