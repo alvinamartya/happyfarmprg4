@@ -80,18 +80,31 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                // get employees
-                var regions = search == null ? db.Regions
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .ToList() : db.Regions
-                    .Where(x =>
-                        x.Name.ToLower().Contains(search.ToLower())
-                    )
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
+                // get region
+                var regions = db.Regions.ToList();
+
+                if(search != null && search != "")
+                {
+                    regions = regions
+                        .Where(x =>
+                            x.Name.ToLower().Contains(search.ToLower())
+                        )
+                        .ToList();
+                }
+
+                // filter by row status
+                // with paging
+                //regions = regions
+                //    .Where(x=>x.RowStatus == "A")
+                //    .OrderBy(x=>x.Name)
+                //    .Skip((currentPage - 1) * limitPage)
+                //    .Take(limitPage)
+                //    .ToList();
+
+                // without paging
+                regions = regions
+                    .Where(x => x.RowStatus == "A")
+                    .OrderBy(x => x.Name)
                     .ToList();
 
                 // get total regions

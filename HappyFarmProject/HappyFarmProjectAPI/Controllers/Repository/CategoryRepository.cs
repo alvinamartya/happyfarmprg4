@@ -82,17 +82,30 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get category
-                var category = search == null ? db.Categories
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
-                    .ToList() : db.Categories
-                    .Where(x =>
-                        x.Name.ToLower().Contains(search.ToLower())
-                    )
-                    .OrderBy(x => x.Id)
-                    .Skip((currentPage - 1) * limitPage)
-                    .Take(limitPage)
+                var category = db.Categories.ToList();
+
+                if(search != null && search != "")
+                {
+                    category = category
+                        .Where(x =>
+                            x.Name.ToLower().Contains(search.ToLower())
+                        )
+                        .ToList();
+                }
+
+                // filter by row status
+                // with paging
+                //category = category
+                //    .Where(x => x.RowStatus == "A")
+                //    .OrderBy(x => x.Name)
+                //    .Skip((currentPage - 1) * limitPage)
+                //    .Take(limitPage)
+                //    .ToList();
+
+                // without paging
+                category = category
+                    .Where(x => x.RowStatus == "A")
+                    .OrderBy(x => x.Name)
                     .ToList();
 
                 // get total category
