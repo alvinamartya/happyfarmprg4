@@ -1,0 +1,22 @@
+Super Admin -> Region, Employee, Promo, Banner, Category, Goods, SubDistrict
+Manager -> Region, Admin, SubDistrict
+Admin Promosi -> Promo, Banner
+Admin Produksi -> Category, Goods, Purchasing
+Customer Service -> Chat, Lihat Customer Feedback
+Admin Penjualan -> Update Status Penjualan, Lihat Barang yang akan diantar
+
+TODO Web Admin
+Region Super Admin
+Employee Super Admin -> sudah
+Promo Super Admin
+Banner Super Admin
+Category Super Admin
+Goods Super Admin
+Sub District Super Admin
+Emplyee Manager
+Region Manager
+SubDistrict Manager
+Promo Admin Promosi
+Banner Admin Promosi
+Category Admin Produksi
+Goods Admin Produksi

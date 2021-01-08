@@ -77,6 +77,7 @@ C:\Users\user\Documents\GitHub\happyfarmprg4\HappyFarmProject\HappyFarmProjectWe
 C:\Users\user\Documents\GitHub\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.csproj.CopyComplete
 C:\Users\user\Documents\GitHub\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.dll
 C:\Users\user\Documents\GitHub\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.pdb
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.csprojAssemblyReference.cache
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.csproj.CoreCompileInputs.cache
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\bin\HappyFarmProjectWebAdmin.dll.config
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\bin\HappyFarmProjectWebAdmin.dll
@@ -164,4 +165,3 @@ D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\bin\Mi
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.csproj.CopyComplete
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.dll
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.pdb
-D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.csprojAssemblyReference.cache

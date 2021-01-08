@@ -9,7 +9,7 @@ namespace HappyFarmProjectAPI.Models
     {
         public int? PromoId { get; set; }
         public string Name { get; set; }
-        public string Image { get; set; }
+        public string FilePath { get; set; }
         public int CreatedBy { get; set; }
     }
 }

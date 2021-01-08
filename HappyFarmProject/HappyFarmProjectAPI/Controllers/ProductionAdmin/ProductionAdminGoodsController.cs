@@ -3,10 +3,12 @@ using HappyFarmProjectAPI.Controllers.Repository;
 using HappyFarmProjectAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace HappyFarmProjectAPI.Controllers
@@ -103,28 +105,112 @@ namespace HappyFarmProjectAPI.Controllers
         /// <returns></returns>
         [Route("api/v1/PA/Goods/Edit/{id}")]
         [HttpPut]
-        public async Task<IHttpActionResult> EditGoods(int id, EditGoodsRequest goodsRequest)
+        public async Task<IHttpActionResult> EditGoods(int id)
         {
             try
             {
-                // validate data
-                ResponseModel responseModel = goodsLogic.EditGoods(id, goodsRequest);
-                if (responseModel.StatusCode == HttpStatusCode.OK)
+                if (!Request.Content.IsMimeMultipartContent())
+                {
+                    var unsupportedMediaTypeResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.UnsupportedMediaType,
+                        Message = "Tipe data pada media tidak di didukung"
+                    };
+
+                    return Ok(unsupportedMediaTypeResponse);
+                }
+                else
                 {
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
-                        // update goods
-                        await Task.Run(() => repo.EditGoods(id, goodsRequest));
-
-                        // response success
-                        var response = new ResponseWithoutData()
+                        // get request from multipart/form-data
+                        var httpRequest = HttpContext.Current.Request;
+                        EditGoodsRequest goodsRequest = new EditGoodsRequest();
+                        foreach (string key in httpRequest.Form.AllKeys)
                         {
-                            StatusCode = HttpStatusCode.OK,
-                            Message = "Berhasil mengubah produk"
-                        };
+                            foreach (string val in httpRequest.Form.GetValues(key))
+                            {
+                                switch (key)
+                                {
+                                    case "CategoryId":
+                                        goodsRequest.CategoryId = int.Parse(val);
+                                        break;
+                                    case "Name":
+                                        goodsRequest.Name = val;
+                                        break;
+                                    case "ModifiedBy":
+                                        goodsRequest.ModifiedBy = int.Parse(val);
+                                        break;
+                                    case "Description":
+                                        goodsRequest.Description = val;
+                                        break;
+                                }
+                            }
+                        }
 
-                        return Ok(response);
+                        // save file
+                        foreach (string file in httpRequest.Files)
+                        {
+                            try
+                            {
+                                // get file
+                                var postedFile = httpRequest.Files[file];
+
+                                // decrypt file name
+                                Guid uid = Guid.NewGuid();
+                                var guidFileName = uid.ToString() + Path.GetExtension(postedFile.FileName);
+
+                                // save to server
+                                var filePath = HttpContext.Current.Server.MapPath("~/Images/Goods/" + guidFileName);
+                                postedFile.SaveAs(filePath);
+                                goodsRequest.FilePath = guidFileName;
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                                goodsRequest.FilePath = "";
+                            }
+                        }
+
+                        // validate data
+                        ResponseModel responseModel = goodsLogic.EditGoods(id, goodsRequest);
+                        if (responseModel.StatusCode == HttpStatusCode.OK)
+                        {
+                            // update goods
+                            await Task.Run(() => repo.EditGoods(id, goodsRequest));
+
+                            // response success
+                            var response = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.OK,
+                                Message = "Berhasil mengubah produk"
+                            };
+
+                            return Ok(response);
+                        }
+                        else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            // unauthorized
+                            var unAuthorizedResponse = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.Unauthorized,
+                                Message = "Anda tidak memiliki hak akses"
+                            };
+
+                            return Ok(unAuthorizedResponse);
+                        }
+                        else
+                        {
+                            // bad request
+                            var badRequestResponse = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.BadRequest,
+                                Message = responseModel.Message
+                            };
+
+                            return Ok(badRequestResponse);
+                        }
                     }
                     else
                     {
@@ -137,28 +223,6 @@ namespace HappyFarmProjectAPI.Controllers
 
                         return Ok(unAuthorizedResponse);
                     }
-                }
-                else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    // unauthorized
-                    var unAuthorizedResponse = new ResponseWithoutData()
-                    {
-                        StatusCode = HttpStatusCode.Unauthorized,
-                        Message = "Anda tidak memiliki hak akses"
-                    };
-
-                    return Ok(unAuthorizedResponse);
-                }
-                else
-                {
-                    // bad request
-                    var badRequestResponse = new ResponseWithoutData()
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        Message = responseModel.Message
-                    };
-
-                    return Ok(badRequestResponse);
                 }
             }
             catch (Exception ex)
@@ -175,28 +239,119 @@ namespace HappyFarmProjectAPI.Controllers
         /// <returns></returns>
         [Route("api/v1/PA/Goods/Add")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddGoods(AddGoodsRequest goodsRequest)
+        public async Task<IHttpActionResult> AddGoods()
         {
             try
             {
-                // validate data
-                ResponseModel responseModel = goodsLogic.AddGoods(goodsRequest);
-                if (responseModel.StatusCode == HttpStatusCode.Created)
+                if (!Request.Content.IsMimeMultipartContent())
+                {
+                    var unsupportedMediaTypeResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.UnsupportedMediaType,
+                        Message = "Tipe data pada media tidak di didukung"
+                    };
+
+                    return Ok(unsupportedMediaTypeResponse);
+                }
+                else
                 {
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                     {
-                        // create new goods
-                        await Task.Run(() => repo.AddGoods(goodsRequest));
-
-                        // response success
-                        var response = new ResponseWithoutData()
+                        // get request from multipart/form-data
+                        var httpRequest = HttpContext.Current.Request;
+                        AddGoodsRequest goodsRequest = new AddGoodsRequest();
+                        foreach (string key in httpRequest.Form.AllKeys)
                         {
-                            StatusCode = HttpStatusCode.Created,
-                            Message = "Berhasil menambah produk"
-                        };
+                            foreach (string val in httpRequest.Form.GetValues(key))
+                            {
+                                switch (key)
+                                {
+                                    case "CategoryId":
+                                        goodsRequest.CategoryId = int.Parse(val);
+                                        break;
+                                    case "Name":
+                                        goodsRequest.Name = val;
+                                        break;
+                                    case "CreatedBy":
+                                        goodsRequest.CreatedBy = int.Parse(val);
+                                        break;
+                                    case "Description":
+                                        goodsRequest.Description = val;
+                                        break;
+                                }
+                            }
+                        }
 
-                        return Ok(response);
+                        // save file
+                        foreach (string file in httpRequest.Files)
+                        {
+                            try
+                            {
+                                // get file
+                                var postedFile = httpRequest.Files[file];
+
+                                // decrypt file name
+                                Guid uid = Guid.NewGuid();
+                                var guidFileName = uid.ToString() + Path.GetExtension(postedFile.FileName);
+
+                                // save to server
+                                var filePath = HttpContext.Current.Server.MapPath("~/Images/Goods/" + guidFileName);
+                                postedFile.SaveAs(filePath);
+                                goodsRequest.FilePath = guidFileName;
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+
+                                var ImageNotFoundResponse = new ResponseWithoutData()
+                                {
+                                    StatusCode = HttpStatusCode.BadRequest,
+                                    Message = "Gambar tidak tersedia"
+                                };
+
+                                return Ok(ImageNotFoundResponse);
+                            }
+                        }
+
+                        // validate data
+                        ResponseModel responseModel = goodsLogic.AddGoods(goodsRequest);
+                        if (responseModel.StatusCode == HttpStatusCode.Created)
+                        {
+                            // create new goods
+                            await Task.Run(() => repo.AddGoods(goodsRequest));
+
+                            // response success
+                            var response = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.Created,
+                                Message = "Berhasil menambah produk"
+                            };
+
+                            return Ok(response);
+                        }
+                        else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            // unauthorized
+                            var unAuthorizedResponse = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.Unauthorized,
+                                Message = "Anda tidak memiliki hak akses"
+                            };
+
+                            return Ok(unAuthorizedResponse);
+                        }
+                        else
+                        {
+                            // bad request
+                            var badRequestResponse = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.BadRequest,
+                                Message = responseModel.Message
+                            };
+
+                            return Ok(badRequestResponse);
+                        }
                     }
                     else
                     {
@@ -209,28 +364,6 @@ namespace HappyFarmProjectAPI.Controllers
 
                         return Ok(unAuthorizedResponse);
                     }
-                }
-                else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    // unauthorized
-                    var unAuthorizedResponse = new ResponseWithoutData()
-                    {
-                        StatusCode = HttpStatusCode.Unauthorized,
-                        Message = "Anda tidak memiliki hak akses"
-                    };
-
-                    return Ok(unAuthorizedResponse);
-                }
-                else
-                {
-                    // bad request
-                    var badRequestResponse = new ResponseWithoutData()
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        Message = responseModel.Message
-                    };
-
-                    return Ok(badRequestResponse);
                 }
             }
             catch (Exception ex)

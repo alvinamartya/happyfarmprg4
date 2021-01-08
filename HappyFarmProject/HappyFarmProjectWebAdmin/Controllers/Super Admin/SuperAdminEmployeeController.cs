@@ -64,10 +64,10 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
-            IndexEmployeeModelView indexViewModel = new IndexEmployeeModelView()
+            IndexModelView<IEnumerable<EmployeeModelView>> indexViewModel = new IndexModelView<IEnumerable<EmployeeModelView>>()
             {
                 DataPaging = dataPaging,
-                EmployeeModelViews = employeesRequest.Data
+                ModelViews = employeesRequest.Data
             };
 
             return View(indexViewModel);
@@ -75,7 +75,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
         [Route("~/SA/Karyawan")]
         [HttpPost]
-        public ActionResult Index(IndexEmployeeModelView indexEmployee)
+        public ActionResult Index(IndexModelView<IEnumerable<EmployeeModelView>> indexEmployee)
         {
             if (Session["ErrMessage"] != null)
             {
@@ -116,10 +116,10 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
-            IndexEmployeeModelView indexViewModel = new IndexEmployeeModelView()
+            IndexModelView<IEnumerable<EmployeeModelView>> indexViewModel = new IndexModelView<IEnumerable<EmployeeModelView>>()
             {
                 DataPaging = dataPaging,
-                EmployeeModelViews = employeesRequest.Data
+                ModelViews = employeesRequest.Data
             };
 
             return View(indexViewModel);
