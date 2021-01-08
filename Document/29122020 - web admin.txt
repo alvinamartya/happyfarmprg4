@@ -1,0 +1,19 @@
+Super Admin -> Region, Employee, Promo, Banner, Category, Goods, SubDistrict
+Manager -> Region, Admin, SubDistrict
+Admin Promosi -> Promo, Banner
+Admin Produksi -> Category, Goods, Purchasing
+Customer Service -> Chat, Lihat Customer Feedback
+Admin Penjualan -> Update Status Penjualan, Lihat Barang yang akan diantar
+
+TODO API
+1. Admin dan Employee -> sudah
+2. Region -> sudah
+3. Category -> sudah
+4. Goods -> revisi multipart
+5. SubDistrict -> sudah
+6. Banner -> revisi multipart
+7. Promo -> revisi multipart
+8. Chat
+9. Lihat Customer Feedback
+10. Purchasing
+11. Update Status Penjualan & Lihat Barang Yang Akan Diantar

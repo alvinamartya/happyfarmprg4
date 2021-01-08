@@ -37,6 +37,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 goods.ModifiedAt = DateTime.Now;
                 goods.CategoryId = goodsRequest.CategoryId;
                 goods.Description = goodsRequest.Description;
+                if (goodsRequest.FilePath != null && goodsRequest.FilePath != "") goods.Image = goodsRequest.FilePath;
                 db.SaveChanges();
             }
         }
@@ -58,7 +59,8 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     ModifiedAt = DateTime.Now,
                     CreatedAt = DateTime.Now,
                     Description = goodsRequest.Description,
-                    RowStatus = "A"
+                    RowStatus = "A",
+                    Image = goodsRequest.FilePath
                 };
                 db.Goods.Add(goods);
                 db.SaveChanges();

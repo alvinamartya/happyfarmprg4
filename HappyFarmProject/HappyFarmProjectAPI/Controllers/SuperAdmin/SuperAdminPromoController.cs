@@ -3,10 +3,12 @@ using HappyFarmProjectAPI.Controllers.Repository;
 using HappyFarmProjectAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace HappyFarmProjectAPI.Controllers
@@ -103,28 +105,124 @@ namespace HappyFarmProjectAPI.Controllers
         /// <returns></returns>
         [Route("api/v1/SA/Promo/Edit/{id}")]
         [HttpPut]
-        public async Task<IHttpActionResult> EditPromo(int id, EditPromoRequest promoRequest)
+        public async Task<IHttpActionResult> EditPromo(int id)
         {
             try
             {
-                // validate data
-                ResponseModel responseModel = promoLogic.EditPromo(id, promoRequest);
-                if (responseModel.StatusCode == HttpStatusCode.OK)
+                if (!Request.Content.IsMimeMultipartContent())
+                {
+                    var unsupportedMediaTypeResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.UnsupportedMediaType,
+                        Message = "Tipe data pada media tidak di didukung"
+                    };
+
+                    return Ok(unsupportedMediaTypeResponse);
+                }
+                else
                 {
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
-                        // update promo
-                        await Task.Run(() => repo.EditPromo(id, promoRequest));
-
-                        // response success
-                        var response = new ResponseWithoutData()
+                        // get request from multipart/form-data
+                        var httpRequest = HttpContext.Current.Request;
+                        EditPromoRequest promoRequest = new EditPromoRequest();
+                        foreach (string key in httpRequest.Form.AllKeys)
                         {
-                            StatusCode = HttpStatusCode.OK,
-                            Message = "Berhasil mengubah promo"
-                        };
+                            foreach (string val in httpRequest.Form.GetValues(key))
+                            {
+                                switch (key)
+                                {
+                                    case "ModifiedBy":
+                                        promoRequest.ModifiedBy = int.Parse(val);
+                                        break;
+                                    case "Name":
+                                        promoRequest.Name = val;
+                                        break;
+                                    case "StartDate":
+                                        promoRequest.StartDate = DateTime.Parse(val);
+                                        break;
+                                    case "EndDate":
+                                        promoRequest.EndDate = DateTime.Parse(val);
+                                        break;
+                                    case "IsFreeDelivery":
+                                        promoRequest.IsFreeDelivery = val;
+                                        break;
+                                    case "Discount":
+                                        promoRequest.Discount = float.Parse(val);
+                                        break;
+                                    case "MinTransaction":
+                                        promoRequest.MinTransaction = int.Parse(val);
+                                        break;
+                                    case "MaxDiscount":
+                                        promoRequest.MaxDiscount = int.Parse(val);
+                                        break;
+                                }
+                            }
+                        }
 
-                        return Ok(response);
+                        // save file
+                        foreach (string file in httpRequest.Files)
+                        {
+                            try
+                            {
+                                // get file
+                                var postedFile = httpRequest.Files[file];
+
+                                // decrypt file name
+                                Guid uid = Guid.NewGuid();
+                                var guidFileName = uid.ToString() + Path.GetExtension(postedFile.FileName);
+
+                                // save to server
+                                var filePath = HttpContext.Current.Server.MapPath("~/Images/Promo/" + guidFileName);
+                                postedFile.SaveAs(filePath);
+                                promoRequest.FilePath = guidFileName;
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                                promoRequest.FilePath = "";
+                            }
+                        }
+
+                        // validate data
+                        ResponseModel responseModel = promoLogic.EditPromo(id, promoRequest);
+                        if (responseModel.StatusCode == HttpStatusCode.OK)
+                        {
+                            // update promo
+                            await Task.Run(() => repo.EditPromo(id, promoRequest));
+
+                            // response success
+                            var response = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.OK,
+                                Message = "Berhasil mengubah promo"
+                            };
+
+                            return Ok(response);
+                        }
+                        else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            // unauthorized
+                            var unAuthorizedResponse = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.Unauthorized,
+                                Message = "Anda tidak memiliki hak akses"
+                            };
+
+                            return Ok(unAuthorizedResponse);
+                        }
+                        else
+                        {
+                            // bad request
+                            var badRequestResponse = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.BadRequest,
+                                Message = responseModel.Message
+                            };
+
+                            return Ok(badRequestResponse);
+                        }
                     }
                     else
                     {
@@ -137,28 +235,6 @@ namespace HappyFarmProjectAPI.Controllers
 
                         return Ok(unAuthorizedResponse);
                     }
-                }
-                else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    // unauthorized
-                    var unAuthorizedResponse = new ResponseWithoutData()
-                    {
-                        StatusCode = HttpStatusCode.Unauthorized,
-                        Message = "Anda tidak memiliki hak akses"
-                    };
-
-                    return Ok(unAuthorizedResponse);
-                }
-                else
-                {
-                    // bad request
-                    var badRequestResponse = new ResponseWithoutData()
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        Message = responseModel.Message
-                    };
-
-                    return Ok(badRequestResponse);
                 }
             }
             catch (Exception ex)
@@ -175,28 +251,131 @@ namespace HappyFarmProjectAPI.Controllers
         /// <returns></returns>
         [Route("api/v1/SA/Promo/Add")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddPromo(AddPromoRequest promoRequest)
+        public async Task<IHttpActionResult> AddPromo()
         {
             try
             {
-                // validate data
-                ResponseModel responseModel = promoLogic.AddPromo(promoRequest);
-                if (responseModel.StatusCode == HttpStatusCode.Created)
+                if (!Request.Content.IsMimeMultipartContent())
+                {
+                    var unsupportedMediaTypeResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.UnsupportedMediaType,
+                        Message = "Tipe data pada media tidak di didukung"
+                    };
+
+                    return Ok(unsupportedMediaTypeResponse);
+                }
+                else
                 {
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
-                        // create promo
-                        await Task.Run(() => repo.AddPromo(promoRequest));
-
-                        // response success
-                        var response = new ResponseWithoutData()
+                        // get request from multipart/form-data
+                        var httpRequest = HttpContext.Current.Request;
+                        AddPromoRequest promoRequest = new AddPromoRequest();
+                        foreach (string key in httpRequest.Form.AllKeys)
                         {
-                            StatusCode = HttpStatusCode.Created,
-                            Message = "Berhasil menambah promo"
-                        };
+                            foreach (string val in httpRequest.Form.GetValues(key))
+                            {
+                                switch (key)
+                                {
+                                    case "CreatedBy":
+                                        promoRequest.CreatedBy = int.Parse(val);
+                                        break;
+                                    case "Name":
+                                        promoRequest.Name = val;
+                                        break;
+                                    case "StartDate":
+                                        promoRequest.StartDate = DateTime.Parse(val);
+                                        break;
+                                    case "EndDate":
+                                        promoRequest.EndDate = DateTime.Parse(val);
+                                        break;
+                                    case "IsFreeDelivery":
+                                        promoRequest.IsFreeDelivery = val;
+                                        break;
+                                    case "Discount":
+                                        promoRequest.Discount = float.Parse(val);
+                                        break;
+                                    case "MinTransaction":
+                                        promoRequest.MinTransaction = int.Parse(val);
+                                        break;
+                                    case "MaxDiscount":
+                                        promoRequest.MaxDiscount = int.Parse(val);
+                                        break;
+                                }
+                            }
+                        }
 
-                        return Ok(response);
+                        // save file
+                        foreach (string file in httpRequest.Files)
+                        {
+                            try
+                            {
+                                // get file
+                                var postedFile = httpRequest.Files[file];
+
+                                // decrypt file name
+                                Guid uid = Guid.NewGuid();
+                                var guidFileName = uid.ToString() + Path.GetExtension(postedFile.FileName);
+
+                                // save to server
+                                var filePath = HttpContext.Current.Server.MapPath("~/Images/Promo/" + guidFileName);
+                                postedFile.SaveAs(filePath);
+                                promoRequest.FilePath = guidFileName;
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+
+                                var ImageNotFoundResponse = new ResponseWithoutData()
+                                {
+                                    StatusCode = HttpStatusCode.BadRequest,
+                                    Message = "Gambar tidak tersedia"
+                                };
+
+                                return Ok(ImageNotFoundResponse);
+                            }
+                        }
+
+                        // validate data
+                        ResponseModel responseModel = promoLogic.AddPromo(promoRequest);
+                        if (responseModel.StatusCode == HttpStatusCode.Created)
+                        {
+                            // create promo
+                            await Task.Run(() => repo.AddPromo(promoRequest));
+
+                            // response success
+                            var response = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.Created,
+                                Message = "Berhasil menambah promo"
+                            };
+
+                            return Ok(response);
+                        }
+                        else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            // unauthorized
+                            var unAuthorizedResponse = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.Unauthorized,
+                                Message = "Anda tidak memiliki hak akses"
+                            };
+
+                            return Ok(unAuthorizedResponse);
+                        }
+                        else
+                        {
+                            // bad request
+                            var badRequestResponse = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.BadRequest,
+                                Message = responseModel.Message
+                            };
+
+                            return Ok(badRequestResponse);
+                        }
                     }
                     else
                     {
@@ -209,28 +388,6 @@ namespace HappyFarmProjectAPI.Controllers
 
                         return Ok(unAuthorizedResponse);
                     }
-                }
-                else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    // unauthorized
-                    var unAuthorizedResponse = new ResponseWithoutData()
-                    {
-                        StatusCode = HttpStatusCode.Unauthorized,
-                        Message = "Anda tidak memiliki hak akses"
-                    };
-
-                    return Ok(unAuthorizedResponse);
-                }
-                else
-                {
-                    // bad request
-                    var badRequestResponse = new ResponseWithoutData()
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        Message = responseModel.Message
-                    };
-
-                    return Ok(badRequestResponse);
                 }
             }
             catch (Exception ex)
@@ -258,7 +415,7 @@ namespace HappyFarmProjectAPI.Controllers
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
-                        // get goods by id
+                        // get promo by id
                         Object promo = await Task.Run(() => repo.GetPromoById(id));
 
                         // response success

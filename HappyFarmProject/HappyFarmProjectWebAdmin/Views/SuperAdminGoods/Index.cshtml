@@ -1,0 +1,52 @@
+﻿@model HappyFarmProjectWebAdmin.Models.IndexModelView<IEnumerable<HappyFarmProjectWebAdmin.Models.GoodsModelView>>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="search-box">
+        <div class="search-box__find">
+            @Html.EditorFor(model => model.DataPaging.Search, new { htmlAttributes = new { @class = "form-control search-box__content", placeholder = "Masukkan kata yang dicari" } })
+            <input type="submit" name="search-btn" value="Cari" id="search-btn" class="btn btn-primary" style="margin-left: 5px" />
+        </div>
+        @Html.ActionLink("Tambah Karyawan", "Add", "SuperAdminEmployee", null, new { @class = "btn btn-primary" })
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Nama
+        </th>
+        <th>
+            Kategori
+        </th>
+        <th>
+            Aksi
+        </th>
+    </tr>
+
+    @foreach (var item in (IEnumerable<HappyFarmProjectWebAdmin.Models.GoodsModelView>)Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

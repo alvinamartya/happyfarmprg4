@@ -35,7 +35,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 promo.ModifiedBy = promoRequest.ModifiedBy;
                 promo.ModifiedAt = DateTime.Now;
                 promo.Name = promoRequest.Name;
-                promo.Image = promoRequest.Image;
+                promo.Image = promoRequest.FilePath;
                 promo.StartDate = promoRequest.StartDate;
                 promo.EndDate = promoRequest.EndDate;
                 promo.IsFreeDelivery = promoRequest.IsFreeDelivery;
@@ -72,7 +72,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     CreatedAt = DateTime.Now,
                     ModifiedAt = DateTime.Now,
                     Name = promoRequest.Name,
-                    Image = promoRequest.Image,
+                    Image = promoRequest.FilePath,
                     StartDate = promoRequest.StartDate,
                     EndDate = promoRequest.EndDate,
                     IsFreeDelivery = promoRequest.IsFreeDelivery,

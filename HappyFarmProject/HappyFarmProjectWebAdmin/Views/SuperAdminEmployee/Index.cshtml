@@ -1,4 +1,4 @@
-﻿@model HappyFarmProjectWebAdmin.Models.IndexEmployeeModelView
+﻿@model HappyFarmProjectWebAdmin.Models.IndexModelView<IEnumerable<HappyFarmProjectWebAdmin.Models.EmployeeModelView>>
 
 @{
     ViewBag.Title = "Index";
@@ -46,7 +46,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.EmployeeModelViews)
+        @foreach (var item in (IEnumerable<HappyFarmProjectWebAdmin.Models.EmployeeModelView>)Model.ModelViews)
         {
             <tr>
                 <td>
@@ -190,5 +190,5 @@
 
 
 @section Scripts {
-    <script src="~/Scripts/data-karyawan.js"></script>
+
 }
