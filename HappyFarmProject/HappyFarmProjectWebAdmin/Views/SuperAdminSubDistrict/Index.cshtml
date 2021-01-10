@@ -1,0 +1,56 @@
+﻿@model HappyFarmProjectWebAdmin.Models.IndexSubDistrictModelView
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="search-box">
+        <div class="search-box__find">
+            @Html.EditorFor(model => model.DataPaging.Search, new { htmlAttributes = new { @class = "form-control search-box__content", placeholder = "Masukkan kata yang dicari" } })
+            <input type="submit" name="search-btn" value="Cari" id="search-btn" class="btn btn-primary" style="margin-left: 5px" />
+        </div>
+        @Html.ActionLink("Tambah Kecamatan", "Add", "SuperAdminSubDistrict", null, new { @class = "btn btn-primary" })
+    </div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nama
+            </th>
+            <th>
+                Wilayah
+            </th>
+            <th>
+                Biaya Kirim
+            </th>
+            <th>
+                Aksi
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SubDistrictModelViews)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Region)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShippingCharges)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit","SuperAdminSubDistrict", new { id = item.ID })" class="btn btn-primary">Ubah</a>
+                <button type="button" class="btn btn-danger" id="btn-delete@(item.ID)">Hapus</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

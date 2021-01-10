@@ -320,25 +320,29 @@ namespace HappyFarmProjectAPI.Controllers
                     ResponsePagingModel<List<SubDistrict>> listSubDistrictPaging = await Task.Run(() => repo.GetSubDistrict(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
 
                     // response success
-                    var response = new ResponseDataWithPaging<Object>()
-                    {
-                        StatusCode = HttpStatusCode.OK,
-                        Message = "Berhasil",
-                        Data = listSubDistrictPaging
-                            .Data
-                            .Select(x => new
-                            {
-                                x.Id,
-                                x.Name,
-                                x.ShippingCharges,
-                                x.RegionId
-                            })
-                            .ToList(),
-                        CurrentPage = listSubDistrictPaging.CurrentPage,
-                        TotalPage = listSubDistrictPaging.TotalPage
-                    };
+                    using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+                    { 
+                        var response = new ResponseDataWithPaging<Object>()
+                        {
+                            StatusCode = HttpStatusCode.OK,
+                            Message = "Berhasil",
+                            Data = listSubDistrictPaging
+                                .Data
+                                .Select(x => new
+                                {
+                                    x.Id,
+                                    x.Name,
+                                    x.ShippingCharges,
+                                    Region = db.Regions.Where(z => z.Id == x.RegionId).FirstOrDefault() == null ? null : db.Regions.Where(z => z.Id == x.RegionId).FirstOrDefault().Name,
+                                    x.RegionId
+                                })
+                                .ToList(),
+                            CurrentPage = listSubDistrictPaging.CurrentPage,
+                            TotalPage = listSubDistrictPaging.TotalPage
+                        };
 
-                    return Ok(response);
+                        return Ok(response);
+                    }
                 }
                 else
                 {

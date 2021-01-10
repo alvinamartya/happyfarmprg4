@@ -171,14 +171,28 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\Super Admin\SuperAdminCategoryController.cs" />
     <Compile Include="Controllers\Super Admin\SuperAdminEmployeeController.cs" />
+    <Compile Include="Controllers\Super Admin\SuperAdminRegionController.cs" />
+    <Compile Include="Controllers\Super Admin\SuperAdminSubDistrictController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelView\CategoryModelView.cs" />
+    <Compile Include="Models\ModelView\IndexCategoryModelView.cs" />
     <Compile Include="Models\ModelView\IndexEmployeeModelView.cs" />
+    <Compile Include="Models\ModelView\IndexRegionModelView.cs" />
+    <Compile Include="Models\ModelView\IndexSubDistrictModelView.cs" />
+    <Compile Include="Models\ModelView\SubDistrictModelView.cs" />
+    <Compile Include="Models\Request\AddCategoryRequest.cs" />
+    <Compile Include="Models\Request\AddRegionRequest.cs" />
+    <Compile Include="Models\Request\AddSubDistrictRequest.cs" />
+    <Compile Include="Models\Request\EditCategoryRequest.cs" />
     <Compile Include="Models\Request\EditEmployeeRequest.cs" />
     <Compile Include="Models\ModelView\RegionModelView.cs" />
     <Compile Include="Models\Request\AddEmployeeRequest.cs" />
+    <Compile Include="Models\Request\EditRegionRequest.cs" />
+    <Compile Include="Models\Request\EditSubDistrictRequest.cs" />
     <Compile Include="Models\Request\GetListDataRequest.cs" />
     <Compile Include="Models\ModelView\EmployeeModelView.cs" />
     <Compile Include="Models\Response\ResponseWithoutData.cs" />
@@ -377,6 +391,15 @@
     <Content Include="Views\Shared\_LayoutPA.cshtml" />
     <Content Include="Views\SuperAdminEmployee\Add.cshtml" />
     <Content Include="Views\SuperAdminEmployee\Edit.cshtml" />
+    <Content Include="Views\SuperAdminRegion\Index.cshtml" />
+    <Content Include="Views\SuperAdminRegion\Add.cshtml" />
+    <Content Include="Views\SuperAdminRegion\Edit.cshtml" />
+    <Content Include="Views\SuperAdminCategory\Index.cshtml" />
+    <Content Include="Views\SuperAdminCategory\Add.cshtml" />
+    <Content Include="Views\SuperAdminCategory\Edit.cshtml" />
+    <Content Include="Views\SuperAdminSubDistrict\Index.cshtml" />
+    <Content Include="Views\SuperAdminSubDistrict\Add.cshtml" />
+    <Content Include="Views\SuperAdminSubDistrict\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
