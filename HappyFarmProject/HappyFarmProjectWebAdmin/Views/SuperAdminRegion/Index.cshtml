@@ -35,8 +35,8 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    <a href="@Url.Action("Edit","SuperAdminRegion", new { id = item.ID })" class="btn btn-primary">Ubah</a>
-                    <button type="button" class="btn btn-danger" id="btn-delete@(item.ID)">Hapus</button>
+                    <a href="@Url.Action("Edit","SuperAdminRegion", new { id = item.Id })" class="btn btn-primary">Ubah</a>
+                    <button type="button" class="btn btn-danger" id="btn-delete@(item.Id)">Hapus</button>
                 </td>
             </tr>
         }
@@ -53,14 +53,14 @@
 
 @foreach (var item in (IEnumerable<HappyFarmProjectWebAdmin.Models.RegionModelView>)Model.ModelViews)
 {
-    using (Html.BeginForm("Delete", "SuperAdminRegion", new { id = item.ID }))
+    using (Html.BeginForm("Delete", "SuperAdminRegion", new { id = item.Id }))
     {
         <!-- The Delete Modal -->
-        <div id="deleteModal@(item.ID)" class="modal" style="display:none">
+        <div id="deleteModal@(item.Id)" class="modal" style="display:none">
             <!-- Delete Modal content -->
             <div class="modal-content">
                 <div class="modal-content--header">
-                    <span class="close" id="close@(item.ID)">&times;</span>
+                    <span class="close" id="close@(item.Id)">&times;</span>
                     <p>Hapus Wilayah</p>
                 </div>
                 <hr style="width: 100%" />
@@ -69,7 +69,7 @@
                 </div>
                 <hr style="width: 100%" />
                 <div class="modal-content--footer">
-                    <a href="#" class="btn btn-secondary" onclick="closeModalDelete@(item.ID)();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+                    <a href="#" class="btn btn-secondary" onclick="closeModalDelete@(item.Id)();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
                     <input type="submit" value="Hapus" class="btn btn-danger" style="margin-bottom: 10px; margin-top: -5px" />
                 </div>
             </div>
@@ -77,25 +77,25 @@
 
         <script>
             // Get the modal
-            var modal@(item.ID) = document.getElementById("deleteModal@(item.ID)");
+            var modal@(item.Id) = document.getElementById("deleteModal@(item.Id)");
 
             // Get the <span> element that closes the modal
-            var span = document.getElementById("close@(item.ID)");
+            var span = document.getElementById("close@(item.Id)");
 
-            modal@(item.ID).style.display = "none";
+            modal@(item.Id).style.display = "none";
 
             // When the user clicks on <span> (x), close the modal
             span.onclick = function () {
-                modal@(item.ID).style.display = "none";
+                modal@(item.Id).style.display = "none";
             }
 
-            function closeModalDelete@(item.ID)() {
-                modal@(item.ID).style.display = "none";
+            function closeModalDelete@(item.Id)() {
+                modal@(item.Id).style.display = "none";
             }
 
-            const btn@(item.ID) = document.getElementById("btn-delete@(item.ID)");
-            btn@(item.ID).addEventListener('click', () => {
-                modal@(item.ID).style.display = "block";
+            const btn@(item.Id) = document.getElementById("btn-delete@(item.Id)");
+            btn@(item.Id).addEventListener('click', () => {
+                modal@(item.Id).style.display = "block";
             })
         </script>
     }
@@ -147,5 +147,5 @@
 
 
 @section Scripts {
-    <script src="~/Scripts/data-karyawan.js"></script>
+
 }

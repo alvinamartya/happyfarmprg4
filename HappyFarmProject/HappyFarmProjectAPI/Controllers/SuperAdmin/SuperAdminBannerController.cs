@@ -464,8 +464,7 @@ namespace HappyFarmProjectAPI.Controllers
                                 x.Id,
                                 x.Name,
                                 x.PromoId,
-                                PromoName = x.PromoId == null ? "-" : x.Promo.Name,
-                                x.Image
+                                PromoName = x.PromoId == null ? "-" : x.Promo.Name
                             })
                             .ToList(),
                         CurrentPage = listBannerPaging.CurrentPage,
