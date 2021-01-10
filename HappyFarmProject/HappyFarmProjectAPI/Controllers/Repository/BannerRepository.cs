@@ -132,8 +132,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                         x.Id,
                         x.Name,
                         x.PromoId,
-                        PromoName = x.PromoId == null ? "-" : x.Promo.Name,
-                        x.Image
+                        PromoName = x.PromoId == null ? "-" : x.Promo.Name
                     })
                     .FirstOrDefault();
 

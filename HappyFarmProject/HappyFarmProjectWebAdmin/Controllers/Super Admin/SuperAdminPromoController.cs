@@ -9,16 +9,17 @@ using System.Web.Mvc;
 
 namespace HappyFarmProjectWebAdmin.Controllers
 {
-    public class SuperAdminGoodsController : Controller
+    public class SuperAdminPromoController : Controller
     {
         #region Variable
-        HttpClient hcGoodsAdd = APIHelper.GetHttpClient(APIHelper.SA + "/Goods/Add");
-        HttpClient hcGoodsDelete = APIHelper.GetHttpClient(APIHelper.SA + "/Goods/Delete");
-        HttpClient hcGoodsEdit = APIHelper.GetHttpClient(APIHelper.SA + "/Goods/Edit");
+        HttpClient hcPromoAdd = APIHelper.GetHttpClient(APIHelper.SA + "/Promo/Add");
+        HttpClient hcPromoDelete = APIHelper.GetHttpClient(APIHelper.SA + "/Promo/Delete");
+        HttpClient hcPromodit = APIHelper.GetHttpClient(APIHelper.SA + "/Promo/Edit");
         #endregion
-        #region GetGoods
-        // GET Goods
-        [Route("~/SA/Produk")]
+
+        #region GetPromo
+        // GET Promo
+        [Route("~/SA/Promo")]
         [HttpGet]
         public ActionResult Index()
         {
@@ -39,43 +40,42 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 Search = ""
             };
 
-            ResponseDataWithPaging<List<GoodsModelView>> goodsRequest = GetGoods(dataPaging);
-            ViewBag.CurrentPage = goodsRequest.CurrentPage;
-            ViewBag.TotalPage = goodsRequest.TotalPage;
+            ResponseDataWithPaging<List<PromoModelView>> promoRequest = GetPromo(dataPaging);
+            ViewBag.CurrentPage = promoRequest.CurrentPage;
+            ViewBag.TotalPage = promoRequest.TotalPage;
 
             // status code
-            if (goodsRequest.StatusCode == HttpStatusCode.Unauthorized)
+            if (promoRequest.StatusCode == HttpStatusCode.Unauthorized)
             {
-                Session["ErrMessage"] = goodsRequest.Message;
+                Session["ErrMessage"] = promoRequest.Message;
                 return RedirectToAction("Index", "Login");
             }
-            else if (goodsRequest.StatusCode != HttpStatusCode.OK)
+            else if (promoRequest.StatusCode != HttpStatusCode.OK)
             {
-                TempData["ErrMessage"] = goodsRequest.Message;
+                TempData["ErrMessage"] = promoRequest.Message;
                 TempData["ErrHeader"] = "Gagal meload data";
             }
 
 
             // data is empty
-            if (goodsRequest.Data.Count == 0)
+            if (promoRequest.Data.Count == 0)
             {
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
-            IndexModelView<IEnumerable<GoodsModelView>> indexViewModel = new IndexModelView<IEnumerable<GoodsModelView>>()
+            IndexModelView<IEnumerable<PromoModelView>> indexViewModel = new IndexModelView<IEnumerable<PromoModelView>>()
             {
                 DataPaging = dataPaging,
-                ModelViews = goodsRequest.Data
+                ModelViews = promoRequest.Data
             };
 
             return View(indexViewModel);
         }
 
-        [Route("~/SA/Produk")]
+        [Route("~/SA/Promo")]
         [HttpPost]
-        public ActionResult Index(IndexModelView<IEnumerable<GoodsModelView>> indexGoods)
+        public ActionResult Index(IndexModelView<IEnumerable<PromoModelView>> indexPromo)
         {
-            System.Diagnostics.Debug.Write(indexGoods.DataPaging.Search);
             if (Session["ErrMessage"] != null)
             {
                 TempData["ErrMessage"] = Session["ErrMessage"];
@@ -90,47 +90,47 @@ namespace HappyFarmProjectWebAdmin.Controllers
             {
                 CurrentPage = 1,
                 LimitPage = 10,
-                Search = indexGoods.DataPaging.Search
+                Search = indexPromo.DataPaging.Search
             };
 
-            ResponseDataWithPaging<List<GoodsModelView>> goodsRequest = GetGoods(dataPaging);
-            ViewBag.CurrentPage = goodsRequest.CurrentPage;
-            ViewBag.TotalPage = goodsRequest.TotalPage;
+            ResponseDataWithPaging<List<PromoModelView>> promoRequest = GetPromo(dataPaging);
+            ViewBag.CurrentPage = promoRequest.CurrentPage;
+            ViewBag.TotalPage = promoRequest.TotalPage;
 
             // status code
-            if (goodsRequest.StatusCode == HttpStatusCode.Unauthorized)
+            if (promoRequest.StatusCode == HttpStatusCode.Unauthorized)
             {
-                Session["ErrMessage"] = goodsRequest.Message;
+                Session["ErrMessage"] = promoRequest.Message;
                 return RedirectToAction("Index", "Login");
             }
-            else if (goodsRequest.StatusCode != HttpStatusCode.OK)
+            else if (promoRequest.StatusCode != HttpStatusCode.OK)
             {
-                TempData["ErrMessage"] = goodsRequest.Message;
+                TempData["ErrMessage"] = promoRequest.Message;
                 TempData["ErrHeader"] = "Gagal meload data";
             }
 
             // data is empty
-            if (goodsRequest.Data.Count == 0)
+            if (promoRequest.Data.Count == 0)
             {
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
-            IndexModelView<IEnumerable<GoodsModelView>> indexViewModel = new IndexModelView<IEnumerable<GoodsModelView>>()
+            IndexModelView<IEnumerable<PromoModelView>> indexViewModel = new IndexModelView<IEnumerable<PromoModelView>>()
             {
                 DataPaging = dataPaging,
-                ModelViews = goodsRequest.Data
+                ModelViews = promoRequest.Data
             };
 
             return View(indexViewModel);
         }
         #endregion
-        #region Delete Goods
-        [Route("~/SA/Produk/Hapus")]
+        #region Delete Promo
+        [Route("~/SA/Promo/Hapus")]
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            hcGoodsDelete.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
-            var apiDelete = hcGoodsDelete.DeleteAsync("Delete/" + id);
+            hcPromoDelete.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
+            var apiDelete = hcPromoDelete.DeleteAsync("Delete/" + id);
             apiDelete.Wait();
 
             var dateDelete = apiDelete.Result;
@@ -145,56 +145,56 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 }
                 else if (displayDataDelete.Result.StatusCode == HttpStatusCode.OK)
                 {
-                    Session["ErrMessage"] = "Berhasil menghapus produk";
+                    Session["ErrMessage"] = "Berhasil menghapus promo";
                     Session["ErrHeader"] = "Berhasil";
                 }
                 else
                 {
                     Session["ErrMessage"] = displayDataDelete.Result.Message;
-                    Session["ErrHeader"] = "Gagal menghapus produk";
+                    Session["ErrHeader"] = "Gagal menghapus promo";
                 }
             }
             else
             {
                 Session["ErrMessage"] = "Terjadi kesalahan pada sistem";
-                Session["ErrHeader"] = "Gagal menghapus produk";
+                Session["ErrHeader"] = "Gagal menghapus promo";
             }
             return RedirectToAction("Index");
         }
         #endregion
 
         #region Request Data
-        public ResponseDataWithPaging<List<GoodsModelView>> GetGoods(GetListDataRequest dataPaging)
+        public ResponseDataWithPaging<List<PromoModelView>> GetPromo(GetListDataRequest dataPaging)
         {
-            // get goods
-            HttpClient hcGoodsGet = APIHelper.GetHttpClient(APIHelper.SA + "/Goods");
-            hcGoodsGet.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
+            // get promo
+            HttpClient hcPromoGet = APIHelper.GetHttpClient(APIHelper.SA + "/Promo");
+            hcPromoGet.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
 
-            var apiGet = hcGoodsGet.PostAsJsonAsync<GetListDataRequest>("Goods", dataPaging);
+            var apiGet = hcPromoGet.PostAsJsonAsync<GetListDataRequest>("Promo", dataPaging);
             apiGet.Wait();
 
             var data = apiGet.Result;
             if (data.IsSuccessStatusCode)
             {
-                var displayData = data.Content.ReadAsAsync<ResponseDataWithPaging<List<GoodsModelView>>>();
+                var displayData = data.Content.ReadAsAsync<ResponseDataWithPaging<List<PromoModelView>>>();
                 displayData.Wait();
 
-                return new ResponseDataWithPaging<List<GoodsModelView>>()
+                return new ResponseDataWithPaging<List<PromoModelView>>()
                 {
                     StatusCode = displayData.Result.StatusCode,
                     Message = displayData.Result.Message,
-                    Data = displayData.Result.StatusCode == HttpStatusCode.OK ? displayData.Result.Data : new List<GoodsModelView>(),
+                    Data = displayData.Result.StatusCode == HttpStatusCode.OK ? displayData.Result.Data : new List<PromoModelView>(),
                     CurrentPage = displayData.Result.StatusCode == HttpStatusCode.OK ? displayData.Result.CurrentPage : 0,
                     TotalPage = displayData.Result.StatusCode == HttpStatusCode.OK ? displayData.Result.TotalPage : 0
                 };
             }
             else
             {
-                return new ResponseDataWithPaging<List<GoodsModelView>>()
+                return new ResponseDataWithPaging<List<PromoModelView>>()
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
                     Message = "Terjadi kesalahan pada sistem",
-                    Data = new List<GoodsModelView>(),
+                    Data = new List<PromoModelView>(),
                     CurrentPage = 0,
                     TotalPage = 0
                 };

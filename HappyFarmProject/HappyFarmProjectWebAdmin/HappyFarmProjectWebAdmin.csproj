@@ -176,12 +176,16 @@
     <Compile Include="Controllers\Super Admin\SuperAdminGoodsController.cs" />
     <Compile Include="Controllers\Super Admin\SuperAdminRegionController.cs" />
     <Compile Include="Controllers\Super Admin\SuperAdminSubDistrictController.cs" />
+    <Compile Include="Controllers\Super Admin\SuperAdminBannerController.cs" />
+    <Compile Include="Controllers\Super Admin\SuperAdminPromoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelView\BannerModelView.cs" />
     <Compile Include="Models\ModelView\CategoryModelView.cs" />
     <Compile Include="Models\ModelView\GoodsModelView.cs" />
     <Compile Include="Models\ModelView\IndexModelView.cs" />
+    <Compile Include="Models\ModelView\PromoModelView.cs" />
     <Compile Include="Models\Request\AddCategoryRequest.cs" />
     <Compile Include="Models\Request\AddRegionRequest.cs" />
     <Compile Include="Models\Request\AddSubDistrictRequest.cs" />
@@ -399,6 +403,8 @@
     <Content Include="Views\SuperAdminSubDistrict\Add.cshtml" />
     <Content Include="Views\SuperAdminSubDistrict\Edit.cshtml" />
     <Content Include="Views\SuperAdminSubDistrict\Index.cshtml" />
+    <Content Include="Views\SuperAdminBanner\Index.cshtml" />
+    <Content Include="Views\SuperAdminPromo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

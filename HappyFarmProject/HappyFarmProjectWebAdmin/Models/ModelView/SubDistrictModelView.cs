@@ -8,7 +8,7 @@ namespace HappyFarmProjectWebAdmin.Models
 {
     public class SubDistrictModelView
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Region { get; set; }
         public int RegionId { get; set; }
         public string Name { get; set; }

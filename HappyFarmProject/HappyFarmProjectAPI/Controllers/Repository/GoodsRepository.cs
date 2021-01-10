@@ -82,11 +82,12 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 // get goods
                 var listGoods = db.Goods.ToList();
 
-                if(search != null && search == "")
+                if(search != null && search != "")
                 {
+                    System.Diagnostics.Debug.WriteLine(search);
                     listGoods = listGoods
                         .Where(x =>
-                         x.Name.ToLower().Contains(search.ToLower()) ||
+                            x.Name.ToLower().Contains(search.ToLower()) ||
                             x.Description.ToLower().Contains(search.ToLower())
                         )
                         .ToList();
@@ -136,7 +137,8 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                         x.Id,
                         x.Name,
                         CategoryId = x.CategoryId,
-                        CategoryName = x.Category.Name
+                        CategoryName = x.Category.Name,
+                        x.Description
                     })
                     .FirstOrDefault();
 
