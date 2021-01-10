@@ -135,6 +135,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                         x.Id,
                         x.Name,
                         RegionId = x.RegionId,
+                        Region = db.Regions.Where(z=>z.Id == x.RegionId).FirstOrDefault().Name,
                         ShippingCharges = x.ShippingCharges
                     })
                     .FirstOrDefault();

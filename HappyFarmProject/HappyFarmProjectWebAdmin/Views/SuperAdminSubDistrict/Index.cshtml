@@ -3,7 +3,6 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -54,3 +53,109 @@
         }
     </tbody>
 </table>
+@* Error Data Empty *@
+@if (TempData["ErrMessageData"] != null)
+{
+    <div class="data-err">
+        @TempData["ErrMessageData"]
+    </div>
+}
+
+@foreach (var item in (IEnumerable<HappyFarmProjectWebAdmin.Models.SubDistrictModelView>)Model.ModelViews)
+{
+    using (Html.BeginForm("Delete", "SuperAdminSubDistrict", new { id = item.ID }))
+    {
+        <!-- The Delete Modal -->
+        <div id="deleteModal@(item.ID)" class="modal" style="display:none">
+            <!-- Delete Modal content -->
+            <div class="modal-content">
+                <div class="modal-content--header">
+                    <span class="close" id="close@(item.ID)">&times;</span>
+                    <p>Hapus Kecamatan</p>
+                </div>
+                <hr style="width: 100%" />
+                <div class="modal-content--description">
+                    Anda yakin akan menghapus data @item.Name?
+                </div>
+                <hr style="width: 100%" />
+                <div class="modal-content--footer">
+                    <a href="#" class="btn btn-secondary" onclick="closeModalDelete@(item.ID)();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+                    <input type="submit" value="Hapus" class="btn btn-danger" style="margin-bottom: 10px; margin-top: -5px" />
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Get the modal
+            var modal@(item.ID) = document.getElementById("deleteModal@(item.ID)");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("close@(item.ID)");
+
+            modal@(item.ID).style.display = "none";
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal@(item.ID).style.display = "none";
+            }
+
+            function closeModalDelete@(item.ID)() {
+                modal@(item.ID).style.display = "none";
+            }
+
+            const btn@(item.ID) = document.getElementById("btn-delete@(item.ID)");
+            btn@(item.ID).addEventListener('click', () => {
+                modal@(item.ID).style.display = "block";
+            })
+        </script>
+    }
+}
+
+@*@if (ViewBag.CurrentPage > 0 && ViewBag.TotalPage > 0)
+    {
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    }*@
+
+@if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
+{
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-content--header">
+                <span class="close">&times;</span>
+                <p>@TempData["ErrHeader"]</p>
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--description">
+                @TempData["ErrMessage"]
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--footer">
+                <a href="#" class="btn btn-danger" onclick="closeModal();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+            </div>
+        </div>
+
+    </div>
+    <script src="~/Scripts/data-error.js"></script>
+}
+
+
+@section Scripts {
+    <script src="~/Scripts/data-karyawan.js"></script>
+}

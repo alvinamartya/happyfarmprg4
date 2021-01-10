@@ -331,7 +331,8 @@ namespace HappyFarmProjectAPI.Controllers
                                 x.Id,
                                 x.Name,
                                 x.ShippingCharges,
-                                x.RegionId
+                                x.RegionId,
+                                Region = x.Region.Name
                             })
                             .ToList(),
                         CurrentPage = listSubDistrictPaging.CurrentPage,

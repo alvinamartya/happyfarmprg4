@@ -199,7 +199,7 @@
     <Compile Include="Models\Request\LoginRequest.cs" />
     <Compile Include="Models\Response\ResponseWithData.cs" />
     <Compile Include="Models\ModelView\RoleModelView.cs" />
-    <Compile Include="Models\SubDistrictModelView.cs" />
+    <Compile Include="Models\ModelView\SubDistrictModelView.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
