@@ -122,6 +122,22 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         }
 
         /// <summary>
+        /// Get categories
+        /// </summary>
+        /// <returns></returns>
+        public List<Category> GetCategories()
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                // get categories
+                var categories = db.Categories.Where(x => x.RowStatus == "A").ToList();
+
+                // return categories
+                return categories;
+            }
+        }
+
+        /// <summary>
         /// Get Category By Id
         /// </summary>
         /// <param name="id"></param>

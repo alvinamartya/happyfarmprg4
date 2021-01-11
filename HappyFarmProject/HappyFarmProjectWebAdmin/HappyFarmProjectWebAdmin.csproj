@@ -181,6 +181,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\AddGoodsRequest.cs" />
     <Compile Include="Models\ModelView\BannerModelView.cs" />
     <Compile Include="Models\ModelView\CategoryModelView.cs" />
     <Compile Include="Models\ModelView\GoodsModelView.cs" />
@@ -405,6 +406,7 @@
     <Content Include="Views\SuperAdminSubDistrict\Index.cshtml" />
     <Content Include="Views\SuperAdminBanner\Index.cshtml" />
     <Content Include="Views\SuperAdminPromo\Index.cshtml" />
+    <Content Include="Views\SuperAdminGoods\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

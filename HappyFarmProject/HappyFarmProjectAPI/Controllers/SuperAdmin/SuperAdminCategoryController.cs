@@ -356,6 +356,56 @@ namespace HappyFarmProjectAPI.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        /// <summary>
+        /// To get categories
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/v1/SA/Category")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetCategories()
+        {
+            try
+            {
+                // validate token
+                if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                {
+                    List<Category> regions = await Task.Run(() => repo.GetCategories());
+
+                    // response success
+                    var response = new ResponseWithData<Object>()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Message = "Berhasil",
+                        Data = regions
+                            .Select(x => new
+                            {
+                                x.Id,
+                                x.Name
+                            })
+                            .ToList(),
+                    };
+
+                    return Ok(response);
+                }
+                else
+                {
+                    // unauthorized
+                    var unAuthorizedResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        Message = "Anda tidak memiliki hak akses"
+                    };
+
+                    return Ok(unAuthorizedResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
         #endregion
     }
 }

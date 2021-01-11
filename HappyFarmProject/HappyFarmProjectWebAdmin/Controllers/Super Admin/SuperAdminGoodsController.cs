@@ -1,6 +1,7 @@
 ﻿using HappyFarmProjectWebAdmin.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -151,19 +152,140 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 else
                 {
                     Session["ErrMessage"] = displayDataDelete.Result.Message;
-                    Session["ErrHeader"] = "Gagal menghapus produk";
+                    Session["ErrHeader"] = "Gagal Menghapus Produk";
                 }
             }
             else
             {
                 Session["ErrMessage"] = "Terjadi kesalahan pada sistem";
-                Session["ErrHeader"] = "Gagal menghapus produk";
+                Session["ErrHeader"] = "Gagal Menghapus Produk";
             }
             return RedirectToAction("Index");
         }
         #endregion
+        #region Add Goods
+        // Add Employee
+        [Route("~/SA/Produk/Tambah")]
+        [HttpGet]
+        public ActionResult Add()
+        {
+            // get categories
+            ResponseWithData<List<CategoryModelView>> categoriesRequest = GetCategories();
+            if (categoriesRequest.StatusCode == HttpStatusCode.OK)
+            {
+                ViewBag.Categories = new SelectList(categoriesRequest.Data, "Id", "Name");
+            }
+            else if (categoriesRequest.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                Session["ErrMessage"] = categoriesRequest.Message;
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                TempData["ErrMessage"] = categoriesRequest.Message;
+                TempData["ErrHeader"] = "Gagal Meload Kategori";
+            }
 
+            AddGoodsRequest goodsRequest = new AddGoodsRequest()
+            {
+                CreatedBy = (int)Session["UserId"]
+            };
+
+            return View(goodsRequest);
+        }
+
+        [Route("~/SA/Produk/Tambah")]
+        [HttpPost]
+        public ActionResult Add(AddGoodsRequest goodRequest)
+        {
+            // get categories
+            ResponseWithData<List<CategoryModelView>> categoriesRequest = GetCategories();
+            if (categoriesRequest.StatusCode == HttpStatusCode.OK)
+            {
+                ViewBag.Categories = new SelectList(categoriesRequest.Data, "Id", "Name");
+            }
+            else if (categoriesRequest.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                Session["ErrMessage"] = categoriesRequest.Message;
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                TempData["ErrMessage"] = categoriesRequest.Message;
+                TempData["ErrHeader"] = "Gagal Meload Kategori";
+            }
+
+            System.Diagnostics.Debug.WriteLine(Path.GetFileName(goodRequest.Image.FileName));
+
+            //// add created by
+            //goodRequest.CreatedBy = (int)Session["UserId"];
+
+            //// insert data using API
+            //hcGoodsAdd.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
+            //var apiSave = hcGoodsAdd.PostAsJsonAsync<AddGoodsRequest>("Add", goodRequest);
+            //apiSave.Wait();
+
+            //var dataSave = apiSave.Result;
+            //if (dataSave.IsSuccessStatusCode)
+            //{
+            //    var displayDataSave = dataSave.Content.ReadAsAsync<ResponseWithoutData>();
+            //    displayDataSave.Wait();
+            //    if (displayDataSave.Result.StatusCode == HttpStatusCode.Unauthorized)
+            //    {
+            //        Session["ErrMessage"] = displayDataSave.Result.Message;
+            //        return RedirectToAction("Index", "Login");
+            //    }
+            //    else if (displayDataSave.Result.StatusCode == HttpStatusCode.Created)
+            //    {
+            //        return RedirectToAction("Index");
+            //    }
+            //    else
+            //    {
+            //        TempData["ErrMessage"] = displayDataSave.Result.Message;
+            //        TempData["ErrHeader"] = "Gagal Menambah Produk";
+            //    }
+            //}
+            //else
+            //{
+            //    TempData["ErrMessage"] = "Terjadi kesalahan pada sistem";
+            //    TempData["ErrHeader"] = "Gagal Menambah Produk";
+            //}
+            return View();
+        }
+        #endregion
         #region Request Data
+        public ResponseWithData<List<CategoryModelView>> GetCategories()
+        {
+            // get categories
+            HttpClient hcCategories = APIHelper.GetHttpClient(APIHelper.SA + "/Category");
+            hcCategories.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
+            var apiGetCategories = hcCategories.GetAsync("Category");
+            apiGetCategories.Wait();
+
+            var dataCategories = apiGetCategories.Result;
+            System.Diagnostics.Debug.WriteLine(dataCategories.StatusCode);
+            if (dataCategories.IsSuccessStatusCode)
+            {
+                var displayDataRegion = dataCategories.Content.ReadAsAsync<ResponseWithData<List<CategoryModelView>>>();
+                displayDataRegion.Wait();
+                return new ResponseWithData<List<CategoryModelView>>()
+                {
+                    StatusCode = displayDataRegion.Result.StatusCode,
+                    Message = displayDataRegion.Result.Message,
+                    Data = displayDataRegion.Result.StatusCode == HttpStatusCode.OK ? displayDataRegion.Result.Data : null
+                };
+            }
+            else
+            {
+                return new ResponseWithData<List<CategoryModelView>>()
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    Message = "Terjadi kesalahan pada sistem",
+                    Data = null
+                };
+            }
+        }
+
         public ResponseDataWithPaging<List<GoodsModelView>> GetGoods(GetListDataRequest dataPaging)
         {
             // get goods

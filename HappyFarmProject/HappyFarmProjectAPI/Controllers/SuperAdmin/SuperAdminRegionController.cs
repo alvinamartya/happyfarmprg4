@@ -359,7 +359,6 @@ namespace HappyFarmProjectAPI.Controllers
         /// <summary>
         /// To get regions
         /// </summary>
-        /// <param name="getListData"></param>
         /// <returns></returns>
         [Route("api/v1/SA/Region")]
         [HttpGet]

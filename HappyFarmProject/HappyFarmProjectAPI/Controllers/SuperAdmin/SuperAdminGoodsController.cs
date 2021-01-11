@@ -159,14 +159,14 @@ namespace HappyFarmProjectAPI.Controllers
 
                                 // decrypt file name
                                 Guid uid = Guid.NewGuid();
-                                var guidFileName = uid.ToString() +  Path.GetExtension(postedFile.FileName);
+                                var guidFileName = uid.ToString() + Path.GetExtension(postedFile.FileName);
 
                                 // save to server
                                 var filePath = HttpContext.Current.Server.MapPath("~/Images/Goods/" + guidFileName);
                                 postedFile.SaveAs(filePath);
                                 goodsRequest.FilePath = guidFileName;
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 System.Diagnostics.Debug.Write("Error: " + ex.Message);
                                 goodsRequest.FilePath = "";
@@ -243,7 +243,18 @@ namespace HappyFarmProjectAPI.Controllers
         {
             try
             {
-                if (!Request.Content.IsMimeMultipartContent())
+                var httpRequest = HttpContext.Current.Request;
+                if (!Helper.IsFileAvailable(httpRequest))
+                {
+                    var imageNotFoundResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        Message = "Gambar Belum diupload"
+                    };
+
+                    return Ok(imageNotFoundResponse);
+                }
+                else if (!Request.Content.IsMimeMultipartContent())
                 {
                     var unsupportedMediaTypeResponse = new ResponseWithoutData()
                     {
@@ -259,7 +270,6 @@ namespace HappyFarmProjectAPI.Controllers
                     if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                     {
                         // get request from multipart/form-data
-                        var httpRequest = HttpContext.Current.Request;
                         AddGoodsRequest goodsRequest = new AddGoodsRequest();
                         foreach (string key in httpRequest.Form.AllKeys)
                         {
@@ -284,7 +294,7 @@ namespace HappyFarmProjectAPI.Controllers
                         }
 
                         // save file
-                        foreach(string file in httpRequest.Files)
+                        foreach (string file in httpRequest.Files)
                         {
                             try
                             {

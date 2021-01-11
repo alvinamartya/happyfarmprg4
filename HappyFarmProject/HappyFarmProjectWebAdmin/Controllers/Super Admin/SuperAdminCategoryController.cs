@@ -355,7 +355,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
             HttpClient hcCategoryGet = APIHelper.GetHttpClient(APIHelper.SA + "/Category");
             hcCategoryGet.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
 
-            var apiGet = hcCategoryGet.PostAsJsonAsync<GetListDataRequest>("Category", dataPaging);
+            var apiGet = hcCategoryGet.GetAsync("Category");
             apiGet.Wait();
 
             var data = apiGet.Result;

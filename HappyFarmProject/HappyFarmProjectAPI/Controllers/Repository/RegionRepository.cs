@@ -128,10 +128,10 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                // get employees
+                // get regions
                 var regions = db.Regions.Where(x => x.RowStatus == "A").ToList();
 
-                // return employees
+                // return regions
                 return regions;
             }
         }
