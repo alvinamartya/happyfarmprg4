@@ -75,7 +75,14 @@
                     @Html.DisplayFor(modelItem => item.Role)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Region)
+                    @if (item.Region == null)
+                    {
+                        @Html.Raw("-")
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Region)
+                    }
                 </td>
                 <td>
                     <a href="@Url.Action("Edit","SuperAdminEmployee", new { id = item.Id })" class="btn btn-primary">Ubah</a>

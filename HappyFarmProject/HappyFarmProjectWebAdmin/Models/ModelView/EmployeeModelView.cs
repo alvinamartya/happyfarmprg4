@@ -16,6 +16,6 @@ namespace HappyFarmProjectWebAdmin.Models
         public string Role { get; set; }
         public int RoleId { get; set; }
         public string Region { get; set; }
-        public int RegionId { get; set; }
+        public int? RegionId { get; set; }
     }
 }

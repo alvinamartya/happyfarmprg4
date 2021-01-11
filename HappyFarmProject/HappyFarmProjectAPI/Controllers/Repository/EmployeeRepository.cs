@@ -155,7 +155,6 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 employees = employees
                     .Where(x => x.RowStatus != "D")
                     .OrderBy(x => x.UserLogin.RoleId)
-                    .ThenBy(x => x.Region.Name)
                     .ThenBy(x => x.Name)
                     .ToList();
 
