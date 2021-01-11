@@ -11,7 +11,7 @@ namespace HappyFarmProjectWebAdmin.Models
     {
         [Required(ErrorMessage = "Wilayah harus diisi")]
         [DisplayName("Wilayah")]
-        public int RegionId { get; set; }
+        public int? RegionId { get; set; }
         [Required(ErrorMessage = "Nama harus diisi")]
         [DisplayName("Nama")]
         public string Name { get; set; }
