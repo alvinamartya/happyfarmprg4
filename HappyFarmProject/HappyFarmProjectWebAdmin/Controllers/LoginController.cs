@@ -58,6 +58,18 @@ namespace HappyFarmProjectWebAdmin.Controllers
                         {
                             return RedirectToAction("Index", "SuperAdminEmployee");
                         }
+                        else if(loginResponse.Result.Role == "Manager")
+                        {
+                            return RedirectToAction("Index", "ManagerEmployee");
+                        }
+                        else if(loginResponse.Result.Role == "Admin Produksi")
+                        {
+                            return RedirectToAction("Index", "ProductionAdminCategory");
+                        }
+                        else if (loginResponse.Result.Role == "Admin Promosi")
+                        {
+                            return RedirectToAction("Index", "MarketingAdminPromo");
+                        }
                     }
                     else
                     {
