@@ -186,17 +186,12 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrHeader"] = "Gagal Meload Kategori";
             }
 
-            AddGoodsRequest goodsRequest = new AddGoodsRequest()
-            {
-                CreatedBy = (int)Session["UserId"]
-            };
-
-            return View(goodsRequest);
+            return View();
         }
 
         [Route("~/SA/Produk/Tambah")]
         [HttpPost]
-        public ActionResult Add(AddGoodsRequest goodRequest)
+        public ActionResult Add(AddGoodsModelView goodsModelView)
         {
             // get categories
             ResponseWithData<List<CategoryModelView>> categoriesRequest = GetCategories();
@@ -215,41 +210,51 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrHeader"] = "Gagal Meload Kategori";
             }
 
-            System.Diagnostics.Debug.WriteLine(Path.GetFileName(goodRequest.Image.FileName));
+            if(goodsModelView.Image != null)
+            {
+                // add created by
+                AddGoodsRequest goodsRequest = new AddGoodsRequest()
+                {
+                    CreatedBy = (int)Session["UserId"]
+                };
 
-            //// add created by
-            //goodRequest.CreatedBy = (int)Session["UserId"];
+                // insert data using API
+                hcGoodsAdd.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
+                var apiSave = hcGoodsAdd.PostAsJsonAsync<AddGoodsRequest>("Add", goodsRequest);
+                apiSave.Wait();
 
-            //// insert data using API
-            //hcGoodsAdd.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
-            //var apiSave = hcGoodsAdd.PostAsJsonAsync<AddGoodsRequest>("Add", goodRequest);
-            //apiSave.Wait();
+                var dataSave = apiSave.Result;
+                if (dataSave.IsSuccessStatusCode)
+                {
+                    var displayDataSave = dataSave.Content.ReadAsAsync<ResponseWithoutData>();
+                    displayDataSave.Wait();
+                    if (displayDataSave.Result.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        Session["ErrMessage"] = displayDataSave.Result.Message;
+                        return RedirectToAction("Index", "Login");
+                    }
+                    else if (displayDataSave.Result.StatusCode == HttpStatusCode.Created)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["ErrMessage"] = displayDataSave.Result.Message;
+                        TempData["ErrHeader"] = "Gagal Menambah Produk";
+                    }
+                }
+                else
+                {
+                    TempData["ErrMessage"] = "Terjadi kesalahan pada sistem";
+                    TempData["ErrHeader"] = "Gagal Menambah Produk";
+                }
+            }
+            else
+            {
+                TempData["ErrMessage"] = "Gambar belum tersedia";
+                TempData["ErrHeader"] = "Gagal Menambah Produk";
+            }
 
-            //var dataSave = apiSave.Result;
-            //if (dataSave.IsSuccessStatusCode)
-            //{
-            //    var displayDataSave = dataSave.Content.ReadAsAsync<ResponseWithoutData>();
-            //    displayDataSave.Wait();
-            //    if (displayDataSave.Result.StatusCode == HttpStatusCode.Unauthorized)
-            //    {
-            //        Session["ErrMessage"] = displayDataSave.Result.Message;
-            //        return RedirectToAction("Index", "Login");
-            //    }
-            //    else if (displayDataSave.Result.StatusCode == HttpStatusCode.Created)
-            //    {
-            //        return RedirectToAction("Index");
-            //    }
-            //    else
-            //    {
-            //        TempData["ErrMessage"] = displayDataSave.Result.Message;
-            //        TempData["ErrHeader"] = "Gagal Menambah Produk";
-            //    }
-            //}
-            //else
-            //{
-            //    TempData["ErrMessage"] = "Terjadi kesalahan pada sistem";
-            //    TempData["ErrHeader"] = "Gagal Menambah Produk";
-            //}
             return View();
         }
         #endregion

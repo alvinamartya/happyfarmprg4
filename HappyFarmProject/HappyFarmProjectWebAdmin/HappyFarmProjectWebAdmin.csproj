@@ -181,7 +181,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EditGoodsRequest.cs" />
     <Compile Include="Models\Request\AddGoodsRequest.cs" />
+    <Compile Include="Models\ModelView\AddGoodsModelView.cs" />
     <Compile Include="Models\ModelView\BannerModelView.cs" />
     <Compile Include="Models\ModelView\CategoryModelView.cs" />
     <Compile Include="Models\ModelView\GoodsModelView.cs" />
@@ -410,6 +412,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Image\Banner\" />
+    <Folder Include="Image\Goods\" />
+    <Folder Include="Image\Promo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

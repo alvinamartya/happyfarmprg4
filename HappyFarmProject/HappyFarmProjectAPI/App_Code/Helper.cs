@@ -161,18 +161,5 @@ namespace HappyFarmProjectAPI
 
             return new string(chars);
         }
-        
-        public static bool IsFileAvailable(HttpRequest httpRequest)
-        {
-            List<string> files = new List<string>();
-            foreach (string file in httpRequest.Files)
-            {
-                // get file
-                var postedFile = httpRequest.Files[file];
-                if (postedFile.FileName != "") files.Add(postedFile.FileName);
-            }
-
-            return files.Count > 0;
-        }
     }
 }
