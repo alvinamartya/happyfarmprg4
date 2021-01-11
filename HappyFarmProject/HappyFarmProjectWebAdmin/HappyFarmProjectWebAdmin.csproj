@@ -171,6 +171,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\Manager\ManagerEmployeeController.cs" />
+    <Compile Include="Controllers\Manager\ManagerRegionController.cs" />
+    <Compile Include="Controllers\Manager\ManagerSubDistrictController.cs" />
+    <Compile Include="Controllers\MarketingAdmin\MarketingAdminBannerController.cs" />
+    <Compile Include="Controllers\MarketingAdmin\MarketingAdminPromoController.cs" />
+    <Compile Include="Controllers\ProductionAdmin\ProductionAdminCategoryController.cs" />
+    <Compile Include="Controllers\ProductionAdmin\ProductionAdminGoodsController.cs" />
     <Compile Include="Controllers\Super Admin\SuperAdminCategoryController.cs" />
     <Compile Include="Controllers\Super Admin\SuperAdminEmployeeController.cs" />
     <Compile Include="Controllers\Super Admin\SuperAdminGoodsController.cs" />
@@ -405,9 +412,18 @@
     <Content Include="Views\SuperAdminSubDistrict\Index.cshtml" />
     <Content Include="Views\SuperAdminBanner\Index.cshtml" />
     <Content Include="Views\SuperAdminPromo\Index.cshtml" />
+    <Content Include="Views\ManagerEmployee\Index.cshtml" />
+    <Content Include="Views\ManagerRegion\Index.cshtml" />
+    <Content Include="Views\ManagerSubDistrict\Index.cshtml" />
+    <Content Include="Views\MarketingAdminBanner\Index.cshtml" />
+    <Content Include="Views\MarketingAdminPromo\Index.cshtml" />
+    <Content Include="Views\ProductionAdminCategory\Index.cshtml" />
+    <Content Include="Views\ProductionAdminGoods\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\CustomerService\" />
+    <Folder Include="Controllers\SalesAdmin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
