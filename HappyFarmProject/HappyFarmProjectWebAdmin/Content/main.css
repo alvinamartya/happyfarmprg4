@@ -10,6 +10,11 @@
  */
 
 /* The Modal (background) */
+input[type='file'] {
+    color: transparent; /* Hides your "No File Selected" */
+    direction: ltr; /* Sets the Control to Right-To-Left */
+}
+
 .search-box__content {
     height: 35px;
     width: 100%

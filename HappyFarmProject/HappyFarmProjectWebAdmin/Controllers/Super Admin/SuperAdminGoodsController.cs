@@ -191,7 +191,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
         [Route("~/SA/Produk/Tambah")]
         [HttpPost]
-        public ActionResult Add(AddGoodsModelView goodsModelView)
+        public ActionResult Add(ProcessGoodsModelView goodsModelView)
         {
             // get categories
             ResponseWithData<List<CategoryModelView>> categoriesRequest = GetCategories();
@@ -210,13 +210,36 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrHeader"] = "Gagal Meload Kategori";
             }
 
-            if(goodsModelView.Image != null)
+            // add created by
+            AddGoodsRequest goodsRequest = new AddGoodsRequest()
             {
-                // add created by
-                AddGoodsRequest goodsRequest = new AddGoodsRequest()
-                {
-                    CreatedBy = (int)Session["UserId"]
-                };
+                CategoryId = goodsModelView.CategoryId,
+                Description = goodsModelView.Description,
+                Name = goodsModelView.Name,
+                CreatedBy = (int)Session["UserId"]
+            };
+
+            //
+            if (goodsModelView.HiddenFileName == null && goodsModelView.Image != null)
+            {
+                // decrypt file name
+                Guid uid = Guid.NewGuid();
+                var guidFileName = uid.ToString() + Path.GetExtension(goodsModelView.Image.FileName);
+
+                // save to server
+                var filePath = Server.MapPath("~/Images/Goods/" + guidFileName);
+                goodsModelView.Image.SaveAs(filePath);
+
+                // set to hidden file
+                goodsModelView.HiddenFileName = guidFileName;
+                goodsModelView.OriginalFileName = goodsModelView.Image.FileName;
+            }
+
+            //
+            if (goodsModelView.HiddenFileName != null)
+            {
+                // set path from hidden file
+                goodsRequest.ImagePath = goodsModelView.HiddenFileName;
 
                 // insert data using API
                 hcGoodsAdd.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
@@ -251,11 +274,156 @@ namespace HappyFarmProjectWebAdmin.Controllers
             }
             else
             {
-                TempData["ErrMessage"] = "Gambar belum tersedia";
+                TempData["ErrMessage"] = "Gambar belum diupload";
                 TempData["ErrHeader"] = "Gagal Menambah Produk";
             }
 
-            return View();
+            return View(goodsModelView);
+        }
+        #endregion
+        #region Edit Goods
+        [Route("~/SA/Produk/Ubah/{id}")]
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            ProcessGoodsModelView processGoodsModelView = new ProcessGoodsModelView();
+
+            // get categories
+            ResponseWithData<List<CategoryModelView>> categoriesRequest = GetCategories();
+            if (categoriesRequest.StatusCode == HttpStatusCode.OK)
+            {
+                ViewBag.Categories = new SelectList(categoriesRequest.Data, "Id", "Name");
+            }
+            else if (categoriesRequest.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                Session["ErrMessage"] = categoriesRequest.Message;
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                TempData["ErrMessage"] = categoriesRequest.Message;
+                TempData["ErrHeader"] = "Gagal Meload Kategori";
+            }
+
+            // get goods
+            HttpClient hcGoodsGet = APIHelper.GetHttpClient(APIHelper.SA + "/Goods");
+            hcGoodsGet.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
+
+            var apiGet = hcGoodsGet.GetAsync("Goods/" + id);
+            apiGet.Wait();
+
+            var data = apiGet.Result;
+            if (data.IsSuccessStatusCode)
+            {
+                var displayData = data.Content.ReadAsAsync<ResponseWithData<GoodsModelView>>();
+                displayData.Wait();
+
+                if (displayData.Result.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    Session["ErrMessage"] = displayData.Result.Message;
+                    return RedirectToAction("Index", "Login");
+                }
+                else if (displayData.Result.StatusCode != HttpStatusCode.OK)
+                {
+                    TempData["ErrMessage"] = displayData.Result.Message;
+                    TempData["ErrHeader"] = "Gagal meload data karyawan";
+                }
+                else
+                {
+                    GoodsModelView goodsModelView = displayData.Result.Data;
+                    processGoodsModelView.Name = goodsModelView.Name;
+                    processGoodsModelView.CategoryId = goodsModelView.CategoryId;
+                    processGoodsModelView.Description = goodsModelView.Description;
+                }
+            }
+            else
+            {
+                TempData["ErrMessage"] = "Terjadi kesalahan pada sistem";
+                TempData["ErrHeader"] = "Gagal meload data";
+            }
+
+            return View(processGoodsModelView);
+        }
+
+        [Route("~/SA/Produk/Ubah/{id}")]
+        [HttpPost]
+        public ActionResult Edit(int id, ProcessGoodsModelView goodsModelView)
+        {
+            // get categories
+            ResponseWithData<List<CategoryModelView>> categoriesRequest = GetCategories();
+            if (categoriesRequest.StatusCode == HttpStatusCode.OK)
+            {
+                ViewBag.Categories = new SelectList(categoriesRequest.Data, "Id", "Name");
+            }
+            else if (categoriesRequest.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                Session["ErrMessage"] = categoriesRequest.Message;
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                TempData["ErrMessage"] = categoriesRequest.Message;
+                TempData["ErrHeader"] = "Gagal Meload Kategori";
+            }
+
+            //
+            if (goodsModelView.HiddenFileName == null && goodsModelView.Image != null)
+            {
+                // decrypt file name
+                Guid uid = Guid.NewGuid();
+                var guidFileName = uid.ToString() + Path.GetExtension(goodsModelView.Image.FileName);
+
+                // save to server
+                var filePath = Server.MapPath("~/Images/Goods/" + guidFileName);
+                goodsModelView.Image.SaveAs(filePath);
+
+                // set to hidden file
+                goodsModelView.HiddenFileName = guidFileName;
+                goodsModelView.OriginalFileName = goodsModelView.Image.FileName;
+            }
+
+            // create edit goods request
+            EditGoodsRequest goodsRequest = new EditGoodsRequest()
+            {
+                CategoryId = goodsModelView.CategoryId,
+                Description = goodsModelView.Description,
+                ImagePath = goodsModelView.HiddenFileName,
+                ModifiedBy = (int)Session["UserId"],
+                Name = goodsModelView.Name
+            };
+
+            // update goods
+            hcGoodsEdit.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
+            var apiEdit = hcGoodsEdit.PutAsJsonAsync<EditGoodsRequest>("Edit/" + id, goodsRequest);
+            apiEdit.Wait();
+
+            var dateEdit = apiEdit.Result;
+            if (dateEdit.IsSuccessStatusCode)
+            {
+                var displayDataEdit = dateEdit.Content.ReadAsAsync<ResponseWithoutData>();
+                displayDataEdit.Wait();
+                if (displayDataEdit.Result.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    Session["ErrMessage"] = displayDataEdit.Result.Message;
+                    return RedirectToAction("Index", "Login");
+                }
+                else if (displayDataEdit.Result.StatusCode == HttpStatusCode.OK)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["ErrMessage"] = displayDataEdit.Result.Message;
+                    TempData["ErrHeader"] = "Gagal Mengubah Data Produk";
+                }
+            }
+            else
+            {
+                TempData["ErrMessage"] = "Terjadi kesalahan pada sistem";
+                TempData["ErrHeader"] = "Gagal Mengubah Data Produk";
+            }
+
+            return View(goodsModelView);
         }
         #endregion
         #region Request Data

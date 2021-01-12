@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
 namespace HappyFarmProjectWebAdmin.Models
 {
-    public class AddGoodsModelView
+    public class ProcessGoodsModelView
     {
         [Required(ErrorMessage = "Kategori harus diisi")]
         [DisplayName("Kategori")]
@@ -19,8 +19,10 @@ namespace HappyFarmProjectWebAdmin.Models
         [DisplayName("Deskripsi")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Gambar harus diupload")]
         [DisplayName("Gambar")]
         public HttpPostedFileBase Image { get; set; }
+
+        public string HiddenFileName { get; set; }
+        public string OriginalFileName { get; set; }
     }
 }

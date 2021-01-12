@@ -181,9 +181,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\EditGoodsRequest.cs" />
+    <Compile Include="Models\ModelView\ProcessGoodsModelView.cs" />
+    <Compile Include="Models\Request\EditGoodsRequest.cs" />
     <Compile Include="Models\Request\AddGoodsRequest.cs" />
-    <Compile Include="Models\ModelView\AddGoodsModelView.cs" />
     <Compile Include="Models\ModelView\BannerModelView.cs" />
     <Compile Include="Models\ModelView\CategoryModelView.cs" />
     <Compile Include="Models\ModelView\GoodsModelView.cs" />
@@ -409,12 +409,13 @@
     <Content Include="Views\SuperAdminBanner\Index.cshtml" />
     <Content Include="Views\SuperAdminPromo\Index.cshtml" />
     <Content Include="Views\SuperAdminGoods\Add.cshtml" />
+    <Content Include="Views\SuperAdminGoods\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Image\Banner\" />
-    <Folder Include="Image\Goods\" />
-    <Folder Include="Image\Promo\" />
+    <Folder Include="Images\Banner\" />
+    <Folder Include="Images\Goods\" />
+    <Folder Include="Images\Promo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

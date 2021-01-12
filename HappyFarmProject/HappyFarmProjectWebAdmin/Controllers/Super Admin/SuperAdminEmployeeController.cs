@@ -125,7 +125,6 @@ namespace HappyFarmProjectWebAdmin.Controllers
             return View(indexViewModel);
         }
         #endregion
-
         #region Add Employee
         // Add Employee
         [Route("~/SA/Karyawan/Tambah")]
@@ -243,7 +242,6 @@ namespace HappyFarmProjectWebAdmin.Controllers
             return View();
         }
         #endregion
-
         #region Delete Employee
         [Route("~/SA/Karyawan/Hapus")]
         [HttpPost]
@@ -282,7 +280,6 @@ namespace HappyFarmProjectWebAdmin.Controllers
             return RedirectToAction("Index");
         }
         #endregion
-
         #region Edit Employee
         [Route("~/SA/Karyawan/Ubah/{id}")]
         [HttpGet]
