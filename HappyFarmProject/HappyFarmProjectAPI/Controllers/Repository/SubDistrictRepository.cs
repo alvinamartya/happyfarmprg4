@@ -35,7 +35,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 subDistricts.ModifiedBy = subDistrictRequest.ModifiedBy;
                 subDistricts.Name = subDistrictRequest.Name;
                 subDistricts.ModifiedAt = DateTime.Now;
-                subDistricts.ShippingCharges = subDistrictRequest.ShippingCharges;
+                subDistricts.ShippingCharges = (decimal)subDistrictRequest.ShippingCharges;
                 db.SaveChanges();
             }
         }
@@ -56,7 +56,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     CreatedBy = subDistrictRequest.CreatedBy,
                     ModifiedAt = DateTime.Now,
                     CreatedAt = DateTime.Now,
-                    ShippingCharges = subDistrictRequest.ShippingCharges,
+                    ShippingCharges = (decimal)subDistrictRequest.ShippingCharges,
                     RowStatus = "A"
                 };
                 db.SubDistricts.Add(subDistrict);

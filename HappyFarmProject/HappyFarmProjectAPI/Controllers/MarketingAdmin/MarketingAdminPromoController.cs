@@ -319,7 +319,7 @@ namespace HappyFarmProjectAPI.Controllers
                 if (tokenLogic.ValidateTokenInHeader(Request, "Admin Promosi"))
                 {
                     // get employee by id
-                    ResponsePagingModel<List<Promo>> listPromoesPaging = await Task.Run(() => repo.GetPromoes(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
+                    ResponsePagingModel<List<Promo>> listPromoesPaging = await Task.Run(() => repo.GetPromos(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
 
                     // response success
                     var response = new ResponseDataWithPaging<Object>()
@@ -344,6 +344,56 @@ namespace HappyFarmProjectAPI.Controllers
                             .ToList(),
                         CurrentPage = listPromoesPaging.CurrentPage,
                         TotalPage = listPromoesPaging.TotalPage
+                    };
+
+                    return Ok(response);
+                }
+                else
+                {
+                    // unauthorized
+                    var unAuthorizedResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        Message = "Anda tidak memiliki hak akses"
+                    };
+
+                    return Ok(unAuthorizedResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+        /// <summary>
+        /// To get categories
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/v1/MA/Promo")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetPromos()
+        {
+            try
+            {
+                // validate token
+                if (tokenLogic.ValidateTokenInHeader(Request, "Admin Promosi"))
+                {
+                    List<Promo> promos = await Task.Run(() => repo.GetPromosByDate());
+
+                    // response success
+                    var response = new ResponseWithData<Object>()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Message = "Berhasil",
+                        Data = promos
+                            .Select(x => new
+                            {
+                                x.Id,
+                                x.Name
+                            })
+                            .ToList(),
                     };
 
                     return Ok(response);

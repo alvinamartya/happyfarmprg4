@@ -105,114 +105,30 @@ namespace HappyFarmProjectAPI.Controllers
         /// <returns></returns>
         [Route("api/v1/MA/Banner/Edit/{id}")]
         [HttpPut]
-        public async Task<IHttpActionResult> EditBanner(int id)
+        public async Task<IHttpActionResult> EditBanner(int id, EditBannerRequest bannerRequest)
         {
             try
             {
-                if (!Request.Content.IsMimeMultipartContent())
+                // validate token
+                if (tokenLogic.ValidateTokenInHeader(Request, "Admin Promosi"))
                 {
-                    var unsupportedMediaTypeResponse = new ResponseWithoutData()
+                    // validate data
+                    ResponseModel responseModel = bannerLogic.EditBanner(id, bannerRequest);
+                    if (responseModel.StatusCode == HttpStatusCode.OK)
                     {
-                        StatusCode = HttpStatusCode.UnsupportedMediaType,
-                        Message = "Tipe data pada media tidak di didukung"
-                    };
+                        // update banner
+                        await Task.Run(() => repo.EditBanner(id, bannerRequest));
 
-                    return Ok(unsupportedMediaTypeResponse);
-                }
-                else
-                {
-                    // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Promosi"))
-                    {
-                        // get request from multipart/form-data
-                        var httpRequest = HttpContext.Current.Request;
-                        EditBannerRequest bannerRequest = new EditBannerRequest();
-                        foreach (string key in httpRequest.Form.AllKeys)
+                        // response success
+                        var response = new ResponseWithoutData()
                         {
-                            foreach (string val in httpRequest.Form.GetValues(key))
-                            {
-                                switch (key)
-                                {
-                                    case "PromoId":
-                                        if (val != "")
-                                        {
-                                            bannerRequest.PromoId = int.Parse(val);
-                                        }
-                                        break;
-                                    case "Name":
-                                        bannerRequest.Name = val;
-                                        break;
-                                    case "ModifiedBy":
-                                        bannerRequest.ModifiedBy = int.Parse(val);
-                                        break;
-                                }
-                            }
-                        }
+                            StatusCode = HttpStatusCode.OK,
+                            Message = "Berhasil mengubah banner"
+                        };
 
-                        // save file
-                        foreach (string file in httpRequest.Files)
-                        {
-                            try
-                            {
-                                // get file
-                                var postedFile = httpRequest.Files[file];
-
-                                // decrypt file name
-                                Guid uid = Guid.NewGuid();
-                                var guidFileName = uid.ToString() + Path.GetExtension(postedFile.FileName);
-
-                                // save to server
-                                var filePath = HttpContext.Current.Server.MapPath("~/Images/Banner/" + guidFileName);
-                                postedFile.SaveAs(filePath);
-                                bannerRequest.FilePath = guidFileName;
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Diagnostics.Debug.Write("Error: " + ex.Message);
-                                bannerRequest.FilePath = "";
-                            }
-                        }
-
-                        // validate data
-                        ResponseModel responseModel = bannerLogic.EditBanner(id, bannerRequest);
-                        if (responseModel.StatusCode == HttpStatusCode.OK)
-                        {
-                            // update banner
-                            await Task.Run(() => repo.EditBanner(id, bannerRequest));
-
-                            // response success
-                            var response = new ResponseWithoutData()
-                            {
-                                StatusCode = HttpStatusCode.OK,
-                                Message = "Berhasil mengubah banner"
-                            };
-
-                            return Ok(response);
-                        }
-                        else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
-                        {
-                            // unauthorized
-                            var unAuthorizedResponse = new ResponseWithoutData()
-                            {
-                                StatusCode = HttpStatusCode.Unauthorized,
-                                Message = "Anda tidak memiliki hak akses"
-                            };
-
-                            return Ok(unAuthorizedResponse);
-                        }
-                        else
-                        {
-                            // bad request
-                            var badRequestResponse = new ResponseWithoutData()
-                            {
-                                StatusCode = HttpStatusCode.BadRequest,
-                                Message = responseModel.Message
-                            };
-
-                            return Ok(badRequestResponse);
-                        }
+                        return Ok(response);
                     }
-                    else
+                    else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
                     {
                         // unauthorized
                         var unAuthorizedResponse = new ResponseWithoutData()
@@ -223,6 +139,28 @@ namespace HappyFarmProjectAPI.Controllers
 
                         return Ok(unAuthorizedResponse);
                     }
+                    else
+                    {
+                        // bad request
+                        var badRequestResponse = new ResponseWithoutData()
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            Message = responseModel.Message
+                        };
+
+                        return Ok(badRequestResponse);
+                    }
+                }
+                else
+                {
+                    // unauthorized
+                    var unAuthorizedResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        Message = "Anda tidak memiliki hak akses"
+                    };
+
+                    return Ok(unAuthorizedResponse);
                 }
             }
             catch (Exception ex)
@@ -239,121 +177,30 @@ namespace HappyFarmProjectAPI.Controllers
         /// <returns></returns>
         [Route("api/v1/MA/Banner/Add")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddBanners()
+        public async Task<IHttpActionResult> AddBanners(AddBannerRequest bannerRequest)
         {
             try
             {
-                if (!Request.Content.IsMimeMultipartContent())
+                // validate token
+                if (tokenLogic.ValidateTokenInHeader(Request, "Admin Promosi"))
                 {
-                    var unsupportedMediaTypeResponse = new ResponseWithoutData()
+                    // validate data
+                    ResponseModel responseModel = bannerLogic.AddBanner(bannerRequest);
+                    if (responseModel.StatusCode == HttpStatusCode.Created)
                     {
-                        StatusCode = HttpStatusCode.UnsupportedMediaType,
-                        Message = "Tipe data pada media tidak di didukung"
-                    };
+                        // create banner
+                        await Task.Run(() => repo.AddBanner(bannerRequest));
 
-                    return Ok(unsupportedMediaTypeResponse);
-                }
-                else
-                {
-                    // validate token
-                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Promosi"))
-                    {
-                        // get request from multipart/form-data
-                        var httpRequest = HttpContext.Current.Request;
-                        AddBannerRequest bannerRequest = new AddBannerRequest();
-                        foreach (string key in httpRequest.Form.AllKeys)
+                        // response success
+                        var response = new ResponseWithoutData()
                         {
-                            foreach (string val in httpRequest.Form.GetValues(key))
-                            {
-                                switch (key)
-                                {
-                                    case "PromoId":
-                                        if (val != "")
-                                        {
-                                            bannerRequest.PromoId = int.Parse(val);
-                                        }
-                                        break;
-                                    case "Name":
-                                        bannerRequest.Name = val;
-                                        break;
-                                    case "CreatedBy":
-                                        bannerRequest.CreatedBy = int.Parse(val);
-                                        break;
-                                }
-                            }
-                        }
+                            StatusCode = HttpStatusCode.Created,
+                            Message = "Berhasil menambah banner"
+                        };
 
-                        // save file
-                        foreach (string file in httpRequest.Files)
-                        {
-                            try
-                            {
-                                // get file
-                                var postedFile = httpRequest.Files[file];
-
-                                // decrypt file name
-                                Guid uid = Guid.NewGuid();
-                                var guidFileName = uid.ToString() + Path.GetExtension(postedFile.FileName);
-
-                                // save to server
-                                var filePath = HttpContext.Current.Server.MapPath("~/Images/Banner/" + guidFileName);
-                                postedFile.SaveAs(filePath);
-                                bannerRequest.FilePath = guidFileName;
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Diagnostics.Debug.Write("Error: " + ex.Message);
-
-                                var ImageNotFoundResponse = new ResponseWithoutData()
-                                {
-                                    StatusCode = HttpStatusCode.BadRequest,
-                                    Message = "Gambar tidak tersedia"
-                                };
-
-                                return Ok(ImageNotFoundResponse);
-                            }
-                        }
-
-                        // validate data
-                        ResponseModel responseModel = bannerLogic.AddBanner(bannerRequest);
-                        if (responseModel.StatusCode == HttpStatusCode.Created)
-                        {
-                            // create banner
-                            await Task.Run(() => repo.AddBanner(bannerRequest));
-
-                            // response success
-                            var response = new ResponseWithoutData()
-                            {
-                                StatusCode = HttpStatusCode.Created,
-                                Message = "Berhasil menambah banner"
-                            };
-
-                            return Ok(response);
-                        }
-                        else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
-                        {
-                            // unauthorized
-                            var unAuthorizedResponse = new ResponseWithoutData()
-                            {
-                                StatusCode = HttpStatusCode.Unauthorized,
-                                Message = "Anda tidak memiliki hak akses"
-                            };
-
-                            return Ok(unAuthorizedResponse);
-                        }
-                        else
-                        {
-                            // bad request
-                            var badRequestResponse = new ResponseWithoutData()
-                            {
-                                StatusCode = HttpStatusCode.BadRequest,
-                                Message = responseModel.Message
-                            };
-
-                            return Ok(badRequestResponse);
-                        }
+                        return Ok(response);
                     }
-                    else
+                    else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
                     {
                         // unauthorized
                         var unAuthorizedResponse = new ResponseWithoutData()
@@ -364,6 +211,28 @@ namespace HappyFarmProjectAPI.Controllers
 
                         return Ok(unAuthorizedResponse);
                     }
+                    else
+                    {
+                        // bad request
+                        var badRequestResponse = new ResponseWithoutData()
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            Message = responseModel.Message
+                        };
+
+                        return Ok(badRequestResponse);
+                    }
+                }
+                else
+                {
+                    // unauthorized
+                    var unAuthorizedResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        Message = "Anda tidak memiliki hak akses"
+                    };
+
+                    return Ok(unAuthorizedResponse);
                 }
             }
             catch (Exception ex)
@@ -453,26 +322,29 @@ namespace HappyFarmProjectAPI.Controllers
                     ResponsePagingModel<List<Banner>> listBannerPaging = await Task.Run(() => repo.GetBanners(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
 
                     // response success
-                    var response = new ResponseDataWithPaging<Object>()
+                    using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
                     {
-                        StatusCode = HttpStatusCode.OK,
-                        Message = "Berhasil",
-                        Data = listBannerPaging
-                            .Data
-                            .Select(x => new
-                            {
-                                x.Id,
-                                x.Name,
-                                x.PromoId,
-                                PromoName = x.PromoId == null ? "-" : x.Promo.Name,
-                                x.Image
-                            })
-                            .ToList(),
-                        CurrentPage = listBannerPaging.CurrentPage,
-                        TotalPage = listBannerPaging.TotalPage
-                    };
+                        // response success
+                        var response = new ResponseDataWithPaging<Object>()
+                        {
+                            StatusCode = HttpStatusCode.OK,
+                            Message = "Berhasil",
+                            Data = listBannerPaging
+                                .Data
+                                .Select(x => new
+                                {
+                                    x.Id,
+                                    x.Name,
+                                    x.PromoId,
+                                    PromoName = x.PromoId == null ? "-" : db.Promoes.Where(z => z.Id == x.PromoId).FirstOrDefault().Name
+                                })
+                                .ToList(),
+                            CurrentPage = listBannerPaging.CurrentPage,
+                            TotalPage = listBannerPaging.TotalPage
+                        };
 
-                    return Ok(response);
+                        return Ok(response);
+                    }
                 }
                 else
                 {

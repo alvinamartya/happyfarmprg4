@@ -34,10 +34,9 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 var banner = db.Banners.Where(x => x.Id == id).FirstOrDefault();
                 banner.PromoId = bannerRequest.PromoId;
                 banner.Name = bannerRequest.Name;
-                banner.Image = bannerRequest.FilePath;
                 banner.ModifiedBy = bannerRequest.ModifiedBy;
                 banner.ModifiedAt = DateTime.Now;
-                if (bannerRequest.FilePath != null && bannerRequest.FilePath != "") banner.Image = bannerRequest.FilePath;
+                if (bannerRequest.ImagePath != null && bannerRequest.ImagePath != "") banner.Image = bannerRequest.ImagePath;
                 db.SaveChanges();
             }
         }
@@ -59,7 +58,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     CreatedAt = DateTime.Now,
                     ModifiedAt = DateTime.Now,
                     RowStatus = "A",
-                    Image = bannerRequest.FilePath
+                    Image = bannerRequest.ImagePath,
                 };
                 db.Banners.Add(banner);
                 db.SaveChanges();

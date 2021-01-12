@@ -181,6 +181,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProcessBannerModelView.cs" />
+    <Compile Include="Models\Request\AddBannerRequest.cs" />
+    <Compile Include="Models\Request\EditBannerRequest.cs" />
+    <Compile Include="Models\ModelView\PromoListModelView.cs" />
+    <Compile Include="Models\Request\EditPromoRequest.cs" />
+    <Compile Include="Models\ModelView\ProcessPromoModelView.cs" />
+    <Compile Include="Models\Request\AddPromoRequest.cs" />
     <Compile Include="Models\ModelView\ProcessGoodsModelView.cs" />
     <Compile Include="Models\Request\EditGoodsRequest.cs" />
     <Compile Include="Models\Request\AddGoodsRequest.cs" />
@@ -410,6 +417,10 @@
     <Content Include="Views\SuperAdminPromo\Index.cshtml" />
     <Content Include="Views\SuperAdminGoods\Add.cshtml" />
     <Content Include="Views\SuperAdminGoods\Edit.cshtml" />
+    <Content Include="Views\SuperAdminPromo\Add.cshtml" />
+    <Content Include="Views\SuperAdminPromo\Edit.cshtml" />
+    <Content Include="Views\SuperAdminBanner\Add.cshtml" />
+    <Content Include="Views\SuperAdminBanner\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

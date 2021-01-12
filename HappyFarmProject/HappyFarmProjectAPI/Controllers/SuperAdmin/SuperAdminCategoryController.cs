@@ -370,14 +370,14 @@ namespace HappyFarmProjectAPI.Controllers
                 // validate token
                 if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                 {
-                    List<Category> regions = await Task.Run(() => repo.GetCategories());
+                    List<Category> categories = await Task.Run(() => repo.GetCategories());
 
                     // response success
                     var response = new ResponseWithData<Object>()
                     {
                         StatusCode = HttpStatusCode.OK,
                         Message = "Berhasil",
-                        Data = regions
+                        Data = categories
                             .Select(x => new
                             {
                                 x.Id,

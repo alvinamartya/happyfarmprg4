@@ -19,7 +19,7 @@ namespace HappyFarmProjectWebAdmin.Models
         [DisplayName("Biaya Kirim")]
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Hanya Bisa Angka")]
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N}")]
-        public decimal ShippingCharges { get; set; }
+        public long ShippingCharges { get; set; }
         public int ModifiedBy { get; set; }
     }
 }

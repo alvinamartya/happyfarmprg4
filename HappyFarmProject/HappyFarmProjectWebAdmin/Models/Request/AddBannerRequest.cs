@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HappyFarmProjectAPI.Models
+namespace HappyFarmProjectWebAdmin.Models
 {
-    public class AddSubDistrictRequest
+    public class AddBannerRequest
     {
-        public int RegionId { get; set; }
+        public int? PromoId { get; set; }
         public string Name { get; set; }
-        public long ShippingCharges { get; set; }
+        public string ImagePath { get; set; }
         public int CreatedBy { get; set; }
     }
 }

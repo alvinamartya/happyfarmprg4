@@ -164,7 +164,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
         }
         #endregion
         #region Add Goods
-        // Add Employee
+        // Add Banner
         [Route("~/SA/Produk/Tambah")]
         [HttpGet]
         public ActionResult Add()
@@ -326,7 +326,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 else if (displayData.Result.StatusCode != HttpStatusCode.OK)
                 {
                     TempData["ErrMessage"] = displayData.Result.Message;
-                    TempData["ErrHeader"] = "Gagal meload data karyawan";
+                    TempData["ErrHeader"] = "Gagal meload data produk";
                 }
                 else
                 {

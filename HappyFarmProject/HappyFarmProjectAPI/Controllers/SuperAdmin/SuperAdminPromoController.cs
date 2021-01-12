@@ -306,13 +306,13 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To get promoes
+        /// To get promos
         /// </summary>
         /// <param name="getListData"></param>
         /// <returns></returns>
         [Route("api/v1/SA/Promo")]
         [HttpPost]
-        public async Task<IHttpActionResult> GetPromoes(GetListDataRequest getListData)
+        public async Task<IHttpActionResult> GetPromos(GetListDataRequest getListData)
         {
             try
             {
@@ -320,14 +320,14 @@ namespace HappyFarmProjectAPI.Controllers
                 if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
                 {
                     // get employee by id
-                    ResponsePagingModel<List<Promo>> listPromoesPaging = await Task.Run(() => repo.GetPromoes(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
+                    ResponsePagingModel<List<Promo>> listPromosPaging = await Task.Run(() => repo.GetPromos(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
 
                     // response success
                     var response = new ResponseDataWithPaging<Object>()
                     {
                         StatusCode = HttpStatusCode.OK,
                         Message = "Berhasil",
-                        Data = listPromoesPaging
+                        Data = listPromosPaging
                             .Data
                             .Select(x => new
                             {
@@ -343,8 +343,58 @@ namespace HappyFarmProjectAPI.Controllers
                                 x.MaxDiscount
                             })
                             .ToList(),
-                        CurrentPage = listPromoesPaging.CurrentPage,
-                        TotalPage = listPromoesPaging.TotalPage
+                        CurrentPage = listPromosPaging.CurrentPage,
+                        TotalPage = listPromosPaging.TotalPage
+                    };
+
+                    return Ok(response);
+                }
+                else
+                {
+                    // unauthorized
+                    var unAuthorizedResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        Message = "Anda tidak memiliki hak akses"
+                    };
+
+                    return Ok(unAuthorizedResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+        /// <summary>
+        /// To get categories
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/v1/SA/Promo")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetPromos()
+        {
+            try
+            {
+                // validate token
+                if (tokenLogic.ValidateTokenInHeader(Request, "Super Admin"))
+                {
+                    List<Promo> promos = await Task.Run(() => repo.GetPromosByDate());
+
+                    // response success
+                    var response = new ResponseWithData<Object>()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Message = "Berhasil",
+                        Data = promos
+                            .Select(x => new
+                            {
+                                x.Id,
+                                x.Name
+                            })
+                            .ToList(),
                     };
 
                     return Ok(response);
