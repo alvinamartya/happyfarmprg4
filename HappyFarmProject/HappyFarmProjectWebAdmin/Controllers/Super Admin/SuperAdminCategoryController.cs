@@ -127,7 +127,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
         #endregion
 
         #region Add Category
-        // Add Region
+        // Add Category
         [Route("~/SA/Kategori/Tambah")]
         [HttpGet]
         public ActionResult Add()
@@ -269,7 +269,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
         [HttpPost]
         public ActionResult Edit(int id, EditCategoryRequest categoryRequest)
         {
-            RegionModelView region = null;
+            CategoryModelView category = null;
 
             // get category
             HttpClient hcCategoryGet = APIHelper.GetHttpClient(APIHelper.SA + "/Category");
@@ -281,7 +281,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
             var data = apiGet.Result;
             if (data.IsSuccessStatusCode)
             {
-                var displayData = data.Content.ReadAsAsync<ResponseWithData<RegionModelView>>();
+                var displayData = data.Content.ReadAsAsync<ResponseWithData<CategoryModelView>>();
                 displayData.Wait();
 
                 if (displayData.Result.StatusCode == HttpStatusCode.Unauthorized)
@@ -296,7 +296,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 }
                 else
                 {
-                    region = displayData.Result.Data;
+                    category = displayData.Result.Data;
                 }
             }
             else
@@ -307,7 +307,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
             EditCategoryRequest editCategory = new EditCategoryRequest()
             {
-                Name = region.Name
+                Name = category.Name
             };
 
             // add modified by

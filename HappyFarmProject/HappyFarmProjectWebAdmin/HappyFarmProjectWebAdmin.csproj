@@ -413,12 +413,16 @@
     <Content Include="Views\SuperAdminBanner\Index.cshtml" />
     <Content Include="Views\SuperAdminPromo\Index.cshtml" />
     <Content Include="Views\ManagerEmployee\Index.cshtml" />
-    <Content Include="Views\ManagerRegion\Index.cshtml" />
     <Content Include="Views\ManagerSubDistrict\Index.cshtml" />
     <Content Include="Views\MarketingAdminBanner\Index.cshtml" />
     <Content Include="Views\MarketingAdminPromo\Index.cshtml" />
-    <Content Include="Views\ProductionAdminCategory\Index.cshtml" />
     <Content Include="Views\ProductionAdminGoods\Index.cshtml" />
+    <Content Include="Views\ManagerRegion\Add.cshtml" />
+    <Content Include="Views\ManagerRegion\Edit.cshtml" />
+    <Content Include="Views\ManagerRegion\Index.cshtml" />
+    <Content Include="Views\ProductionAdminCategory\Add.cshtml" />
+    <Content Include="Views\ProductionAdminCategory\Edit.cshtml" />
+    <Content Include="Views\ProductionAdminCategory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
