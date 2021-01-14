@@ -188,6 +188,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\AddPromoRequest.cs" />
+    <Compile Include="Models\Request\EditPromoRequest.cs" />
+    <Compile Include="Models\Request\AddGoodsRequest.cs" />
+    <Compile Include="Models\Request\EditGoodsRequest.cs" />
     <Compile Include="Models\Request\EditBannerRequest.cs" />
     <Compile Include="Models\ModelView\ProcessBannerModelView.cs" />
     <Compile Include="Models\Request\AddBannerRequest.cs" />

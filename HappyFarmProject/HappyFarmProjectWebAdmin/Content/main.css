@@ -10,6 +10,10 @@
  */
 
 /* The Modal (background) */
+input[type='file'] {
+    color: transparent;
+}
+
 .search-box__content {
     height: 35px;
     width: 100%
