@@ -74,13 +74,13 @@
                 }
             </td>
             <td>
-                @if (item.IsFreeDelivery == "Y")
+                @if (item.Discount > 0)
                 {
-                    @Html.Raw("-")
+                    @Html.DisplayFor(modelItem => item.Discount) @Html.Raw("%")
                 }
                 else
                 {
-                    @Html.DisplayFor(modelItem => item.Discount)
+                    @Html.Raw("-")
                 }
             </td>
             <td>
@@ -104,7 +104,14 @@
                 }
             </td>
             <td>
-                <a href="@Url.Action("Edit","SuperAdminPromo", new { id = item.Id })" class="btn btn-primary">Ubah</a>
+                @if (item.EndDate < DateTime.Now)
+                {
+                    <a href="@Url.Action("Edit","SuperAdminPromo", new { id = item.Id })" class="btn btn-primary" disabled>Ubah</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Edit","SuperAdminPromo", new { id = item.Id })" class="btn btn-primary">Ubah</a>
+                }
                 <button type="button" class="btn btn-danger" id="btn-delete@(item.Id)">Hapus</button>
             </td>
         </tr>

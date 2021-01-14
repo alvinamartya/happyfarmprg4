@@ -14,7 +14,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         /// <param name="id"></param>
         public void DeletePromo(int id)
         {
-            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 var promo = db.Promoes.Where(x => x.Id == id).FirstOrDefault();
                 promo.RowStatus = "D";
@@ -29,13 +29,13 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         /// <param name="promoRequest"></param>
         public void EditPromo(int id, EditPromoRequest promoRequest)
         {
-            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 var promo = db.Promoes.Where(x => x.Id == id).FirstOrDefault();
                 promo.ModifiedBy = promoRequest.ModifiedBy;
                 promo.ModifiedAt = DateTime.Now;
                 promo.Name = promoRequest.Name;
-                promo.Image = promoRequest.FilePath;
+                if (promoRequest.ImagePath != null && promoRequest.ImagePath != "") promo.Image = promoRequest.ImagePath;
                 promo.StartDate = promoRequest.StartDate;
                 promo.EndDate = promoRequest.EndDate;
                 promo.IsFreeDelivery = promoRequest.IsFreeDelivery;
@@ -72,7 +72,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     CreatedAt = DateTime.Now,
                     ModifiedAt = DateTime.Now,
                     Name = promoRequest.Name,
-                    Image = promoRequest.FilePath,
+                    Image = promoRequest.ImagePath,
                     StartDate = promoRequest.StartDate,
                     EndDate = promoRequest.EndDate,
                     IsFreeDelivery = promoRequest.IsFreeDelivery,
@@ -95,14 +95,14 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         /// <param name="limitPage"></param>
         /// <param name="search"></param>
         /// <returns></returns>
-        public ResponsePagingModel<List<Promo>> GetPromoes(int currentPage, int limitPage, string search)
+        public ResponsePagingModel<List<Promo>> GetPromos(int currentPage, int limitPage, string search)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get promoes
                 var promoes = db.Promoes.ToList();
 
-                if(search != null && search != "")
+                if (search != null && search != "")
                 {
                     promoes = promoes
                         .Where(x =>
@@ -138,6 +138,29 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     CurrentPage = currentPage,
                     TotalPage = (int)totalPages
                 };
+            }
+        }
+
+        /// <summary>
+        /// Get promos with paging
+        /// </summary>
+        /// <param name="currentPage"></param>
+        /// <param name="limitPage"></param>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        public List<Promo> GetPromosByDate()
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+                // get promos
+                var promoes = db.Promoes
+                    .Where(x => x.RowStatus == "A" && x.EndDate > now)
+                    .ToList();
+
+                // return banners
+                return promoes;
             }
         }
 

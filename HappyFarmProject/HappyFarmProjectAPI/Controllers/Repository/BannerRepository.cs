@@ -34,10 +34,9 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 var banner = db.Banners.Where(x => x.Id == id).FirstOrDefault();
                 banner.PromoId = bannerRequest.PromoId;
                 banner.Name = bannerRequest.Name;
-                banner.Image = bannerRequest.FilePath;
                 banner.ModifiedBy = bannerRequest.ModifiedBy;
                 banner.ModifiedAt = DateTime.Now;
-                if (bannerRequest.FilePath != null && bannerRequest.FilePath != "") banner.Image = bannerRequest.FilePath;
+                if (bannerRequest.ImagePath != null && bannerRequest.ImagePath != "") banner.Image = bannerRequest.ImagePath;
                 db.SaveChanges();
             }
         }
@@ -48,7 +47,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         /// <param name="bannerRequest"></param>
         public void AddBanner(AddBannerRequest bannerRequest)
         {
-            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 var banner = new Banner()
                 {
@@ -59,7 +58,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     CreatedAt = DateTime.Now,
                     ModifiedAt = DateTime.Now,
                     RowStatus = "A",
-                    Image = bannerRequest.FilePath
+                    Image = bannerRequest.ImagePath,
                 };
                 db.Banners.Add(banner);
                 db.SaveChanges();
@@ -75,12 +74,12 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         /// <returns></returns>
         public ResponsePagingModel<List<Banner>> GetBanners(int currentPage, int limitPage, string search)
         {
-            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get banners
                 var banners = db.Banners.ToList();
 
-                if(search != null && search != "")
+                if (search != null && search != "")
                 {
                     banners = banners
                         .Where(x =>
@@ -100,7 +99,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 // without paging
                 banners = banners
                     .Where(x => x.RowStatus != "D")
-                    .OrderBy(x=>x.Name)
+                    .OrderBy(x => x.Name)
                     .ToList();
 
                 // get total banners
@@ -123,7 +122,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         /// <returns></returns>
         public Object GetBannerById(int id)
         {
-            using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 var banners = db.Banners
                     .Where(x => x.Id == id && x.RowStatus != "D")
