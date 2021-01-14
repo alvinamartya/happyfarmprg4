@@ -192,7 +192,10 @@
     <Compile Include="Models\ModelView\CategoryModelView.cs" />
     <Compile Include="Models\ModelView\GoodsModelView.cs" />
     <Compile Include="Models\ModelView\IndexModelView.cs" />
+    <Compile Include="Models\ModelView\PromoListModelView.cs" />
     <Compile Include="Models\ModelView\PromoModelView.cs" />
+    <Compile Include="Models\ModelView\ProcessGoodsModelView.cs" />
+    <Compile Include="Models\ModelView\ProcessPromoModelView.cs" />
     <Compile Include="Models\Request\AddCategoryRequest.cs" />
     <Compile Include="Models\Request\AddRegionRequest.cs" />
     <Compile Include="Models\Request\AddSubDistrictRequest.cs" />
@@ -419,6 +422,12 @@
     <Content Include="Views\MarketingAdminPromo\Index.cshtml" />
     <Content Include="Views\ProductionAdminCategory\Index.cshtml" />
     <Content Include="Views\ProductionAdminGoods\Index.cshtml" />
+    <Content Include="Views\SuperAdminGoods\Add.cshtml" />
+    <Content Include="Views\SuperAdminGoods\Edit.cshtml" />
+    <Content Include="Views\SuperAdminPromo\Add.cshtml" />
+    <Content Include="Views\SuperAdminPromo\Edit.cshtml" />
+    <Content Include="Views\SuperAdminBanner\Add.cshtml" />
+    <Content Include="Views\SuperAdminBanner\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

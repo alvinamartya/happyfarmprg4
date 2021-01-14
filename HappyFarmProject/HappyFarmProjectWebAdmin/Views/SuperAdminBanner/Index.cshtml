@@ -25,7 +25,7 @@
         <th>
             Promo
         </th>
-        <th>
+        <th style="width: 30%">
             Aksi
         </th>
     </tr>
@@ -37,7 +37,14 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PromoName)
+                @if (item.PromoId == null)
+                {
+                    @Html.Raw("-")
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.PromoName)
+                }
             </td>
             <td>
                 <a href="@Url.Action("Edit","SuperAdminBanner", new { id = item.Id })" class="btn btn-primary">Ubah</a>

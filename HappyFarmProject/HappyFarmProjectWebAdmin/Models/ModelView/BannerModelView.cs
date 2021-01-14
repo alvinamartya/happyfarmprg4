@@ -9,7 +9,7 @@ namespace HappyFarmProjectWebAdmin.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int PromoId { get; set; }
+        public int? PromoId { get; set; }
         public string PromoName { get; set; }
     }
 }
