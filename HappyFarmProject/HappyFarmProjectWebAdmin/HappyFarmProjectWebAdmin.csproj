@@ -188,14 +188,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\AddPromoRequest.cs" />
+    <Compile Include="Models\Request\EditPromoRequest.cs" />
+    <Compile Include="Models\Request\AddGoodsRequest.cs" />
+    <Compile Include="Models\Request\EditGoodsRequest.cs" />
+    <Compile Include="Models\Request\EditBannerRequest.cs" />
+    <Compile Include="Models\ModelView\ProcessBannerModelView.cs" />
+    <Compile Include="Models\Request\AddBannerRequest.cs" />
     <Compile Include="Models\ModelView\BannerModelView.cs" />
     <Compile Include="Models\ModelView\CategoryModelView.cs" />
     <Compile Include="Models\ModelView\GoodsModelView.cs" />
     <Compile Include="Models\ModelView\IndexModelView.cs" />
-    <Compile Include="Models\ModelView\PromoListModelView.cs" />
     <Compile Include="Models\ModelView\PromoModelView.cs" />
     <Compile Include="Models\ModelView\ProcessGoodsModelView.cs" />
     <Compile Include="Models\ModelView\ProcessPromoModelView.cs" />
+    <Compile Include="Models\ModelView\PromoListModelView.cs" />
     <Compile Include="Models\Request\AddCategoryRequest.cs" />
     <Compile Include="Models\Request\AddRegionRequest.cs" />
     <Compile Include="Models\Request\AddSubDistrictRequest.cs" />
