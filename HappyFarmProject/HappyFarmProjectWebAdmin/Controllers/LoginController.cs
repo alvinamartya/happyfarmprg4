@@ -51,6 +51,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
                     if (loginResponse.Result.StatusCode == HttpStatusCode.OK)
                     {
+                        System.Diagnostics.Debug.WriteLine(loginResponse.Result.Role);
                         Session["UserId"] = loginResponse.Result.UserId;
                         Session["Token"] = loginResponse.Result.Token.Token;
 
