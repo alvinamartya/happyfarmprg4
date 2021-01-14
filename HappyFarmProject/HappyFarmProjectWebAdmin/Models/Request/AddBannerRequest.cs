@@ -5,9 +5,11 @@ using System.Web;
 
 namespace HappyFarmProjectWebAdmin.Models
 {
-    public class PromoListModelView
+    public class AddBannerRequest
     {
-        public int? ID { get; set; }
+        public int? PromoId { get; set; }
         public string Name { get; set; }
+        public string ImagePath { get; set; }
+        public int CreatedBy { get; set; }
     }
 }

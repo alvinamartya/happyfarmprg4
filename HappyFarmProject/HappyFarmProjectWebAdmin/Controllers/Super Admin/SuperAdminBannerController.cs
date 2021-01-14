@@ -1,6 +1,7 @@
 ﻿using HappyFarmProjectWebAdmin.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -20,7 +21,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
         // GET Banner
         [Route("~/SA/Banner")]
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string Sorting_Order)
         {
             if (Session["ErrMessage"] != null)
             {
@@ -54,7 +55,6 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrMessage"] = bannerRequest.Message;
                 TempData["ErrHeader"] = "Gagal meload data";
             }
-
 
             // data is empty
             if (bannerRequest.Data.Count == 0)
