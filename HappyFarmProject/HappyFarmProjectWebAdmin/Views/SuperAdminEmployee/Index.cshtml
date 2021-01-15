@@ -7,6 +7,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    <h4>Data Karyawan</h4>
+    <hr />
     <div class="search-box">
         <div class="search-box__find">
             @Html.EditorFor(model => model.DataPaging.Search, new { htmlAttributes = new { @class = "form-control search-box__content", placeholder = "Masukkan kata yang dicari" } })
@@ -20,25 +22,25 @@
     <thead>
         <tr>
             <th>
-                Nama
+                @Html.ActionLink("Nama", "Index", new { Sorting_Order = ViewBag.SortingName })
             </th>
             <th>
-                Nomor Telepon
+                @Html.ActionLink("Nomor Telepon", "Index", new { Sorting_Order = ViewBag.SortingPhone })
             </th>
             <th>
-                Email
+                @Html.ActionLink("Email", "Index", new { Sorting_Order = ViewBag.SortingEmail })
             </th>
             <th>
-                Alamat
+                @Html.ActionLink("Alamat", "Index", new { Sorting_Order = ViewBag.SortingAddress })
             </th>
             <th>
-                Jenis Kelamin
+                @Html.ActionLink("Jenis Kelamin", "Index", new { Sorting_Order = ViewBag.SortingGender })
             </th>
             <th>
-                Hak Akses
+                @Html.ActionLink("Hak Akses", "Index", new { Sorting_Order = ViewBag.SortingRole })
             </th>
             <th>
-                Wilayah
+                @Html.ActionLink("Wilayah", "Index", new { Sorting_Order = ViewBag.SortingRegion })
             </th>
             <th>
                 Aksi

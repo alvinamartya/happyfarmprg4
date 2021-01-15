@@ -122,6 +122,26 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         }
 
         /// <summary>
+        /// Get category with paging
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="limitPage"></param>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        public List<Category> GetCategories()
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                // get category
+                var category = db.Categories
+                    .Where(x=>x.RowStatus == "A")
+                    .ToList();
+
+                return category;
+            }
+        }
+
+        /// <summary>
         /// Get Category By Id
         /// </summary>
         /// <param name="id"></param>

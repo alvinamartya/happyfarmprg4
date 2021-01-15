@@ -454,7 +454,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 {
                     StatusCode = HttpStatusCode.InternalServerError,
                     Message = "Terjadi kesalahan pada sistem",
-                    Data = null
+                    Data = new List<CategoryModelView>()
                 };
             }
         }

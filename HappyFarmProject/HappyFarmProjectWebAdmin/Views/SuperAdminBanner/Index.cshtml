@@ -7,7 +7,9 @@
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken() 
+    <h4>Data Banner</h4>
+    <hr />
     <div class="search-box">
         <div class="search-box__find">
             @Html.EditorFor(model => model.DataPaging.Search, new { htmlAttributes = new { @class = "form-control search-box__content", placeholder = "Masukkan kata yang dicari" } })
