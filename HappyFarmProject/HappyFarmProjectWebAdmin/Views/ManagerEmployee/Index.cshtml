@@ -1,8 +1,201 @@
-﻿
+﻿@model HappyFarmProjectWebAdmin.Models.IndexModelView<IEnumerable<HappyFarmProjectWebAdmin.Models.EmployeeModelView>>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="search-box">
+        <div class="search-box__find">
+            @Html.EditorFor(model => model.DataPaging.Search, new { htmlAttributes = new { @class = "form-control search-box__content", placeholder = "Masukkan kata yang dicari" } })
+            <input type="submit" name="search-btn" value="Cari" id="search-btn" class="btn btn-primary" style="margin-left: 5px" />
+        </div>
+        @Html.ActionLink("Tambah Karyawan", "Add", "ManagerEmployee", null, new { @class = "btn btn-primary" })
+    </div>
+}
 
-<h2>Index</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nama
+            </th>
+            <th>
+                Nomor Telepon
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Alamat
+            </th>
+            <th>
+                Jenis Kelamin
+            </th>
+            <th>
+                Hak Akses
+            </th>
+            <th>
+                Wilayah
+            </th>
+            <th>
+                Aksi
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in (IEnumerable<HappyFarmProjectWebAdmin.Models.EmployeeModelView>)Model.ModelViews)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @if (item.Gender == "M")
+                    {
+                        @Html.Raw("Laki-Laki")
+                    }
+                    else
+                    {
+                        @Html.Raw("Perempuan")
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    @if (item.Region == null)
+                    {
+                        @Html.Raw("-")
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Region)
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit","ManagerEmployee", new { id = item.Id })" class="btn btn-primary">Ubah</a>
+                    <button type="button" class="btn btn-danger" id="btn-delete@(item.Id)">Hapus</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
+@* Error Data Empty *@
+@if (TempData["ErrMessageData"] != null)
+{
+    <div class="data-err">
+        @TempData["ErrMessageData"]
+    </div>
+}
+
+@foreach (var item in (IEnumerable<HappyFarmProjectWebAdmin.Models.EmployeeModelView>)Model.ModelViews)
+{
+    using (Html.BeginForm("Delete", "ManagerEmployee", new { id = item.Id }))
+    {
+        <!-- The Delete Modal -->
+        <div id="deleteModal@(item.Id)" class="modal" style="display:none">
+            <!-- Delete Modal content -->
+            <div class="modal-content">
+                <div class="modal-content--header">
+                    <span class="close" id="close@(item.Id)">&times;</span>
+                    <p>Hapus Karyawan</p>
+                </div>
+                <hr style="width: 100%" />
+                <div class="modal-content--description">
+                    Anda yakin akan menghapus data @item.Name?
+                </div>
+                <hr style="width: 100%" />
+                <div class="modal-content--footer">
+                    <a href="#" class="btn btn-secondary" onclick="closeModalDelete@(item.Id)();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+                    <input type="submit" value="Hapus" class="btn btn-danger" style="margin-bottom: 10px; margin-top: -5px" />
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Get the modal
+            var modal@(item.Id) = document.getElementById("deleteModal@(item.Id)");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("close@(item.Id)");
+
+            modal@(item.Id).style.display = "none";
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal@(item.Id).style.display = "none";
+            }
+
+            function closeModalDelete@(item.Id)() {
+                modal@(item.Id).style.display = "none";
+            }
+
+            const btn@(item.Id) = document.getElementById("btn-delete@(item.Id)");
+            btn@(item.Id).addEventListener('click', () => {
+                modal@(item.Id).style.display = "block";
+            })
+        </script>
+    }
+}
+
+@*@if (ViewBag.CurrentPage > 0 && ViewBag.TotalPage > 0)
+    {
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    }*@
+
+@if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
+{
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-content--header">
+                <span class="close">&times;</span>
+                <p>@TempData["ErrHeader"]</p>
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--description">
+                @TempData["ErrMessage"]
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--footer">
+                <a href="#" class="btn btn-danger" onclick="closeModal();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+            </div>
+        </div>
+
+    </div>
+    <script src="~/Scripts/data-error.js"></script>
+}
+
+
+@section Scripts {
+
+}

@@ -186,7 +186,7 @@ namespace HappyFarmProjectAPI.Controllers.Manager
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
                     {
-                        // create region
+                        // create subdistrict
                         await Task.Run(() => repo.AddSubDistrict(subDistrictRequest));
 
                         // response success
@@ -258,15 +258,15 @@ namespace HappyFarmProjectAPI.Controllers.Manager
                     // validate token
                     if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
                     {
-                        // get goods by id
-                        Object region = await Task.Run(() => repo.GetSubDistrictById(id));
+                        // get subdistrict by id
+                        Object subDistrict = await Task.Run(() => repo.GetSubDistrictById(id));
 
                         // response success
                         var response = new ResponseWithData<Object>()
                         {
                             StatusCode = HttpStatusCode.OK,
                             Message = "Berhasil",
-                            Data = region
+                            Data = subDistrict
                         };
 
                         return Ok(response);
@@ -331,7 +331,8 @@ namespace HappyFarmProjectAPI.Controllers.Manager
                                 x.Id,
                                 x.Name,
                                 x.ShippingCharges,
-                                x.RegionId
+                                x.RegionId,
+                                Region = x.Region.Name
                             })
                             .ToList(),
                         CurrentPage = listSubDistrictPaging.CurrentPage,
