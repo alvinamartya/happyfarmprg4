@@ -24,28 +24,28 @@
 <table class="table table-bordered table-striped">
     <tr>
         <th>
-            Kode
+            @Html.ActionLink("Kode", "Index", new { Sorting_Order = ViewBag.SortingCode })
         </th>
         <th>
-            Nama
+            @Html.ActionLink("Nama", "Index", new { Sorting_Order = ViewBag.SortingName })
         </th>
         <th>
-            Tanggal Mulai
+            @Html.ActionLink("Tanggal Mulai", "Index", new { Sorting_Order = ViewBag.SortingStartDate })
         </th>
         <th>
-            Tanggal Berakhir
+            @Html.ActionLink("Tanggal Berakhir", "Index", new { Sorting_Order = ViewBag.SortingEndDate })
         </th>
         <th>
-            Gratis Ongkos Kirim
+            @Html.ActionLink("Gratis Ongkos Kirim", "Index", new { Sorting_Order = ViewBag.SortingIsFreeDelivery })
         </th>
         <th>
-            Diskon
+            @Html.ActionLink("Diskon", "Index", new { Sorting_Order = ViewBag.SortingDiscount })
         </th>
         <th>
-            Transaksi Minimal
+            @Html.ActionLink("Transaksi Minimal", "Index", new { Sorting_Order = ViewBag.SortingMinTransaction })
         </th>
         <th>
-            Diskon Maksimal
+            @Html.ActionLink("Diskon Maksimal", "Index", new { Sorting_Order = ViewBag.SortingMaxDiscount })
         </th>
         <th>
             Aksi

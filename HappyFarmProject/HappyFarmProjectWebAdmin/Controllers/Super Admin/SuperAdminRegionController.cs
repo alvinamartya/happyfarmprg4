@@ -85,7 +85,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
             int sizeOfPage = 4;
             int noOfPage = (Page_No ?? 1);
-            IndexModelView<IEnumerable<RegionModelView>> indexViewModel = new IndexModelView<IEnumerable<RegionModelView>>()
+            IndexModelView<IPagedList<RegionModelView>> indexViewModel = new IndexModelView<IPagedList<RegionModelView>>()
             {
                 DataPaging = dataPaging,
                 ModelViews = regionsRequest.Data.ToPagedList(noOfPage, sizeOfPage)

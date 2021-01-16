@@ -16,14 +16,14 @@
             @Html.EditorFor(model => model.DataPaging.Search, new { htmlAttributes = new { @class = "form-control search-box__content", placeholder = "Masukkan kata yang dicari" } })
             <input type="submit" name="search-btn" value="Cari" id="search-btn" class="btn btn-primary" style="margin-left: 5px" />
         </div>
-        @Html.ActionLink("Tambah Wilayah", "Add", "SuperAdminCategory", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Tambah Kategori", "Add", "SuperAdminCategory", null, new { @class = "btn btn-primary" })
     </div>
 }
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>
-                Nama
+                @Html.ActionLink("Nama", "Index", new { Sorting_Order = ViewBag.SortingName })
             </th>
             <th style="width:150px;">
                 Aksi

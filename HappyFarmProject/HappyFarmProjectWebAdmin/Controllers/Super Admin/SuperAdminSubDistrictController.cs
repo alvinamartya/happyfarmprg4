@@ -96,7 +96,7 @@ namespace HappyFarmProjectWebAdmin.Controllers.Super_Admin
 
             int sizeOfPage = 4;
             int noOfPage = (Page_No ?? 1);
-            IndexModelView<IEnumerable<SubDistrictModelView>> indexViewModel = new IndexModelView<IEnumerable<SubDistrictModelView>>()
+            IndexModelView<IPagedList<SubDistrictModelView>> indexViewModel = new IndexModelView<IPagedList<SubDistrictModelView>>()
             {
                 DataPaging = dataPaging,
                 ModelViews = subDistrictRequest.Data.ToPagedList(noOfPage, sizeOfPage)

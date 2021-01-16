@@ -130,7 +130,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
             int sizeOfPage = 4;
             int noOfPage = (Page_No ?? 1);
-            IndexModelView<IEnumerable<PromoModelView>> indexViewModel = new IndexModelView<IEnumerable<PromoModelView>>()
+            IndexModelView<IPagedList<PromoModelView>> indexViewModel = new IndexModelView<IPagedList<PromoModelView>>()
             {
                 DataPaging = dataPaging,
                 ModelViews = promoRequest.Data.ToPagedList(noOfPage, sizeOfPage)

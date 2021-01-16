@@ -24,13 +24,13 @@
 <table class="table table-bordered table-striped">
     <tr>
         <th style="width: 25%">
-            Nama
+            @Html.ActionLink("Nama", "Index", new { Sorting_Order = ViewBag.SortingName })
         </th>
         <th style="width: 25%">
-            Kategori
+            @Html.ActionLink("Kategori", "Index", new { Sorting_Order = ViewBag.SortingCategory })
         </th>
         <th style="width: 40%">
-            Deskripsi
+            @Html.ActionLink("Deskripsi", "Index", new { Sorting_Order = ViewBag.SortingDescription })
         </th>
         <th>
             Aksi
