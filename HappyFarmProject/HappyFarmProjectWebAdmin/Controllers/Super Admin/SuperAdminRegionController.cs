@@ -7,6 +7,8 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Net;
 using System.Web.Mvc;
+using PagedList;
+
 
 namespace HappyFarmProjectWebAdmin.Controllers
 {
@@ -22,8 +24,9 @@ namespace HappyFarmProjectWebAdmin.Controllers
         // GET Regions
         [Route("~/SA/Wilayah")]
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string Sorting_Order, int? Page_No)
         {
+            // error
             if (Session["ErrMessage"] != null)
             {
                 TempData["ErrMessage"] = Session["ErrMessage"];
@@ -32,6 +35,11 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 Session["ErrMessage"] = null;
                 Session["ErrHeader"] = null;
             }
+
+            // sorting state
+            ViewBag.CurrentSortOrder = Sorting_Order; 
+            ViewBag.SortingName = Sorting_Order == "Name_Desc" ? "Name_Asc" : "Name_Desc";
+
 
             // default request paging
             var dataPaging = new GetListDataRequest()
@@ -57,17 +65,30 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrHeader"] = "Gagal meload data";
             }
 
-
             // data is empty
             if (regionsRequest.Data.Count == 0)
             {
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
+            // sorting
+            // sorting
+            switch (Sorting_Order)
+            {
+                case "Name_Desc":
+                    regionsRequest.Data = regionsRequest.Data.OrderByDescending(x => x.Name).ToList();
+                    break;
+                case "Name_Asc":
+                    regionsRequest.Data = regionsRequest.Data.OrderBy(x => x.Name).ToList();
+                    break;
+            }
+
+            int sizeOfPage = 4;
+            int noOfPage = (Page_No ?? 1);
             IndexModelView<IEnumerable<RegionModelView>> indexViewModel = new IndexModelView<IEnumerable<RegionModelView>>()
             {
                 DataPaging = dataPaging,
-                ModelViews = regionsRequest.Data
+                ModelViews = regionsRequest.Data.ToPagedList(noOfPage, sizeOfPage)
             };
 
             return View(indexViewModel);

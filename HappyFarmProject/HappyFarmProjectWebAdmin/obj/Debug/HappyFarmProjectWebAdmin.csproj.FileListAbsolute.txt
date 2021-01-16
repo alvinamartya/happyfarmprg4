@@ -165,3 +165,7 @@ D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\De
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.csproj.CopyComplete
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.dll
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\obj\Debug\HappyFarmProjectWebAdmin.pdb
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\bin\PagedList.dll
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\bin\PagedList.Mvc.dll
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\bin\PagedList.xml
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectWebAdmin\bin\PagedList.Mvc.xml

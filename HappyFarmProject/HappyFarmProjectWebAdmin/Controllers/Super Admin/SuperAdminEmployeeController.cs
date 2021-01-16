@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Net;
 using System.Web.Mvc;
+using PagedList;
 
 namespace HappyFarmProjectWebAdmin.Controllers
 {
@@ -22,16 +23,9 @@ namespace HappyFarmProjectWebAdmin.Controllers
         // GET Employees
         [Route("~/SA/Karyawan")]
         [HttpGet]
-        public ActionResult Index(string Sorting_Order)
+        public ActionResult Index(string Sorting_Order, int? Page_No)
         {
-            ViewBag.SortingName = Sorting_Order == "Name_Desc" ? "Name_Asc" : "Name_Desc";
-            ViewBag.SortingPhone = Sorting_Order == "Phone_Desc" ? "Phone_Asc" : "Phone_Desc";
-            ViewBag.SortingEmail = Sorting_Order == "Email_Desc" ? "Email_Asc" : "Email_Desc";
-            ViewBag.SortingAddress = Sorting_Order == "Address_Desc" ? "Address_Asc" : "Address_Desc";
-            ViewBag.SortingGender = Sorting_Order == "Gender_Desc" ? "Gender_Asc" : "Gender_Desc";
-            ViewBag.SortingRole = Sorting_Order == "Role_Desc" ? "Role_Asc" : "Role_Desc";
-            ViewBag.SortingRegion = Sorting_Order == "Region_Desc" ? "Region_Asc" : "Region_Desc";
-
+            // error
             if (Session["ErrMessage"] != null)
             {
                 TempData["ErrMessage"] = Session["ErrMessage"];
@@ -40,6 +34,16 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 Session["ErrMessage"] = null;
                 Session["ErrHeader"] = null;
             }
+
+            // sorting state
+            ViewBag.CurrentSortOrder = Sorting_Order; 
+            ViewBag.SortingName = Sorting_Order == "Name_Desc" ? "Name_Asc" : "Name_Desc";
+            ViewBag.SortingPhone = Sorting_Order == "Phone_Desc" ? "Phone_Asc" : "Phone_Desc";
+            ViewBag.SortingEmail = Sorting_Order == "Email_Desc" ? "Email_Asc" : "Email_Desc";
+            ViewBag.SortingAddress = Sorting_Order == "Address_Desc" ? "Address_Asc" : "Address_Desc";
+            ViewBag.SortingGender = Sorting_Order == "Gender_Desc" ? "Gender_Asc" : "Gender_Desc";
+            ViewBag.SortingRole = Sorting_Order == "Role_Desc" ? "Role_Asc" : "Role_Desc";
+            ViewBag.SortingRegion = Sorting_Order == "Region_Desc" ? "Region_Asc" : "Region_Desc";
 
             // default request paging
             var dataPaging = new GetListDataRequest()
@@ -119,10 +123,12 @@ namespace HappyFarmProjectWebAdmin.Controllers
                     break;
             }
 
-            IndexModelView<IEnumerable<EmployeeModelView>> indexViewModel = new IndexModelView<IEnumerable<EmployeeModelView>>()
+            int sizeOfPage = 4;
+            int noOfPage = (Page_No ?? 1);
+            IndexModelView<IPagedList<EmployeeModelView>> indexViewModel = new IndexModelView<IPagedList<EmployeeModelView>>()
             {
                 DataPaging = dataPaging,
-                ModelViews = employeesRequest.Data
+                ModelViews = employeesRequest.Data.ToPagedList(noOfPage, sizeOfPage)
             };
 
             return View(indexViewModel);

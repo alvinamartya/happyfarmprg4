@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Net;
 using System.Web.Mvc;
+using PagedList;
 
 namespace HappyFarmProjectWebAdmin.Controllers.Super_Admin
 {
@@ -22,8 +23,9 @@ namespace HappyFarmProjectWebAdmin.Controllers.Super_Admin
         // GET SubDistricts
         [Route("~/SA/Kecamatan")]
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string Sorting_Order, int? Page_No)
         {
+            // error
             if (Session["ErrMessage"] != null)
             {
                 TempData["ErrMessage"] = Session["ErrMessage"];
@@ -32,6 +34,12 @@ namespace HappyFarmProjectWebAdmin.Controllers.Super_Admin
                 Session["ErrMessage"] = null;
                 Session["ErrHeader"] = null;
             }
+
+            // sorting state
+            ViewBag.CurrentSortOrder = Sorting_Order;
+            ViewBag.SortingName = Sorting_Order == "Name_Desc" ? "Name_Asc" : "Name_Desc";
+            ViewBag.SortingRegion = Sorting_Order == "Region_Desc" ? "Region_Asc" : "Region_Desc";
+            ViewBag.SortingShippingCharges = Sorting_Order == "ShippingCharges_Desc" ? "ShippingCharges_Asc" : "ShippingCharges_Desc";
 
             // default request paging
             var dataPaging = new GetListDataRequest()
@@ -57,17 +65,41 @@ namespace HappyFarmProjectWebAdmin.Controllers.Super_Admin
                 TempData["ErrHeader"] = "Gagal meload data";
             }
 
-
             // data is empty
             if (subDistrictRequest.Data.Count == 0)
             {
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
+            // sorting
+            switch(Sorting_Order)
+            {
+                case "Name_Desc":
+                    subDistrictRequest.Data = subDistrictRequest.Data.OrderByDescending(x => x.Name).ToList();
+                    break;
+                case "Name_Asc":
+                    subDistrictRequest.Data = subDistrictRequest.Data.OrderBy(x => x.Name).ToList();
+                    break;
+                case "Region_Desc":
+                    subDistrictRequest.Data = subDistrictRequest.Data.OrderByDescending(x => x.Region).ToList();
+                    break;
+                case "Region_Asc":
+                    subDistrictRequest.Data = subDistrictRequest.Data.OrderBy(x => x.Region).ToList();
+                    break;
+                case "ShippingCharges_Desc":
+                    subDistrictRequest.Data = subDistrictRequest.Data.OrderByDescending(x => x.ShippingCharges).ToList();
+                    break;
+                case "ShippingCharges_Asc":
+                    subDistrictRequest.Data = subDistrictRequest.Data.OrderBy(x => x.ShippingCharges).ToList();
+                    break;
+            }
+
+            int sizeOfPage = 4;
+            int noOfPage = (Page_No ?? 1);
             IndexModelView<IEnumerable<SubDistrictModelView>> indexViewModel = new IndexModelView<IEnumerable<SubDistrictModelView>>()
             {
                 DataPaging = dataPaging,
-                ModelViews = subDistrictRequest.Data
+                ModelViews = subDistrictRequest.Data.ToPagedList(noOfPage, sizeOfPage)
             };
 
             return View(indexViewModel);
