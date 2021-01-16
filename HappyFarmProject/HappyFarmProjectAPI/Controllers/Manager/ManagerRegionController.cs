@@ -21,7 +21,6 @@ namespace HappyFarmProjectAPI.Controllers
         // repo
         private RegionRepository repo = new RegionRepository();
         #endregion
-
         #region Action
         /// <summary>
         /// To delete region using manager
@@ -334,6 +333,57 @@ namespace HappyFarmProjectAPI.Controllers
                             .ToList(),
                         CurrentPage = listRegionPaging.CurrentPage,
                         TotalPage = listRegionPaging.TotalPage
+                    };
+
+                    return Ok(response);
+                }
+                else
+                {
+                    // unauthorized
+                    var unAuthorizedResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        Message = "Anda tidak memiliki hak akses"
+                    };
+
+                    return Ok(unAuthorizedResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+        /// <summary>
+        /// To get regions
+        /// </summary>
+        /// <param name="getListData"></param>
+        /// <returns></returns>
+        [Route("api/v1/Manager/Region")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetRegions()
+        {
+            try
+            {
+                // validate token
+                if (tokenLogic.ValidateTokenInHeader(Request, "Manager"))
+                {
+                    List<Region> regions = await Task.Run(() => repo.GetRegions());
+
+                    // response success
+                    var response = new ResponseWithData<Object>()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Message = "Berhasil",
+                        Data = regions
+                            .Select(x => new
+                            {
+                                x.Id,
+                                x.Name
+                            })
+                            .ToList(),
                     };
 
                     return Ok(response);

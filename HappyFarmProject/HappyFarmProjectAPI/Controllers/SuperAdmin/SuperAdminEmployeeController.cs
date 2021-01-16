@@ -320,11 +320,6 @@ namespace HappyFarmProjectAPI.Controllers
                     // get employee by id
                     ResponsePagingModel<List<Employee>> employeesPaging = await Task.Run(() => repo.GetEmployees(getListData.CurrentPage, getListData.LimitPage, getListData.Search, "Super Admin"));
 
-                    System.Diagnostics.Debug.WriteLine(employeesPaging.Data.Count);
-                    System.Diagnostics.Debug.WriteLine(getListData.CurrentPage);
-                    System.Diagnostics.Debug.WriteLine(getListData.Search);
-                    System.Diagnostics.Debug.WriteLine(getListData.LimitPage);
-
                     // response success
                     using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
                     {
