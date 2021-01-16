@@ -1,4 +1,6 @@
-﻿@model HappyFarmProjectWebAdmin.Models.IndexModelView<IEnumerable<HappyFarmProjectWebAdmin.Models.GoodsModelView>>
+﻿@using PagedList
+@using PagedList.Mvc
+@model HappyFarmProjectWebAdmin.Models.IndexModelView<IPagedList<HappyFarmProjectWebAdmin.Models.GoodsModelView>>
 
 @{
     ViewBag.Title = "Index";
@@ -8,6 +10,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    <h4>Data Produk</h4>
+    <hr />
     <div class="search-box">
         <div class="search-box__find">
             @Html.EditorFor(model => model.DataPaging.Search, new { htmlAttributes = new { @class = "form-control search-box__content", placeholder = "Masukkan kata yang dicari" } })
@@ -20,13 +24,13 @@
 <table class="table table-bordered table-striped">
     <tr>
         <th style="width: 25%">
-            Nama
+            @Html.ActionLink("Nama", "Index", new { Sorting_Order = ViewBag.SortingName })
         </th>
         <th style="width: 25%">
-            Kategori
+            @Html.ActionLink("Kategori", "Index", new { Sorting_Order = ViewBag.SortingCategory })
         </th>
         <th style="width: 40%">
-            Deskripsi
+            @Html.ActionLink("Deskripsi", "Index", new { Sorting_Order = ViewBag.SortingDescription })
         </th>
         <th>
             Aksi
@@ -111,25 +115,12 @@
     }
 }
 
-@*@if (ViewBag.CurrentPage > 0 && ViewBag.TotalPage > 0)
-    {
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
-    }*@
+@* Paging *@
+<br />
+Page @(Model.ModelViews.PageCount < Model.ModelViews.PageNumber ? 0 : Model.ModelViews.PageNumber) of @Model.ModelViews.PageCount
+@Html.PagedListPager((IPagedList)Model.ModelViews, Page_No => Url.Action("Index", new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder }))
 
+@* Error Modal *@
 @if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
 {
     <!-- The Modal -->
