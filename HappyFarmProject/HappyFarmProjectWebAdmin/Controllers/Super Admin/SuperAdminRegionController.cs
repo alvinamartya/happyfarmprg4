@@ -373,7 +373,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
         public ResponseDataWithPaging<List<RegionModelView>> GetRegions(GetListDataRequest dataPaging)
         {
             // get categories
-            HttpClient hcRegionGet = APIHelper.GetHttpClient(APIHelper.SA + "/Category");
+            HttpClient hcRegionGet = APIHelper.GetHttpClient(APIHelper.SA + "/Region");
             hcRegionGet.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
 
             var apiGet = hcRegionGet.PostAsJsonAsync<GetListDataRequest>("Region", dataPaging);
