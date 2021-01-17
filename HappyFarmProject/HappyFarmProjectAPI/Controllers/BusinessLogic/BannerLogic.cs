@@ -59,7 +59,7 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
                 var employee = db.Employees.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
                 if (employee != null)
                 {
-                    if (employee.UserLogin.Role.Name != "Super Admin" && employee.UserLogin.Role.Name != "Admin Produksi")
+                    if (employee.UserLogin.Role.Name != "Super Admin" && employee.UserLogin.Role.Name != "Admin Promosi")
                     {
                         // unauthroized
                         return new ResponseModel()

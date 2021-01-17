@@ -315,6 +315,7 @@ namespace HappyFarmProjectAPI.Controllers
         {
             try
             {
+                System.Diagnostics.Debug.Write(getListData.Search);
                 // validate token
                 if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                 {
@@ -335,7 +336,8 @@ namespace HappyFarmProjectAPI.Controllers
                                     x.Id,
                                     x.Name,
                                     CategoryId = x.CategoryId,
-                                    CategoryName = db.Categories.Where(z => z.Id == x.CategoryId).FirstOrDefault().Name
+                                    CategoryName = db.Categories.Where(z => z.Id == x.CategoryId).FirstOrDefault().Name,
+                                    x.Description
                                 })
                                 .ToList(),
                             CurrentPage = listGoodsPaging.CurrentPage,

@@ -1,0 +1,99 @@
+﻿@model HappyFarmProjectWebAdmin.Models.ProcessGoodsModelView
+
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_LayoutPA.cshtml";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+@using (Html.BeginForm("Edit", "ProductionAdminGoods", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Ubah Produk</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label for="Name" class="control-label col-md-2">Nama <span style="color:red">*</span></label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="CategoryId" class="control-label col-md-2">Kategori <span style="color:red">*</span></label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categories as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Description" class="control-label col-md-2">Deskripsi <span style="color:red">*</span></label>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, 3, 100, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Image" class="control-label col-md-2">Gambar</label>
+            <div class="col-md-10">
+                <div class="form-control" style="display: flex; align-items: center; padding: 20px 10px 20px 10px">
+                    <input type="text" value="@(Model == null ? "" : Model.HiddenFileName)" id="HiddenFileName" name="HiddenFileName" style="display:none" />
+                    @Html.TextBoxFor(model => model.Image, "", new { type = "file" })
+                    <p style="margin-left: -14.5%; margin-top: 15px" id="FileName">@Html.Raw(Model == null || Model.HiddenFileName == null || Model.HiddenFileName == "" ? "No File Choosen" : Model.OriginalFileName)</p>
+                </div>
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+            </div>
+            <p style="font-size:12px; margin-left: 20px">Unggah ulang jika ingin mengganti berkas.</p>
+        </div>
+
+        <div class="form-group btn-box">
+            <div class="col-md-offset-2 col-md-10" style="display:flex">
+                @Html.ActionLink("Kembali", "Index", "ProductionAdminGoods", null, new { @class = "btn btn-danger" })
+                <input type="submit" value="Ubah" class="btn btn-primary btn-margin-left" />
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $('input[type="file"]').change(function () {
+            const fileName = $('input[type=file]').val().split('\\').pop();
+            $("#FileName").text(fileName);
+        });
+    });
+</script>
+
+@if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
+{
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-content--header">
+                <span class="close">&times;</span>
+                <p>@TempData["ErrHeader"]</p>
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--description">
+                @TempData["ErrMessage"]
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--footer">
+                <a href="#" class="btn btn-danger" onclick="closeModal();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="~/Scripts/data-error.js"></script>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,8 +1,218 @@
-﻿
+﻿@using PagedList
+@using PagedList.Mvc
+@model HappyFarmProjectWebAdmin.Models.IndexModelView<IPagedList<HappyFarmProjectWebAdmin.Models.PromoModelView>>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutMA.cshtml";
 }
 
-<h2>Index</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h4>Data Promo</h4>
+    <hr />
+    <div class="search-box">
+        <div class="search-box__find">
+            @Html.EditorFor(model => model.DataPaging.Search, new { htmlAttributes = new { @class = "form-control search-box__content", placeholder = "Masukkan kata yang dicari" } })
+            <input type="submit" name="search-btn" value="Cari" id="search-btn" class="btn btn-primary" style="margin-left: 5px" />
+        </div>
+        @Html.ActionLink("Tambah Promo", "Add", "MarketingAdminPromo", null, new { @class = "btn btn-primary" })
+    </div>
+}
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            @Html.ActionLink("Kode", "Index", new { Sorting_Order = ViewBag.SortingCode })
+        </th>
+        <th>
+            @Html.ActionLink("Nama", "Index", new { Sorting_Order = ViewBag.SortingName })
+        </th>
+        <th>
+            @Html.ActionLink("Tanggal Mulai", "Index", new { Sorting_Order = ViewBag.SortingStartDate })
+        </th>
+        <th>
+            @Html.ActionLink("Tanggal Berakhir", "Index", new { Sorting_Order = ViewBag.SortingEndDate })
+        </th>
+        <th>
+            @Html.ActionLink("Gratis Ongkos Kirim", "Index", new { Sorting_Order = ViewBag.SortingIsFreeDelivery })
+        </th>
+        <th>
+            @Html.ActionLink("Diskon", "Index", new { Sorting_Order = ViewBag.SortingDiscount })
+        </th>
+        <th>
+            @Html.ActionLink("Transaksi Minimal", "Index", new { Sorting_Order = ViewBag.SortingMinTransaction })
+        </th>
+        <th>
+            @Html.ActionLink("Diskon Maksimal", "Index", new { Sorting_Order = ViewBag.SortingMaxDiscount })
+        </th>
+        <th>
+            Aksi
+        </th>
+    </tr>
+
+    @foreach (var item in (IEnumerable<HappyFarmProjectWebAdmin.Models.PromoModelView>)Model.ModelViews)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @if (item.IsFreeDelivery == "Y")
+                {
+                    @Html.Raw("Ya")
+                }
+                else
+                {
+                    @Html.Raw("Tidak")
+                }
+            </td>
+            <td>
+                @if (item.Discount > 0)
+                {
+                    @Html.DisplayFor(modelItem => item.Discount) @Html.Raw("%")
+                }
+                else
+                {
+                    @Html.Raw("-")
+                }
+            </td>
+            <td>
+                @if (item.MinTransaction > 0)
+                {
+                    @Html.Raw("Rp. ") @Html.DisplayFor(modelItem => item.MinTransaction)
+                }
+                else
+                {
+                    @Html.Raw("-")
+                }
+            </td>
+            <td>
+                @if (item.MaxDiscount > 0)
+                {
+                    @Html.Raw("Rp. ") @Html.DisplayFor(modelItem => item.MaxDiscount)
+                }
+                else
+                {
+                    @Html.Raw("-")
+                }
+            </td>
+            <td>
+                @if (item.EndDate < DateTime.Now)
+                {
+                    <a href="@Url.Action("Edit","MarketingAdminPromo", new { id = item.Id })" class="btn btn-primary" disabled>Ubah</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Edit","MarketingAdminPromo", new { id = item.Id })" class="btn btn-primary">Ubah</a>
+                }
+                <button type="button" class="btn btn-danger" id="btn-delete@(item.Id)">Hapus</button>
+            </td>
+        </tr>
+    }
+</table>
+
+
+@* Error Data Empty *@
+@if (TempData["ErrMessageData"] != null)
+{
+    <div class="data-err">
+        @TempData["ErrMessageData"]
+    </div>
+}
+
+@foreach (var item in (IEnumerable<HappyFarmProjectWebAdmin.Models.PromoModelView>)Model.ModelViews)
+{
+    using (Html.BeginForm("Delete", "MarketingAdminPromo", new { id = item.Id }))
+    {
+        <!-- The Delete Modal -->
+        <div id="deleteModal@(item.Id)" class="modal" style="display:none">
+            <!-- Delete Modal content -->
+            <div class="modal-content">
+                <div class="modal-content--header">
+                    <span class="close" id="close@(item.Id)">&times;</span>
+                    <p>Hapus Kecamatan</p>
+                </div>
+                <hr style="width: 100%" />
+                <div class="modal-content--description">
+                    Anda yakin akan menghapus data @item.Code?
+                </div>
+                <hr style="width: 100%" />
+                <div class="modal-content--footer">
+                    <a href="#" class="btn btn-secondary" onclick="closeModalDelete@(item.Id)();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+                    <input type="submit" value="Hapus" class="btn btn-danger" style="margin-bottom: 10px; margin-top: -5px" />
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Get the modal
+            var modal@(item.Id) = document.getElementById("deleteModal@(item.Id)");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("close@(item.Id)");
+
+            modal@(item.Id).style.display = "none";
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal@(item.Id).style.display = "none";
+            }
+
+            function closeModalDelete@(item.Id)() {
+                modal@(item.Id).style.display = "none";
+            }
+
+            const btn@(item.Id) = document.getElementById("btn-delete@(item.Id)");
+            btn@(item.Id).addEventListener('click', () => {
+                modal@(item.Id).style.display = "block";
+            })
+        </script>
+    }
+}
+
+@* Paging *@
+<br />
+Page @(Model.ModelViews.PageCount < Model.ModelViews.PageNumber ? 0 : Model.ModelViews.PageNumber) of @Model.ModelViews.PageCount
+@Html.PagedListPager((IPagedList)Model.ModelViews, Page_No => Url.Action("Index", new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder }))
+
+
+@if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
+{
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-content--header">
+                <span class="close">&times;</span>
+                <p>@TempData["ErrHeader"]</p>
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--description">
+                @TempData["ErrMessage"]
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--footer">
+                <a href="#" class="btn btn-danger" onclick="closeModal();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+            </div>
+        </div>
+
+    </div>
+    <script src="~/Scripts/data-error.js"></script>
+}
+
+@section Scripts {
+
+}
 
