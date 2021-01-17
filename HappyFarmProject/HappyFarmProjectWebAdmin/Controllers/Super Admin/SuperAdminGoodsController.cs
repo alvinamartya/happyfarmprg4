@@ -72,7 +72,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
             }
 
             // sorting
-            switch(Sorting_Order)
+            switch (Sorting_Order)
             {
                 case "Name_Desc":
                     goodsRequest.Data = goodsRequest.Data.OrderByDescending(x => x.Name).ToList();
@@ -107,7 +107,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
         [Route("~/SA/Produk")]
         [HttpPost]
-        public ActionResult Index(IndexModelView<IEnumerable<GoodsModelView>> indexGoods)
+        public ActionResult Index(IndexModelView<IEnumerable<GoodsModelView>> indexGoods, string Sorting_Order, int? Page_No)
         {
             System.Diagnostics.Debug.Write(indexGoods.DataPaging.Search);
             if (Session["ErrMessage"] != null)
@@ -118,6 +118,12 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 Session["ErrMessage"] = null;
                 Session["ErrHeader"] = null;
             }
+
+            // sorting state
+            ViewBag.CurrentSortOder = Sorting_Order;
+            ViewBag.SortingName = Sorting_Order == "Name_Desc" ? "Name_Asc" : "Name_Desc";
+            ViewBag.SortingCategory = Sorting_Order == "Category_Desc" ? "Category_Asc" : "Category_Desc";
+            ViewBag.SortingDescription = Sorting_Order == "Description_Desc" ? "Description_Asc" : "Description_Desc";
 
             // default request paging
             var dataPaging = new GetListDataRequest()
@@ -149,10 +155,35 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
-            IndexModelView<IEnumerable<GoodsModelView>> indexViewModel = new IndexModelView<IEnumerable<GoodsModelView>>()
+            // sorting
+            switch (Sorting_Order)
+            {
+                case "Name_Desc":
+                    goodsRequest.Data = goodsRequest.Data.OrderByDescending(x => x.Name).ToList();
+                    break;
+                case "Name_Asc":
+                    goodsRequest.Data = goodsRequest.Data.OrderBy(x => x.Name).ToList();
+                    break;
+                case "Category_Desc":
+                    goodsRequest.Data = goodsRequest.Data.OrderByDescending(x => x.CategoryName).ToList();
+                    break;
+                case "Category_Asc":
+                    goodsRequest.Data = goodsRequest.Data.OrderBy(x => x.CategoryName).ToList();
+                    break;
+                case "Description_Desc":
+                    goodsRequest.Data = goodsRequest.Data.OrderByDescending(x => x.Description).ToList();
+                    break;
+                case "Description_Asc":
+                    goodsRequest.Data = goodsRequest.Data.OrderBy(x => x.Description).ToList();
+                    break;
+            }
+
+            int sizeOfPage = 4;
+            int noOfPage = (Page_No ?? 1);
+            IndexModelView<IPagedList<GoodsModelView>> indexViewModel = new IndexModelView<IPagedList<GoodsModelView>>()
             {
                 DataPaging = dataPaging,
-                ModelViews = goodsRequest.Data
+                ModelViews = goodsRequest.Data.ToPagedList(noOfPage, sizeOfPage)
             };
 
             return View(indexViewModel);

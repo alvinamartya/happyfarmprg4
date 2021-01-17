@@ -93,7 +93,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
         [Route("~/Manager/Kategori")]
         [HttpPost]
-        public ActionResult Index(IndexModelView<IEnumerable<CategoryModelView>> indexRegion)
+        public ActionResult Index(IndexModelView<IEnumerable<CategoryModelView>> indexRegion, string Sorting_Order, int? Page_No)
         {
             if (Session["ErrMessage"] != null)
             {
@@ -103,6 +103,10 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 Session["ErrMessage"] = null;
                 Session["ErrHeader"] = null;
             }
+
+            // sorting
+            ViewBag.CurrentSortOrder = Sorting_Order;
+            ViewBag.SortingName = Sorting_Order == "Name_Desc" ? "Name_Asc" : "Name_Desc";
 
             // default request paging
             var dataPaging = new GetListDataRequest()
@@ -134,10 +138,23 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
-            IndexModelView<IEnumerable<CategoryModelView>> indexViewModel = new IndexModelView<IEnumerable<CategoryModelView>>()
+            // sorting
+            switch (Sorting_Order)
+            {
+                case "Name_Desc":
+                    categoriesRequest.Data = categoriesRequest.Data.OrderByDescending(x => x.Name).ToList();
+                    break;
+                case "Name_Asc":
+                    categoriesRequest.Data = categoriesRequest.Data.OrderBy(x => x.Name).ToList();
+                    break;
+            }
+
+            int sizeOfPage = 4;
+            int noOfPage = (Page_No ?? 1);
+            IndexModelView<IPagedList<CategoryModelView>> indexViewModel = new IndexModelView<IPagedList<CategoryModelView>>()
             {
                 DataPaging = dataPaging,
-                ModelViews = categoriesRequest.Data
+                ModelViews = categoriesRequest.Data.ToPagedList(noOfPage, sizeOfPage)
             };
 
             return View(indexViewModel);
