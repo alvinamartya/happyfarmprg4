@@ -71,7 +71,6 @@ namespace HappyFarmProjectWebAdmin.Controllers
             }
 
             // sorting
-            // sorting
             switch (Sorting_Order)
             {
                 case "Name_Desc":
@@ -95,7 +94,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
         [Route("~/Manager/Wilayah")]
         [HttpPost]
-        public ActionResult Index(IndexModelView<IEnumerable<RegionModelView>> indexRegion)
+        public ActionResult Index(IndexModelView<IEnumerable<RegionModelView>> indexRegion, string Sorting_Order, int? Page_No)
         {
             if (Session["ErrMessage"] != null)
             {
@@ -105,6 +104,10 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 Session["ErrMessage"] = null;
                 Session["ErrHeader"] = null;
             }
+
+            // sorting state
+            ViewBag.CurrentSortOrder = Sorting_Order;
+            ViewBag.SortingName = Sorting_Order == "Name_Desc" ? "Name_Asc" : "Name_Desc";
 
             // default request paging
             var dataPaging = new GetListDataRequest()
@@ -136,10 +139,23 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
-            IndexModelView<IEnumerable<RegionModelView>> indexViewModel = new IndexModelView<IEnumerable<RegionModelView>>()
+            // sorting
+            switch (Sorting_Order)
+            {
+                case "Name_Desc":
+                    regionsRequest.Data = regionsRequest.Data.OrderByDescending(x => x.Name).ToList();
+                    break;
+                case "Name_Asc":
+                    regionsRequest.Data = regionsRequest.Data.OrderBy(x => x.Name).ToList();
+                    break;
+            }
+
+            int sizeOfPage = 4;
+            int noOfPage = (Page_No ?? 1);
+            IndexModelView<IPagedList<RegionModelView>> indexViewModel = new IndexModelView<IPagedList<RegionModelView>>()
             {
                 DataPaging = dataPaging,
-                ModelViews = regionsRequest.Data
+                ModelViews = regionsRequest.Data.ToPagedList(noOfPage, sizeOfPage)
             };
 
             return View(indexViewModel);

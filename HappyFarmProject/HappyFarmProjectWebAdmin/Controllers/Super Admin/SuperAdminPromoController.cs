@@ -141,7 +141,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
         [Route("~/SA/Promo")]
         [HttpPost]
-        public ActionResult Index(IndexModelView<IEnumerable<PromoModelView>> indexPromo)
+        public ActionResult Index(IndexModelView<IEnumerable<PromoModelView>> indexPromo, string Sorting_Order, int? Page_No)
         {
             if (Session["ErrMessage"] != null)
             {
@@ -151,6 +151,17 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 Session["ErrMessage"] = null;
                 Session["ErrHeader"] = null;
             }
+
+            // sorting state
+            ViewBag.CurrentSortOrder = Sorting_Order;
+            ViewBag.SortingCode = Sorting_Order == "Code_Desc" ? "Code_Asc" : "Code_Desc";
+            ViewBag.SortingName = Sorting_Order == "Name_Desc" ? "Name_Asc" : "Name_Desc";
+            ViewBag.SortingStartDate = Sorting_Order == "StartDate_Desc" ? "StartDate_Asc" : "StartDate_Desc";
+            ViewBag.SortingEndDate = Sorting_Order == "EndDate_Desc" ? "EndDate_Asc" : "EndDate_Desc";
+            ViewBag.SortingIsFreeDelivery = Sorting_Order == "IsFreeDelivery_Desc" ? "IsFreeDelivery_Asc" : "IsFreeDelivery_Desc";
+            ViewBag.SortingDiscount = Sorting_Order == "Discount_Desc" ? "Discount_Asc" : "Discount_Desc";
+            ViewBag.SortingMinTransaction = Sorting_Order == "MinTransaction_Desc" ? "MinTransaction_Asc" : "MinTransaction_Desc";
+            ViewBag.SortingMaxDiscount = Sorting_Order == "MaxDiscount_Desc" ? "MaxDiscount_Asc" : "MaxDiscount_Desc";
 
             // default request paging
             var dataPaging = new GetListDataRequest()
@@ -176,16 +187,71 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrHeader"] = "Gagal meload data";
             }
 
+            // sorting
+            switch (Sorting_Order)
+            {
+                case "Code_Desc":
+                    promoRequest.Data = promoRequest.Data.OrderByDescending(x => x.Code).ToList();
+                    break;
+                case "Code_Asc":
+                    promoRequest.Data = promoRequest.Data.OrderBy(x => x.Code).ToList();
+                    break;
+                case "Name_Desc":
+                    promoRequest.Data = promoRequest.Data.OrderByDescending(x => x.Name).ToList();
+                    break;
+                case "Name_Asc":
+                    promoRequest.Data = promoRequest.Data.OrderBy(x => x.Name).ToList();
+                    break;
+                case "StartDate_Desc":
+                    promoRequest.Data = promoRequest.Data.OrderByDescending(x => x.StartDate).ToList();
+                    break;
+                case "StartDate_Asc":
+                    promoRequest.Data = promoRequest.Data.OrderBy(x => x.StartDate).ToList();
+                    break;
+                case "EndDate_Desc":
+                    promoRequest.Data = promoRequest.Data.OrderByDescending(x => x.EndDate).ToList();
+                    break;
+                case "EndDate_Asc":
+                    promoRequest.Data = promoRequest.Data.OrderBy(x => x.EndDate).ToList();
+                    break;
+                case "IsFreeDelivery_Desc":
+                    promoRequest.Data = promoRequest.Data.OrderByDescending(x => x.IsFreeDelivery).ToList();
+                    break;
+                case "IsFreeDelivery_Asc":
+                    promoRequest.Data = promoRequest.Data.OrderBy(x => x.IsFreeDelivery).ToList();
+                    break;
+                case "Discount_Desc":
+                    promoRequest.Data = promoRequest.Data.OrderByDescending(x => x.Discount).ToList();
+                    break;
+                case "Discount_Asc":
+                    promoRequest.Data = promoRequest.Data.OrderBy(x => x.Discount).ToList();
+                    break;
+                case "MinTransaction_Desc":
+                    promoRequest.Data = promoRequest.Data.OrderByDescending(x => x.MinTransaction).ToList();
+                    break;
+                case "MinTransaction_Asc":
+                    promoRequest.Data = promoRequest.Data.OrderBy(x => x.MinTransaction).ToList();
+                    break;
+                case "MaxDiscount_Desc":
+                    promoRequest.Data = promoRequest.Data.OrderByDescending(x => x.MaxDiscount).ToList();
+                    break;
+                case "MaxDiscount_Asc":
+                    promoRequest.Data = promoRequest.Data.OrderBy(x => x.MaxDiscount).ToList();
+                    break;
+            }
+
             // data is empty
             if (promoRequest.Data.Count == 0)
             {
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
-            IndexModelView<IEnumerable<PromoModelView>> indexViewModel = new IndexModelView<IEnumerable<PromoModelView>>()
+            int sizeOfPage = 4;
+            int noOfPage = (Page_No ?? 1);
+            IndexModelView<IPagedList<PromoModelView>> indexViewModel = new IndexModelView<IPagedList<PromoModelView>>()
             {
                 DataPaging = dataPaging,
-                ModelViews = promoRequest.Data
+                ModelViews = promoRequest.Data.ToPagedList(noOfPage, sizeOfPage)
             };
 
             return View(indexViewModel);

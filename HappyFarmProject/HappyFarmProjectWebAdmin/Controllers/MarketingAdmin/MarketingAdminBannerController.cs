@@ -99,7 +99,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
         [Route("~/MA/Banner")]
         [HttpPost]
-        public ActionResult Index(IndexModelView<IEnumerable<BannerModelView>> indexBanner)
+        public ActionResult Index(IndexModelView<IEnumerable<BannerModelView>> indexBanner, string Sorting_Order, int? Page_No)
         {
             if (Session["ErrMessage"] != null)
             {
@@ -109,6 +109,11 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 Session["ErrMessage"] = null;
                 Session["ErrHeader"] = null;
             }
+
+            // sorting state
+            ViewBag.CurrentSortOrder = Sorting_Order;
+            ViewBag.SortName = Sorting_Order == "Name_Desc" ? "Name_Asc" : "Name_Desc";
+            ViewBag.SortPromo = Sorting_Order == "Promo_Desc" ? "Promo_Asc" : "Promo_Desc";
 
             // default request paging
             var dataPaging = new GetListDataRequest()
@@ -140,10 +145,29 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
-            IndexModelView<IEnumerable<BannerModelView>> indexViewModel = new IndexModelView<IEnumerable<BannerModelView>>()
+            // sorting list
+            switch (Sorting_Order)
+            {
+                case "Name_Desc":
+                    bannerRequest.Data = bannerRequest.Data.OrderByDescending(x => x.Name).ToList();
+                    break;
+                case "Name_Asc":
+                    bannerRequest.Data = bannerRequest.Data.OrderBy(x => x.Name).ToList();
+                    break;
+                case "Promo_Desc":
+                    bannerRequest.Data = bannerRequest.Data.OrderByDescending(x => x.PromoName).ToList();
+                    break;
+                case "Promo_Asc":
+                    bannerRequest.Data = bannerRequest.Data.OrderBy(x => x.PromoName).ToList();
+                    break;
+            }
+
+            int sizeOfPage = 4;
+            int noOfPage = (Page_No ?? 1);
+            IndexModelView<IPagedList<BannerModelView>> indexViewModel = new IndexModelView<IPagedList<BannerModelView>>()
             {
                 DataPaging = dataPaging,
-                ModelViews = bannerRequest.Data
+                ModelViews = bannerRequest.Data.ToPagedList(noOfPage, sizeOfPage)
             };
 
             return View(indexViewModel);
