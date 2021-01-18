@@ -194,6 +194,7 @@
     <Compile Include="Controllers\BusinessLogic\CategoryLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\EmployeeLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\GoodsLogic.cs" />
+    <Compile Include="Controllers\BusinessLogic\GoodsPriceRegionLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\PromoLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\RegionLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\SubDistrictLogic.cs" />
@@ -210,12 +211,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Repository\CategoryRepository.cs" />
     <Compile Include="Controllers\Repository\EmployeeRepository.cs" />
+    <Compile Include="Controllers\Repository\GoodsPriceRegionRepository.cs" />
     <Compile Include="Controllers\Repository\GoodsRepository.cs" />
     <Compile Include="Controllers\Repository\PromoRepository.cs" />
     <Compile Include="Controllers\Repository\RegionRepository.cs" />
     <Compile Include="Controllers\Repository\RoleRepository.cs" />
     <Compile Include="Controllers\Repository\SubDistrictRepository.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminCategoryController.cs" />
+    <Compile Include="Controllers\SuperAdmin\SuperAdminGoodsPriceRegionController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminSubDistrictController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminRoleController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminRegionController.cs" />
@@ -265,8 +268,10 @@
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Request\AddCategoryRequest.cs" />
+    <Compile Include="Models\Request\AddGoodsPriceRegionRequest.cs" />
     <Compile Include="Models\Request\AddSubDistrictRequest.cs" />
     <Compile Include="Models\Request\EditCategoryRequest.cs" />
+    <Compile Include="Models\Request\EditGoodsPriceRegionRequest.cs" />
     <Compile Include="Models\Request\EditRegionRequest.cs" />
     <Compile Include="Models\Request\AddRegionRequest.cs" />
     <Compile Include="Models\Request\EditPromoRequest.cs" />

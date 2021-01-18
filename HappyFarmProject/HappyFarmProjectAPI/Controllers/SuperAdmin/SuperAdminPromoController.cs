@@ -369,7 +369,7 @@ namespace HappyFarmProjectAPI.Controllers
         }
 
         /// <summary>
-        /// To get categories
+        /// To get promos
         /// </summary>
         /// <returns></returns>
         [Route("api/v1/SA/Promo")]

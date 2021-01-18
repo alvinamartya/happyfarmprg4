@@ -346,7 +346,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
                 ModifiedBy = (int)Session["UserId"],
                 Name = subDistrict.Name,
-                ShippingCharges = subDistrict.ShippingCharges,
+                ShippingCharges = (long)subDistrict.ShippingCharges,
                 RegionId = subDistrict.RegionId
             };
 

@@ -47,7 +47,14 @@
                     @Html.DisplayFor(modelItem => item.Region)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ShippingCharges)
+                    @if (item.ShippingCharges > 0)
+                    {
+                        @Html.Raw("Rp. ") @Html.DisplayFor(modelItem => item.ShippingCharges)
+                    }
+                    else
+                    {
+                        @Html.Raw("-")
+                    }
                 </td>
                 <td>
                     <a href="@Url.Action("Edit","SuperAdminSubDistrict", new { id = item.Id })" class="btn btn-primary">Ubah</a>
