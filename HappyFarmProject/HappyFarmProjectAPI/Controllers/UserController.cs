@@ -1,15 +1,22 @@
-﻿using HappyFarmProjectAPI.Models;
+﻿using HappyFarmProjectAPI.Controllers.BusinessLogic;
+using HappyFarmProjectAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace HappyFarmProjectAPI.Controllers
 {
     public class UserController : ApiController
     {
+        #region Variable
+        private TokenLogic tokenLogic = new TokenLogic();
+        #endregion
+
+        #region Action
         /// <summary>
         /// Login To Application
         /// </summary>
@@ -42,10 +49,10 @@ namespace HappyFarmProjectAPI.Controllers
                         {
                             var isCustomer = db.Customers.Where(x => x.UserLoginId == user.Id).FirstOrDefault() != null;
 
-                            if(!isCustomer)
+                            if (!isCustomer)
                             {
                                 var employee = db.Employees.Where(x => x.UserLoginId == user.Id).FirstOrDefault();
-                                if(employee.RowStatus == "D")
+                                if (employee.RowStatus == "D")
                                 {
                                     ResponseWithoutData deactiveAccountResponse = new ResponseWithoutData()
                                     {
@@ -61,8 +68,8 @@ namespace HappyFarmProjectAPI.Controllers
                                 StatusCode = HttpStatusCode.OK,
                                 Message = "Login Berhasil",
                                 Role = user.Role.Name,
-                                UserId = user.Role.Name == "Customer" ? 
-                                    db.Customers.Where(x=>x.UserLoginId == user.Id).FirstOrDefault().Id :
+                                UserId = user.Role.Name == "Customer" ?
+                                    db.Customers.Where(x => x.UserLoginId == user.Id).FirstOrDefault().Id :
                                     db.Employees.Where(x => x.UserLoginId == user.Id).FirstOrDefault().Id,
                                 Token = new AuthModel()
                                 {
@@ -91,5 +98,135 @@ namespace HappyFarmProjectAPI.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        /// <summary>
+        /// Forgot Password
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/v1/User/Employee/ForgotPassword")]
+        [HttpPost]
+        public async Task<IHttpActionResult> ForgotPasswordEmployee(ForgotPasswordRequest forgotRequest)
+        {
+            try
+            {
+                using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+                {
+                    // get employee by email
+                    var user = db.Employees.Where(x => x.Email == forgotRequest.Email).FirstOrDefault();
+                    if (user != null)
+                    {
+                        string newPassword = Helper.RandomPassword();
+                        string ecryptPassword = Helper.EncryptStringSha256Hash(newPassword);
+                        user.UserLogin.Password = ecryptPassword;
+                        db.SaveChanges();
+
+                        await Task.Run(() => Helper.SendMailAsync(user.Email, "Ganti Kata Sandi",
+                            "<div>" +
+                            "Hai <span style = \"font-weight: bold;\">" + user.Name + "</span>," +
+                            "<br>" +
+                            "Kata sandi anda telah berhasil diganti, login ke aplikasi <span style=\"font-weight: bold;\">HappyFarm</span> segera dengan menggunakan akun anda:" +
+                            "<br><br>" +
+                            "<div>Nama Pengguna : " + user.UserLogin.Username + "<br>Kata Sandi : " + newPassword + "</div><br>" +
+                            "<div>Segala bentuk informasi seperti nomor kontak, alamat e-mail, atau password kamu bersifat rahasia. Jangan " +
+                            "menginformasikan data - data tersebut kepada siapapun, termasuk kepada pihak yang mengatasnamakan perusahaan.</div>" +
+                            "</div>"));
+
+                        // response success
+                        var response = new ResponseWithoutData()
+                        {
+                            StatusCode = HttpStatusCode.OK,
+                            Message = "Berhasil mengubah kata sandi"
+                        };
+
+                        return Ok(response);
+                    }
+                    else
+                    {
+                        ResponseWithoutData userNotAvailableResponse = new ResponseWithoutData()
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            Message = "Email tidak tersedia"
+                        };
+                        return Ok(userNotAvailableResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+        /// <summary>
+        /// employee account
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/v1/User/Employee/{id}")]
+        [HttpGet]
+        public IHttpActionResult GetEmployeeAccount(int id)
+        {
+            try
+            {
+                using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+                {
+                    var employee = db.Employees.Where(x => x.Id == id)
+                        .Select(x => new
+                        {
+                            x.Id,
+                            x.Name,
+                            x.PhoneNumber,
+                            x.Email,
+                            x.Address,
+                            x.Gender,
+                            Role = x.UserLogin.Role.Name
+                        })
+                        .FirstOrDefault();
+                    if (employee != null)
+                    {
+                        // validate token
+                        string role = employee.Role;
+                        if (tokenLogic.ValidateTokenInHeader(Request, role))
+                        {
+                            // response success
+                            var response = new ResponseWithData<Object>()
+                            {
+                                StatusCode = HttpStatusCode.OK,
+                                Message = "Berhasil",
+                                Data = employee
+                            };
+
+                            return Ok(response);
+                        }
+                        else
+                        {
+                            // unauthorized
+                            var unAuthorizedResponse = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.Unauthorized,
+                                Message = "Anda tidak memiliki hak akses"
+                            };
+
+                            return Ok(unAuthorizedResponse);
+                        }
+                    }
+                    else
+                    {
+                        ResponseWithoutData userNotAvailableResponse = new ResponseWithoutData()
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            Message = "Akun tidak tersedia"
+                        };
+                        return Ok(userNotAvailableResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+        #endregion
     }
 }

@@ -47,7 +47,14 @@
                     @Html.DisplayFor(modelItem => item.Region)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ShippingCharges)
+                    @if (item.ShippingCharges > 0)
+                    {
+                        @Html.Raw("Rp. ") @Html.DisplayFor(modelItem => item.ShippingCharges)
+                    }
+                    else
+                    {
+                        @Html.Raw("-")
+                    }
                 </td>
                 <td>
                     <a href="@Url.Action("Edit","SuperAdminSubDistrict", new { id = item.Id })" class="btn btn-primary">Ubah</a>
@@ -117,7 +124,7 @@
 
 @* Paging *@
 <br />
-Page @(Model.ModelViews.PageCount < Model.ModelViews.PageNumber ? 0 : Model.ModelViews.PageNumber) of @Model.ModelViews.PageCount
+Halaman @(Model.ModelViews.PageCount < Model.ModelViews.PageNumber ? 0 : Model.ModelViews.PageNumber) dari @Model.ModelViews.PageCount
 @Html.PagedListPager((IPagedList)Model.ModelViews, Page_No => Url.Action("Index", new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder }))
 
 
@@ -145,7 +152,6 @@ Page @(Model.ModelViews.PageCount < Model.ModelViews.PageNumber ? 0 : Model.Mode
     </div>
     <script src="~/Scripts/data-error.js"></script>
 }
-
 
 @section Scripts {
 

@@ -194,6 +194,7 @@
     <Compile Include="Controllers\BusinessLogic\CategoryLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\EmployeeLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\GoodsLogic.cs" />
+    <Compile Include="Controllers\BusinessLogic\GoodsPriceRegionLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\PromoLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\RegionLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\SubDistrictLogic.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Repository\CategoryRepository.cs" />
     <Compile Include="Controllers\Repository\EmployeeRepository.cs" />
+    <Compile Include="Controllers\Repository\GoodsPriceRegionRepository.cs" />
     <Compile Include="Controllers\Repository\GoodsRepository.cs" />
     <Compile Include="Controllers\Repository\PromoRepository.cs" />
     <Compile Include="Controllers\Repository\RegionRepository.cs" />
@@ -264,6 +266,9 @@
     <Compile Include="GoodsStockRegion.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\ForgotPasswordRequest.cs" />
+    <Compile Include="Models\Request\EditGoodsPriceRegionRequest.cs" />
+    <Compile Include="Models\Request\AddGoodsPriceRegionRequest.cs" />
     <Compile Include="Models\Request\AddCategoryRequest.cs" />
     <Compile Include="Models\Request\AddSubDistrictRequest.cs" />
     <Compile Include="Models\Request\EditCategoryRequest.cs" />
