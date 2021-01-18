@@ -176,7 +176,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\Account\LoginController.cs" />
+    <Compile Include="Controllers\Account\LogoutController.cs" />
+    <Compile Include="Controllers\Account\ForgotPasswordController.cs" />
     <Compile Include="Controllers\Manager\ManagerEmployeeController.cs" />
     <Compile Include="Controllers\Manager\ManagerRegionController.cs" />
     <Compile Include="Controllers\Manager\ManagerSubDistrictController.cs" />
@@ -184,16 +186,17 @@
     <Compile Include="Controllers\MarketingAdmin\MarketingAdminPromoController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminCategoryController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminGoodsController.cs" />
-    <Compile Include="Controllers\Super Admin\SuperAdminCategoryController.cs" />
-    <Compile Include="Controllers\Super Admin\SuperAdminEmployeeController.cs" />
-    <Compile Include="Controllers\Super Admin\SuperAdminGoodsController.cs" />
-    <Compile Include="Controllers\Super Admin\SuperAdminRegionController.cs" />
-    <Compile Include="Controllers\Super Admin\SuperAdminSubDistrictController.cs" />
-    <Compile Include="Controllers\Super Admin\SuperAdminBannerController.cs" />
-    <Compile Include="Controllers\Super Admin\SuperAdminPromoController.cs" />
+    <Compile Include="Controllers\SuperAdmin\SuperAdminCategoryController.cs" />
+    <Compile Include="Controllers\SuperAdmin\SuperAdminEmployeeController.cs" />
+    <Compile Include="Controllers\SuperAdmin\SuperAdminGoodsController.cs" />
+    <Compile Include="Controllers\SuperAdmin\SuperAdminRegionController.cs" />
+    <Compile Include="Controllers\SuperAdmin\SuperAdminSubDistrictController.cs" />
+    <Compile Include="Controllers\SuperAdmin\SuperAdminBannerController.cs" />
+    <Compile Include="Controllers\SuperAdmin\SuperAdminPromoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\ForgotPasswordRequest.cs" />
     <Compile Include="Models\Request\AddPromoRequest.cs" />
     <Compile Include="Models\Request\EditPromoRequest.cs" />
     <Compile Include="Models\Request\AddGoodsRequest.cs" />
@@ -243,13 +246,12 @@
     <Content Include="Content\hamburgers.min.css" />
     <Content Include="Content\Images\logo-inverse.png" />
     <Content Include="Content\Images\logo.png" />
-    <Content Include="Content\login-util.css" />
-    <Content Include="Content\login.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\perfect-scrollbar.css" />
     <Content Include="Content\select2.css" />
     <Content Include="Content\select2.min.css" />
+    <Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fa-solid-900.svg" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.css" />
@@ -257,6 +259,8 @@
     <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\ionicons\ionicons.min.css" />
+    <Content Include="fonts\ionicons\ionicons.svg" />
     <Content Include="fonts\Linearicons-Free-v1.0.0\icon-font.min.css" />
     <Content Include="fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.svg" />
     <Content Include="fonts\montserrat\OFL.txt" />
@@ -375,6 +379,9 @@
     <Content Include="fonts\ubuntu\Ubuntu-Medium.ttf" />
     <Content Include="fonts\ubuntu\Ubuntu-MediumItalic.ttf" />
     <Content Include="fonts\ubuntu\Ubuntu-Regular.ttf" />
+    <Content Include="fonts\ionicons\ionicons.eot" />
+    <Content Include="fonts\ionicons\ionicons.ttf" />
+    <Content Include="fonts\ionicons\ionicons.woff" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\countdowntime.js" />
     <Content Include="Scripts\data-error.js" />
@@ -456,11 +463,13 @@
     <Content Include="Views\MarketingAdminBanner\Add.cshtml" />
     <Content Include="Views\MarketingAdminBanner\Edit.cshtml" />
     <Content Include="Views\MarketingAdminBanner\Index.cshtml" />
+    <Content Include="Views\ForgotPassword\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\CustomerService\" />
     <Folder Include="Controllers\SalesAdmin\" />
+    <Folder Include="Views\Logout\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

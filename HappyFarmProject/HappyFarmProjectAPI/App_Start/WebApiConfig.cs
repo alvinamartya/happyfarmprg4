@@ -11,10 +11,10 @@ namespace HappyFarmProjectAPI
     {
         public static void Register(HttpConfiguration config)
         {
-            //var cors = new EnableCorsAttribute("https://localhost:44301", "*", "*");
-            //config.EnableCors(cors);
+            var cors = new EnableCorsAttribute("https://localhost:44366", "*", "*");
+            config.EnableCors(cors);
 
-            //// Web API configuration and services
+            // Web API configuration and services
             //config.Formatters.Clear();
             //config.Formatters.Add(new JsonMediaTypeFormatter());
 

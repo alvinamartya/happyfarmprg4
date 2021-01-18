@@ -117,7 +117,7 @@
 
 @* Paging *@
 <br />
-Page @(Model.ModelViews.PageCount < Model.ModelViews.PageNumber ? 0 : Model.ModelViews.PageNumber) of @Model.ModelViews.PageCount
+Halaman @(Model.ModelViews.PageCount < Model.ModelViews.PageNumber ? 0 : Model.ModelViews.PageNumber) dari @Model.ModelViews.PageCount
 @Html.PagedListPager((IPagedList)Model.ModelViews, Page_No => Url.Action("Index", new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder }))
 
 @* Error Modal *@

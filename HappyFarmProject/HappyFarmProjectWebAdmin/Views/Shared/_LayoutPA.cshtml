@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Analytics Dashboard - This is an example dashboard created using build-in elements and components.</title>
+    <title>Happy Farm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
@@ -23,6 +23,28 @@
     <link href="~/Content/main.css" rel="stylesheet">
 </head>
 <body>
+    <!-- The Modal -->
+    <div id="logoutModal" class="modal-logout">
+
+        <!-- Modal content -->
+        <div class="modal-content-logout">
+            <div class="modal-content--header">
+                <span class="close" id="close-logout">&times;</span>
+                <p>Keluar</p>
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--description">
+                Anda yakin ingin keluar?
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--footer">
+                <a href="#" class="btn btn-secondary" onclick="closeLogout();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+                <a href="@Url.Action("Index","Logout")" class="btn btn-danger" style="margin-bottom: 10px; margin-top: -5px">Keluar</a>
+            </div>
+        </div>
+
+    </div>
+
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-header header-shadow">
             <div class="app-header__logo">
@@ -60,28 +82,9 @@
                     <div class="header-btn-lg pr-0">
                         <div class="widget-content p-0">
                             <div class="widget-content-wrapper">
-                                <div class="widget-content-left">
-                                    <div class="btn-group">
-                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                        </a>
-                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                            <button type="button" tabindex="0" class="dropdown-item">User Account</button>
-                                            <button type="button" tabindex="0" class="dropdown-item">Settings</button>
-                                            <h6 tabindex="-1" class="dropdown-header">Header</h6>
-                                            <button type="button" tabindex="0" class="dropdown-item">Actions</button>
-                                            <div tabindex="-1" class="dropdown-divider"></div>
-                                            <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
-                                    <div class="widget-heading">
-                                        Alina Mclourd
-                                    </div>
-                                    <div class="widget-subheading">
-                                        VP People Manager
-                                    </div>
+                                    <div class="widget-heading" id="employee-name"></div>
+                                    <div class="widget-subheading" id="employee-role"></div>
                                 </div>
                             </div>
                         </div>
@@ -125,13 +128,13 @@
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Produksi</li>
                             <li>
-                                <a href="@Url.Action("Index","ProductionAdminCategory")">
+                                <a href="@Url.Action("Index","ProductionAdminCategory")" id="category-nav">
                                     <i class="metismenu-icon pe-7s-ticket"></i>
                                     Kategori
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index","ProductionAdminGoods")">
+                                <a href="@Url.Action("Index","ProductionAdminGoods")" id="goods-nav">
                                     <i class="metismenu-icon pe-7s-shopbag"></i>
                                     Produk
                                 </a>
@@ -140,6 +143,25 @@
                                 <a href="dashboard-boxes.html">
                                     <i class="metismenu-icon pe-7s-shopbag"></i>
                                     Pembelian
+                                </a>
+                            </li>
+                            <li class="app-sidebar__heading">Akun</li>
+                            <li>
+                                <a href="@Url.Action("Index","SuperAdminCategory")">
+                                    <i class="metismenu-icon pe-7s-user"></i>
+                                    Profil
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","SuperAdminGoods")">
+                                    <i class="metismenu-icon pe-7s-lock"></i>
+                                    Ganti Kata Sandi
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" onclick="showLogout(); return false;">
+                                    <i class="metismenu-icon pe-7s-power"></i>
+                                    Keluar
                                 </a>
                             </li>
                         </ul>
@@ -153,9 +175,70 @@
             </div>
         </div>
     </div>
+
+    @* Logout Script *@
+    <script>
+        // Get the modal
+        const modalLogout = document.getElementById("logoutModal");
+
+        // Get the <span> element that closes the modal
+        const spanLogout = document.getElementById("close-logout");
+
+        modalLogout.style.display = "none";
+
+        // When the user clicks on <span> (x), close the modal
+        spanLogout.onclick = function () {
+            modalLogout.style.display = "none";
+        }
+
+        function closeLogout() {
+            modalLogout.style.display = "none";
+        }
+
+        function showLogout() {
+            modalLogout.style.display = "block";
+        }
+    </script>
     <script type="text/javascript" src="~/Scripts/main.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+    async function getData() {
+        const url = 'https://localhost:44301/api/v1/User/Employee/' + '@Session["UserId"]';
+        const token = "Bearer " + '@Session["Token"]';
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            contentType: "application/json",
+            dataType: 'json',
+            async: true,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", token);
+            },
+            success: async function (result) {
+                document.getElementById("employee-name").innerHTML = result.Data.Name;
+                document.getElementById("employee-role").innerHTML = result.Data.Role;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('Error: ' + textStatus + ' ' + errorThrown);
+            }
+        })
+    }
+
+        getData();
+
+        function changeNav() {
+            const pageArr = window.location.href.split("/");
+            if (pageArr.indexOf("Kategori") > -1) {
+                $("#category-nav").addClass("mm-active");
+            } else if (pageArr.indexOf("Produk") > -1) {
+                $("#goods-nav").addClass("mm-active");
+            }
+        }
+        changeNav();
+    </script>
 </body>
 </html>
