@@ -10,6 +10,11 @@
  */
 
 /* The Modal (background) */
+.search-change-price {
+    float: right;
+    margin-right: -2%
+}
+
 input[type='file'] {
     color: transparent;
 }

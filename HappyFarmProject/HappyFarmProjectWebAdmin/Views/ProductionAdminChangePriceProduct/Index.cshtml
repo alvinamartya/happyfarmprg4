@@ -1,0 +1,80 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model HappyFarmProjectWebAdmin.Models.IndexModelView<IPagedList<HappyFarmProjectWebAdmin.Models.GoodsPriceModelView>>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPA.cshtml";
+}
+
+<script type="text/javascript" src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<h2>Harga Produk</h2>
+<hr />
+
+<div>
+    <div class="row mx-auto" style="display:flex; align-items: center">
+        <div>
+            Produk:
+        </div>
+        <div class="col-4">
+            @if (ViewBag.Products != null)
+            {
+                using (@Html.BeginForm("Index", "ProductionAdminChangePriceProduct", FormMethod.Get, new { id = "goodsChanged" }))
+                {
+                    @Html.DropDownList("Product", ViewBag.Products as SelectList, new { @class = "form-control" })
+                }
+            }
+        </div>
+        <div style="width: 60%">
+            @Html.ActionLink("Ubah Harga Produk", "Edit", "ProductionAdminChangePriceProduct", new { GoodsId = ViewBag.ProductId }, new { @class = "btn btn-primary search-change-price" })
+        </div>
+    </div>
+</div>
+
+<br />
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Wilayah", "Index", new { Sorting_Order = ViewBag.SortingRegion, Product = ViewBag.ProductId })
+            </th>
+            <th>
+                @Html.ActionLink("Harga", "Index", new { Sorting_Order = ViewBag.SortingPrice, Product = ViewBag.ProductId })
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in (IEnumerable<HappyFarmProjectWebAdmin.Models.GoodsPriceModelView>)Model.ModelViews)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Region)
+                </td>
+                <td>
+                    @if (item.Price == null)
+                    {
+                        @Html.Raw("-")
+                    }
+                    else
+                    {
+                        @Html.Raw("Rp. ") @Html.DisplayFor(modelItem => item.Price)
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@* Paging *@
+<br />
+Halaman @(Model.ModelViews.PageCount < Model.ModelViews.PageNumber ? 0 : Model.ModelViews.PageNumber) dari @Model.ModelViews.PageCount
+@Html.PagedListPager((IPagedList)Model.ModelViews, Page_No => Url.Action("Index", new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Product = ViewBag.ProductId }))
+
+<script>
+    $(document).ready(() => {
+        $("#Product").change(() => {
+            $("#goodsChanged").submit();
+        })
+    })
+</script>

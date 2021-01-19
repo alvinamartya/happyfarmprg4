@@ -315,7 +315,6 @@ namespace HappyFarmProjectAPI.Controllers
         {
             try
             {
-                System.Diagnostics.Debug.Write(getListData.Search);
                 // validate token
                 if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
                 {
@@ -346,6 +345,58 @@ namespace HappyFarmProjectAPI.Controllers
 
                         return Ok(response);
                     }
+                }
+                else
+                {
+                    // unauthorized
+                    var unAuthorizedResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        Message = "Anda tidak memiliki hak akses"
+                    };
+
+                    return Ok(unAuthorizedResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+        #endregion
+
+        #region GetGoods
+        /// <summary>
+        /// To get list goods
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/v1/PA/Goods")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetGoods()
+        {
+            try
+            {
+                // validate token
+                if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
+                {
+                    List<Good> goods = await Task.Run(() => repo.GetGoods());
+
+                    // response success
+                    var response = new ResponseWithData<Object>()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Message = "Berhasil",
+                        Data = goods
+                            .Select(x => new
+                            {
+                                x.Id,
+                                x.Name
+                            })
+                            .ToList(),
+                    };
+
+                    return Ok(response);
                 }
                 else
                 {

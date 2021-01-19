@@ -184,6 +184,7 @@
     <Compile Include="Controllers\Manager\ManagerSubDistrictController.cs" />
     <Compile Include="Controllers\MarketingAdmin\MarketingAdminBannerController.cs" />
     <Compile Include="Controllers\MarketingAdmin\MarketingAdminPromoController.cs" />
+    <Compile Include="Controllers\ProductionAdmin\ProductionAdminChangePriceProductController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminCategoryController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminGoodsController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminCategoryController.cs" />
@@ -196,6 +197,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\AddGoodsPriceRegionRequest.cs" />
+    <Compile Include="Models\ModelView\GoodsListModelView.cs" />
+    <Compile Include="Models\ModelView\GoodsPriceModelView.cs" />
     <Compile Include="Models\Request\ForgotPasswordRequest.cs" />
     <Compile Include="Models\Request\AddPromoRequest.cs" />
     <Compile Include="Models\Request\EditPromoRequest.cs" />
@@ -464,6 +468,8 @@
     <Content Include="Views\MarketingAdminBanner\Edit.cshtml" />
     <Content Include="Views\MarketingAdminBanner\Index.cshtml" />
     <Content Include="Views\ForgotPassword\Index.cshtml" />
+    <Content Include="Views\ProductionAdminChangePriceProduct\Index.cshtml" />
+    <Content Include="Views\ProductionAdminChangePriceProduct\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

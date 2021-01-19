@@ -5,11 +5,10 @@ using System.Web;
 
 namespace HappyFarmProjectAPI.Models
 {
-    public class AddSubDistrictRequest
+    public class GoodsPriceResponse
     {
         public int RegionId { get; set; }
-        public string Name { get; set; }
-        public long ShippingCharges { get; set; }
-        public int CreatedBy { get; set; }
+        public string Region { get; set; }
+        public decimal? Price { get; set; }
     }
 }

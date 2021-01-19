@@ -24,7 +24,7 @@
 </head>
 <body>
     <!-- The Modal -->
-    <div id="logoutModal" class="modal-logout">
+    <div id="logoutModal" class="modal-logout" style="display:none">
 
         <!-- Modal content -->
         <div class="modal-content-logout">
@@ -129,7 +129,7 @@
                             <li class="app-sidebar__heading">Produksi</li>
                             <li>
                                 <a href="@Url.Action("Index","ProductionAdminCategory")" id="category-nav">
-                                    <i class="metismenu-icon pe-7s-ticket"></i>
+                                    <i class="metismenu-icon pe-7s-note2"></i>
                                     Kategori
                                 </a>
                             </li>
@@ -141,8 +141,14 @@
                             </li>
                             <li>
                                 <a href="dashboard-boxes.html">
-                                    <i class="metismenu-icon pe-7s-shopbag"></i>
+                                    <i class="metismenu-icon pe-7s-ticket"></i>
                                     Pembelian
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","ProductionAdminChangePriceProduct")"  id="change-price-nav">
+                                    <i class="metismenu-icon pe-7s-cash"></i>
+                                    Harga Produk
                                 </a>
                             </li>
                             <li class="app-sidebar__heading">Akun</li>
@@ -236,6 +242,9 @@
                 $("#category-nav").addClass("mm-active");
             } else if (pageArr.indexOf("Produk") > -1) {
                 $("#goods-nav").addClass("mm-active");
+            }
+            else if (pageArr.indexOf("HargaWilayah") > -1) {
+                $("#change-price-nav").addClass("mm-active");
             }
         }
         changeNav();
