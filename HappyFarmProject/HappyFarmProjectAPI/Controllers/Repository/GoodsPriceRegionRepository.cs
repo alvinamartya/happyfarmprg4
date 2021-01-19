@@ -9,58 +9,35 @@ namespace HappyFarmProjectAPI.Controllers.Repository
     public class GoodsPriceRegionRepository
     {
         /// <summary>
-        /// Delete GoodsPriceRegion using repository
-        /// </summary>
-        /// <param name="id"></param>
-        public void DeleteGoodsPriceRegion(int id)
-        {
-            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
-            {
-                var goodsPriceRegion = db.GoodsPriceRegions.Where(x => x.Id == id).FirstOrDefault();
-                goodsPriceRegion.RowStatus = "D";
-                db.SaveChanges();
-            }
-        }
-
-        /// <summary>
-        /// Edit GoodsPriceRegion using repository
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="GoodsPriceRegionRequest"></param>
-        public void EditGoodsPriceRegion(int id, EditGoodsPriceRegionRequest GoodsPriceRegionRequest)
-        {
-            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
-            {
-                var goodsPriceRegions = db.GoodsPriceRegions.Where(x => x.Id == id).FirstOrDefault();
-                goodsPriceRegions.ModifiedBy = GoodsPriceRegionRequest.ModifiedBy;
-                goodsPriceRegions.GoodsId = GoodsPriceRegionRequest.GoodsId;
-                goodsPriceRegions.ModifiedAt = DateTime.Now;
-                goodsPriceRegions.RegionId = GoodsPriceRegionRequest.RegionId;
-                goodsPriceRegions.Price = GoodsPriceRegionRequest.Price;
-                db.SaveChanges();
-            }
-        }
-
-        /// <summary>
         /// Add GoodsPriceRegion using repository
         /// </summary>
         /// <param name="GoodsPriceRegionRequest"></param>
-        public void AddGoodsPriceRegion(AddGoodsPriceRegionRequest GoodsPriceRegionRequest)
+        public void AddGoodsPriceRegion(AddGoodsPriceRegionRequest goodsPriceRegionRequest)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                var GoodsPriceRegion = new GoodsPriceRegion()
+                GoodsPriceRegion goodsPrice = db.GoodsPriceRegions.Where(x => x.GoodsId == goodsPriceRegionRequest.GoodsId && x.RegionId == goodsPriceRegionRequest.RegionId).FirstOrDefault();
+                if(goodsPrice != null)
                 {
-                    GoodsId = GoodsPriceRegionRequest.GoodsId,
-                    RegionId = GoodsPriceRegionRequest.RegionId,
-                    ModifiedBy = GoodsPriceRegionRequest.CreatedBy,
-                    CreatedBy = GoodsPriceRegionRequest.CreatedBy,
-                    ModifiedAt = DateTime.Now,
-                    CreatedAt = DateTime.Now,
-                    Price = GoodsPriceRegionRequest.Price,
-                    RowStatus = "A"
-                };
-                db.GoodsPriceRegions.Add(GoodsPriceRegion);
+                    goodsPrice.Price = goodsPriceRegionRequest.Price;
+                    goodsPrice.ModifiedBy = goodsPriceRegionRequest.CreatedBy;
+                    goodsPrice.ModifiedAt = DateTime.Now;
+                }
+                else
+                {
+                    GoodsPriceRegion newGoodsPriceRegion = new GoodsPriceRegion()
+                    {
+                        Price = goodsPriceRegionRequest.Price,
+                        ModifiedBy = goodsPriceRegionRequest.CreatedBy,
+                        CreatedBy = goodsPriceRegionRequest.CreatedBy,
+                        ModifiedAt = DateTime.Now,
+                        CreatedAt = DateTime.Now,
+                        RegionId = goodsPriceRegionRequest.RegionId,
+                        GoodsId = goodsPriceRegionRequest.GoodsId,
+                        RowStatus = "A"
+                    };
+                    db.GoodsPriceRegions.Add(newGoodsPriceRegion);
+                }
                 db.SaveChanges();
             }
         }
@@ -73,12 +50,12 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         /// <param name="search"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public ResponsePagingModel<List<GoodsPriceRegion>> GetGoodsPriceRegion(int currentPage, int limitPage, string search)
+        public ResponsePagingModel<List<GoodsPriceRegion>> GetGoodsPriceRegion(int goodsId, int currentPage, int limitPage, string search)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get goodspriceregion
-                var listGoodsPriceRegions = db.GoodsPriceRegions.ToList();
+                var listGoodsPriceRegions = db.GoodsPriceRegions.Where(x=>x.GoodsId == goodsId).ToList();
 
                 if (search != null && search != "")
                 {
@@ -89,16 +66,6 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                         )
                         .ToList();
                 }
-
-                // filter goods by row status
-                // with paging
-                //listGoodsPriceRegions = listGoodsPriceRegions
-                //    .Where(x => x.RowStatus != "D")
-                //    .OrderBy(x => x.Region.Name)
-                //    .ThenBy(x => x.Name)
-                //    .Skip((currentPage - 1) * limitPage)
-                //    .Take(limitPage)
-                //    .ToList();
 
                 // without paging
                 listGoodsPriceRegions = listGoodsPriceRegions
@@ -133,8 +100,6 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     .Select(x => new
                     {
                         x.Id,
-                        GoodsId = x.GoodsId,
-                        Good = db.Goods.Where(y => y.Id == x.GoodsId).FirstOrDefault().Name,
                         RegionId = x.RegionId,
                         Region = db.Regions.Where(z => z.Id == x.RegionId).FirstOrDefault().Name,
                         Price = x.Price

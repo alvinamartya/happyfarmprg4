@@ -205,6 +205,8 @@
     <Compile Include="Controllers\Manager\ManagerSubDistrictController.cs" />
     <Compile Include="Controllers\MarketingAdmin\MarketingAdminPromoController.cs" />
     <Compile Include="Controllers\MarketingAdmin\MarketingAdminBannerController.cs" />
+    <Compile Include="Controllers\ProductionAdmin\ProductionAdminRegionController.cs" />
+    <Compile Include="Controllers\ProductionAdmin\ProductionAdminChangePriceProductController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminCategoryController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminGoodsController.cs" />
     <Compile Include="Controllers\Repository\BannerRepository.cs" />
@@ -266,8 +268,8 @@
     <Compile Include="GoodsStockRegion.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Response\GoodsPriceResponse.cs" />
     <Compile Include="Models\Request\ForgotPasswordRequest.cs" />
-    <Compile Include="Models\Request\EditGoodsPriceRegionRequest.cs" />
     <Compile Include="Models\Request\AddGoodsPriceRegionRequest.cs" />
     <Compile Include="Models\Request\AddCategoryRequest.cs" />
     <Compile Include="Models\Request\AddSubDistrictRequest.cs" />
@@ -285,9 +287,9 @@
     <Compile Include="Models\Request\EditEmployeeRequest.cs" />
     <Compile Include="Models\Request\AddEmployeeRequest.cs" />
     <Compile Include="Models\Request\LoginRequest.cs" />
-    <Compile Include="Models\ResponsePagingModel.cs" />
+    <Compile Include="Models\Response\ResponsePagingModel.cs" />
     <Compile Include="Models\Response\ResponseDataWithPaging.cs" />
-    <Compile Include="Models\ResponseModel.cs" />
+    <Compile Include="Models\Response\ResponseModel.cs" />
     <Compile Include="Models\Response\ResponseLogin.cs" />
     <Compile Include="Models\Response\ResponseWithData.cs" />
     <Compile Include="Models\Response\ResponseWithoutData.cs" />

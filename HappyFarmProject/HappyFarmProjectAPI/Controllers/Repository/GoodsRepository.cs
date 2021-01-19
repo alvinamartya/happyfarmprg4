@@ -121,6 +121,23 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             }
         }
 
+
+        /// <summary>
+        /// Get goods
+        /// </summary>
+        /// <returns></returns>
+        public List<Good> GetGoods()
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                // get employees
+                var goods = db.Goods.Where(x => x.RowStatus == "A").ToList();
+
+                // return employees
+                return goods;
+            }
+        }
+
         /// <summary>
         /// Get Goods by Id
         /// </summary>

@@ -9,7 +9,7 @@ namespace HappyFarmProjectAPI.Models
     {
         public int RegionId { get; set; }
         public string Name { get; set; }
-        public decimal ShippingCharges { get; set; }
+        public long ShippingCharges { get; set; }
         public int ModifiedBy { get; set; }
     }
 }
