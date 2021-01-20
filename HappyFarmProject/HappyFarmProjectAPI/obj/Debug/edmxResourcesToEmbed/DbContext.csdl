@@ -56,6 +56,7 @@
     <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
     <NavigationProperty Name="UserLogin" Relationship="Self.FK__Customer__UserLo__66603565" FromRole="Customer" ToRole="UserLogin" />
     <NavigationProperty Name="CustomerAddresses" Relationship="Self.FK__CustomerA__Custo__6754599E" FromRole="Customer" ToRole="CustomerAddress" />
+    <NavigationProperty Name="Sellings" Relationship="HappyFarmPRG4Model.FK__Selling__Custome__01142BA1" FromRole="Customer" ToRole="Selling" />
   </EntityType>
   <EntityType Name="CustomerAddress">
     <Key>
@@ -129,7 +130,7 @@
     <Property Name="CreatedBy" Type="Int32" Nullable="false" />
     <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
     <Property Name="CategoryId" Type="Int32" Nullable="false" />
-    <Property Name="Image" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="3" />
@@ -194,6 +195,7 @@
     <NavigationProperty Name="Banners" Relationship="Self.FK__Banner__PromoId__619B8048" FromRole="Promo" ToRole="Banner" />
     <NavigationProperty Name="Employee" Relationship="Self.FK__Promo__CreatedBy__76969D2E" FromRole="Promo" ToRole="Employee" />
     <NavigationProperty Name="Employee1" Relationship="Self.FK__Promo__ModifiedB__778AC167" FromRole="Promo" ToRole="Employee" />
+    <NavigationProperty Name="Sellings" Relationship="HappyFarmPRG4Model.FK__Selling__PromoId__02084FDA" FromRole="Promo" ToRole="Selling" />
   </EntityType>
   <EntityType Name="Purchasing">
     <Key>
@@ -219,6 +221,7 @@
     <Property Name="Qty" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Good" Relationship="Self.FK__Purchasin__Goods__797309D9" FromRole="PurchasingDetails" ToRole="Goods" />
     <NavigationProperty Name="Purchasing" Relationship="Self.FK__Purchasin__Purch__7A672E12" FromRole="PurchasingDetails" ToRole="Purchasing" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="Region">
     <Key>
@@ -254,16 +257,21 @@
     <Property Name="CustomerId" Type="Int32" Nullable="false" />
     <Property Name="SellingStatusId" Type="Int32" Nullable="false" />
     <Property Name="CustomerAddressId" Type="Int32" Nullable="false" />
-    <Property Name="PromoId" Type="Int32" Nullable="false" />
+    <Property Name="PromoId" Type="Int32" />
     <Property Name="RecipientName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="RecipientPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="PaymentImage" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="PaymentImage" Type="Binary" MaxLength="100" FixedLength="false" />
     <Property Name="ShippingCharges" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="TotalSalePrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="CustomerFeedbacks" Relationship="Self.FK__CustomerF__Order__693CA210" FromRole="Selling" ToRole="CustomerFeedback" />
     <NavigationProperty Name="SellingActivities" Relationship="Self.FK__SellingAc__Selli__7E37BEF6" FromRole="Selling" ToRole="SellingActivity" />
     <NavigationProperty Name="SellingDetails" Relationship="Self.FK__SellingDe__Selli__01142BA1" FromRole="Selling" ToRole="SellingDetails" />
+    <Property Name="RecipientAddress" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SubDistrictId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="HappyFarmPRG4Model.FK__Selling__Custome__01142BA1" FromRole="Selling" ToRole="Customer" />
+    <NavigationProperty Name="Promo" Relationship="HappyFarmPRG4Model.FK__Selling__PromoId__02084FDA" FromRole="Selling" ToRole="Promo" />
+    <NavigationProperty Name="SubDistrict" Relationship="HappyFarmPRG4Model.FK__Selling__SubDist__74AE54BC" FromRole="Selling" ToRole="SubDistrict" />
   </EntityType>
   <EntityType Name="SellingActivity">
     <Key>
@@ -315,6 +323,7 @@
     <NavigationProperty Name="Employee" Relationship="Self.FK__SubDistri__Creat__02084FDA" FromRole="SubDistrict" ToRole="Employee" />
     <NavigationProperty Name="Employee1" Relationship="Self.FK__SubDistri__Modif__02FC7413" FromRole="SubDistrict" ToRole="Employee" />
     <NavigationProperty Name="Region" Relationship="Self.FK__SubDistri__Regio__03F0984C" FromRole="SubDistrict" ToRole="Region" />
+    <NavigationProperty Name="Sellings" Relationship="HappyFarmPRG4Model.FK__Selling__SubDist__74AE54BC" FromRole="SubDistrict" ToRole="Selling" />
   </EntityType>
   <EntityType Name="UserLogin">
     <Key>
@@ -990,5 +999,53 @@
       <End Role="SellingStatus" EntitySet="SellingStatus" />
       <End Role="SellingActivity" EntitySet="SellingActivities" />
     </AssociationSet>
+    <AssociationSet Name="FK__Selling__Custome__01142BA1" Association="HappyFarmPRG4Model.FK__Selling__Custome__01142BA1">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Selling" EntitySet="Sellings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Selling__PromoId__02084FDA" Association="HappyFarmPRG4Model.FK__Selling__PromoId__02084FDA">
+      <End Role="Promo" EntitySet="Promoes" />
+      <End Role="Selling" EntitySet="Sellings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Selling__SubDist__74AE54BC" Association="HappyFarmPRG4Model.FK__Selling__SubDist__74AE54BC">
+      <End Role="SubDistrict" EntitySet="SubDistricts" />
+      <End Role="Selling" EntitySet="Sellings" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK__Selling__Custome__01142BA1">
+    <End Type="HappyFarmPRG4Model.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="HappyFarmPRG4Model.Selling" Role="Selling" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Selling">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Selling__PromoId__02084FDA">
+    <End Type="HappyFarmPRG4Model.Promo" Role="Promo" Multiplicity="0..1" />
+    <End Type="HappyFarmPRG4Model.Selling" Role="Selling" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Promo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Selling">
+        <PropertyRef Name="PromoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Selling__SubDist__74AE54BC">
+    <End Type="HappyFarmPRG4Model.SubDistrict" Role="SubDistrict" Multiplicity="1" />
+    <End Type="HappyFarmPRG4Model.Selling" Role="Selling" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubDistrict">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Selling">
+        <PropertyRef Name="SubDistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

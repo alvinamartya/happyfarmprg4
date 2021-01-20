@@ -1,0 +1,63 @@
+﻿@model IEnumerable<HappyFarmProjectWebAdmin.Models.PurchasingModelView>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPA.cshtml";
+}
+
+<h2>Riwayat Pembelian</h2>
+<hr />
+
+@Html.ActionLink("Pembelian Produk", "Add", "ProductionAdminPurchasing", new { GoodsId = ViewBag.ProductId }, new { @class = "btn btn-primary", style="margin-bottom:10px" })
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            Tanggal Pembelian
+        </th>
+        <th>
+            Nama Petani
+        </th>
+        <th>
+            Alamat Petani
+        </th>
+        <th>
+            No Telepon Petani
+        </th>
+        <th>
+            Total Pembelian
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FarmerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FarmerAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FarmerPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPurchasePrice)
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" id="btn-delete@(item.Id)">Hapus</button>
+            </td>
+        </tr>
+    }
+
+</table>
+@* Error Data Empty *@
+@if (TempData["ErrMessageData"] != null)
+{
+    <div class="data-err">
+        @TempData["ErrMessageData"]
+    </div>
+}

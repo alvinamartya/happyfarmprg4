@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HappyFarmProjectAPI
+namespace HappyFarmProjectAPI.Models
 {
     using System;
     using System.Collections.Generic;
@@ -24,18 +24,21 @@ namespace HappyFarmProjectAPI
     
         public int Id { get; set; }
         public int CustomerId { get; set; }
-        public int SellingStatusId { get; set; }
-        public int CustomerAddressId { get; set; }
-        public int PromoId { get; set; }
+        public Nullable<int> PromoId { get; set; }
         public string RecipientName { get; set; }
         public string RecipientPhone { get; set; }
-        public byte[] PaymentImage { get; set; }
+        public string RecipientAddress { get; set; }
+        public int SubDistrictId { get; set; }
+        public string PaymentImage { get; set; }
         public decimal ShippingCharges { get; set; }
         public decimal TotalSalePrice { get; set; }
         public System.DateTime DateTime { get; set; }
     
+        public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerFeedback> CustomerFeedbacks { get; set; }
+        public virtual Promo Promo { get; set; }
+        public virtual SubDistrict SubDistrict { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SellingActivity> SellingActivities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

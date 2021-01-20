@@ -7,29 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HappyFarmProjectAPI
+namespace HappyFarmProjectAPI.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Purchasing
+    public partial class Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Purchasing()
+        public Category()
         {
-            this.PurchasingDetails = new HashSet<PurchasingDetail>();
+            this.Goods = new HashSet<Good>();
         }
     
         public int Id { get; set; }
-        public int EmployeeId { get; set; }
-        public string FarmerName { get; set; }
-        public string FarmerPhone { get; set; }
-        public string FarmerAddress { get; set; }
-        public decimal TotalPurchasePrice { get; set; }
-        public System.DateTime DateTime { get; set; }
+        public string Name { get; set; }
+        public int CreatedBy { get; set; }
+        public int ModifiedBy { get; set; }
+        public System.DateTime CreatedAt { get; set; }
+        public System.DateTime ModifiedAt { get; set; }
+        public string RowStatus { get; set; }
     
         public virtual Employee Employee { get; set; }
+        public virtual Employee Employee1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchasingDetail> PurchasingDetails { get; set; }
+        public virtual ICollection<Good> Goods { get; set; }
     }
 }

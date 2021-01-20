@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="32f2419bf95048a1aedd09c7bf684b2c" Name="Diagram1">
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.Banner" Width="1.5" PointX="17.75" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.Category" Width="1.5" PointX="12.5" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.Customer" Width="1.5" PointX="5.25" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.CustomerFeedback" Width="1.5" PointX="9.75" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.Employee" Width="1.5" PointX="10.25" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.Good" Width="1.5" PointX="14.75" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.GoodsPriceRegion" Width="1.5" PointX="20" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.GoodsStockRegion" Width="1.5" PointX="17" PointY="29" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.Promo" Width="1.5" PointX="12.5" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.Purchasing" Width="1.5" PointX="12.5" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.PurchasingDetail" Width="1.5" PointX="20" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.Region" Width="1.5" PointX="12.5" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.Role" Width="1.5" PointX="0.75" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.Selling" Width="1.5" PointX="7.5" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.SellingActivity" Width="1.5" PointX="15.5" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.SellingDetail" Width="1.5" PointX="14.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.SellingStatu" Width="1.5" PointX="13.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.SubDistrict" Width="1.5" PointX="17.75" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="HappyFarmPRG4Model.UserLogin" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Banner__CreatedB__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Banner__Modified__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Banner__PromoId__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Category__Create__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Category__Modifi__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Goods__CategoryI__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Customer__UserLo__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Selling__Custome__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__CustomerF__Order__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Employee__Create__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Employee__Modifi__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Employee__Region__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Employee__UserLo__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Goods__CreatedBy__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Goods__ModifiedB__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__GoodsPric__Creat__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__GoodsPric__Modif__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Promo__CreatedBy__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Promo__ModifiedB__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Purchasin__Emplo__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Region__CreatedB__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Region__Modified__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__SellingAc__Creat__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__SubDistri__Creat__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__SubDistri__Modif__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__GoodsPric__Goods__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__GoodsStoc__Goods__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Purchasin__Goods__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__SellingDe__Goods__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__GoodsPric__Regio__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__GoodsStoc__Regio__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Selling__PromoId__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Purchasin__Purch__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__SubDistri__Regio__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__UserLogin__RoleI__7D439ABD" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__Selling__SubDist__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__SellingAc__Selli__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__SellingDe__Selli__797309D9" ManuallyRouted="false" />
+        <AssociationConnector Association="HappyFarmPRG4Model.FK__SellingAc__Selli__778AC167" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HappyFarmProjectAPI
+namespace HappyFarmProjectAPI.Models
 {
     using System;
     using System.Data.Entity;
@@ -27,9 +27,7 @@ namespace HappyFarmProjectAPI
     
         public virtual DbSet<Banner> Banners { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Chat> Chats { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<CustomerAddress> CustomerAddresses { get; set; }
         public virtual DbSet<CustomerFeedback> CustomerFeedbacks { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Good> Goods { get; set; }

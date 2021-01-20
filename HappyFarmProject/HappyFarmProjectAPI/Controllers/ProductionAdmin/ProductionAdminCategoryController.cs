@@ -21,7 +21,6 @@ namespace HappyFarmProjectAPI.Controllers
         // repo
         private CategoryRepository repo = new CategoryRepository();
         #endregion
-
         #region Action
         /// <summary>
         /// To delete category using Admin Produksi

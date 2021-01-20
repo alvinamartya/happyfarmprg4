@@ -29,17 +29,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Chats">
-      <EntityTypeMapping TypeName="HappyFarmPRG4Model.Chat">
-        <MappingFragment StoreEntitySet="Chat">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="From" ColumnName="From" />
-          <ScalarProperty Name="To" ColumnName="To" />
-          <ScalarProperty Name="Message" ColumnName="Message" />
-          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Customers">
       <EntityTypeMapping TypeName="HappyFarmPRG4Model.Customer">
         <MappingFragment StoreEntitySet="Customer">
@@ -49,17 +38,6 @@
           <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CustomerAddresses">
-      <EntityTypeMapping TypeName="HappyFarmPRG4Model.CustomerAddress">
-        <MappingFragment StoreEntitySet="CustomerAddress">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-          <ScalarProperty Name="SubDistrictId" ColumnName="SubDistrictId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -170,6 +148,7 @@
     <EntitySetMapping Name="PurchasingDetails">
       <EntityTypeMapping TypeName="HappyFarmPRG4Model.PurchasingDetail">
         <MappingFragment StoreEntitySet="PurchasingDetails">
+          <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PurchasingId" ColumnName="PurchasingId" />
           <ScalarProperty Name="GoodsId" ColumnName="GoodsId" />
@@ -201,10 +180,10 @@
     <EntitySetMapping Name="Sellings">
       <EntityTypeMapping TypeName="HappyFarmPRG4Model.Selling">
         <MappingFragment StoreEntitySet="Selling">
+          <ScalarProperty Name="SubDistrictId" ColumnName="SubDistrictId" />
+          <ScalarProperty Name="RecipientAddress" ColumnName="RecipientAddress" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-          <ScalarProperty Name="SellingStatusId" ColumnName="SellingStatusId" />
-          <ScalarProperty Name="CustomerAddressId" ColumnName="CustomerAddressId" />
           <ScalarProperty Name="PromoId" ColumnName="PromoId" />
           <ScalarProperty Name="RecipientName" ColumnName="RecipientName" />
           <ScalarProperty Name="RecipientPhone" ColumnName="RecipientPhone" />

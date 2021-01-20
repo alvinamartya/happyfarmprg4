@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HappyFarmProjectAPI
+namespace HappyFarmProjectAPI.Models
 {
     using System;
     using System.Collections.Generic;
@@ -21,8 +21,6 @@ namespace HappyFarmProjectAPI
             this.Banners1 = new HashSet<Banner>();
             this.Categories = new HashSet<Category>();
             this.Categories1 = new HashSet<Category>();
-            this.Chats = new HashSet<Chat>();
-            this.Chats1 = new HashSet<Chat>();
             this.Employee1 = new HashSet<Employee>();
             this.Employee11 = new HashSet<Employee>();
             this.Goods = new HashSet<Good>();
@@ -61,10 +59,6 @@ namespace HappyFarmProjectAPI
         public virtual ICollection<Category> Categories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Category> Categories1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Chat> Chats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Chat> Chats1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employee1 { get; set; }
         public virtual Employee Employee2 { get; set; }

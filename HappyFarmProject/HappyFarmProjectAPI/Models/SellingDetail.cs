@@ -7,19 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HappyFarmProjectAPI
+namespace HappyFarmProjectAPI.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class GoodsStockRegion
+    public partial class SellingDetail
     {
         public int Id { get; set; }
+        public int SellingId { get; set; }
         public int GoodsId { get; set; }
-        public int RegionId { get; set; }
-        public int Stock { get; set; }
+        public int Qty { get; set; }
+        public decimal GoodsPrice { get; set; }
     
         public virtual Good Good { get; set; }
-        public virtual Region Region { get; set; }
+        public virtual Selling Selling { get; set; }
     }
 }
