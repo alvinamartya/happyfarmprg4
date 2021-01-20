@@ -179,6 +179,7 @@
     <Compile Include="Controllers\Account\LoginController.cs" />
     <Compile Include="Controllers\Account\LogoutController.cs" />
     <Compile Include="Controllers\Account\ForgotPasswordController.cs" />
+    <Compile Include="Controllers\CustomerService\CustomerServiceCustomerFeedbackController.cs" />
     <Compile Include="Controllers\Manager\ManagerEmployeeController.cs" />
     <Compile Include="Controllers\Manager\ManagerRegionController.cs" />
     <Compile Include="Controllers\Manager\ManagerSubDistrictController.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelView\CustomerFeedbackModelView.cs" />
     <Compile Include="Models\Request\ForgotPasswordRequest.cs" />
     <Compile Include="Models\Request\AddPromoRequest.cs" />
     <Compile Include="Models\Request\EditPromoRequest.cs" />
@@ -467,8 +469,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\CustomerService\" />
     <Folder Include="Controllers\SalesAdmin\" />
+    <Folder Include="Views\CustomerServiceCustomerFeedback\" />
     <Folder Include="Views\Logout\" />
   </ItemGroup>
   <ItemGroup>

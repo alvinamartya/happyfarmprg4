@@ -221,7 +221,6 @@
     <Compile Include="Controllers\Repository\RoleRepository.cs" />
     <Compile Include="Controllers\Repository\SubDistrictRepository.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminCategoryController.cs" />
-    <Compile Include="Controllers\SuperAdmin\SuperAdminCustomerFeedbackController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminSubDistrictController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminRoleController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminRegionController.cs" />
