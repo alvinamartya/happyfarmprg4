@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace HappyFarmProjectWebAdmin.Models.ModelView
+namespace HappyFarmProjectWebAdmin.Models
 {
     public class CustomerFeedbackModelView
     {

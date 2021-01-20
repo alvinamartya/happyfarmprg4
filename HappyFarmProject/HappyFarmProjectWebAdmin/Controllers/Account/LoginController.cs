@@ -70,6 +70,10 @@ namespace HappyFarmProjectWebAdmin.Controllers
                         {
                             return RedirectToAction("Index", "MarketingAdminPromo");
                         }
+                        else if (loginResponse.Result.Role == "Customer Service")
+                        {
+                            return RedirectToAction("Index", "CustomerServiceCustomerFeedback");
+                        }
                     }
                     else
                     {

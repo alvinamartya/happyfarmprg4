@@ -466,11 +466,12 @@
     <Content Include="Views\MarketingAdminBanner\Edit.cshtml" />
     <Content Include="Views\MarketingAdminBanner\Index.cshtml" />
     <Content Include="Views\ForgotPassword\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutCS.cshtml" />
+    <Content Include="Views\CustomerServiceCustomerFeedback\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\SalesAdmin\" />
-    <Folder Include="Views\CustomerServiceCustomerFeedback\" />
     <Folder Include="Views\Logout\" />
   </ItemGroup>
   <ItemGroup>
