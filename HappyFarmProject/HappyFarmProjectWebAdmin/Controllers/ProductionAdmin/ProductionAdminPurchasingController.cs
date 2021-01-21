@@ -15,7 +15,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
 
         #region Get Purchasing History
         // GET: ProductionAdminPurchasing
-        [Route("api/v1/PA/RiwayatPembelian")]
+        [Route("~/PA/RiwayatPembelian")]
         public ActionResult Index(string Sorting_Order, int? Page_No)
         {
             // session
