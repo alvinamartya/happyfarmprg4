@@ -7,23 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HappyFarmProjectAPI
+namespace HappyFarmProjectAPI.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class SellingStatu
+    public partial class Role
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SellingStatu()
+        public Role()
         {
-            this.SellingActivities = new HashSet<SellingActivity>();
+            this.UserLogins = new HashSet<UserLogin>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SellingActivity> SellingActivities { get; set; }
+        public virtual ICollection<UserLogin> UserLogins { get; set; }
     }
 }

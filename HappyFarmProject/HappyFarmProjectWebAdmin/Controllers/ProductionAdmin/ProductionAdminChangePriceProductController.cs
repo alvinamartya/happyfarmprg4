@@ -58,7 +58,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
             else
             {
                 TempData["ErrMessage"] = goodsRequest.Message;
-                TempData["ErrHeader"] = "Gagal meload wilayah";
+                TempData["ErrHeader"] = "Gagal meload produk";
             }
 
             string productId = "0";

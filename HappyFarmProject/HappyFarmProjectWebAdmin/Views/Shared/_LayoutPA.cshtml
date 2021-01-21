@@ -140,7 +140,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="dashboard-boxes.html">
+                                <a href="@Url.Action("Index","ProductionAdminPurchasing")" id="purchasing-nav">
                                     <i class="metismenu-icon pe-7s-ticket"></i>
                                     Pembelian
                                 </a>
@@ -242,9 +242,10 @@
                 $("#category-nav").addClass("mm-active");
             } else if (pageArr.indexOf("Produk") > -1) {
                 $("#goods-nav").addClass("mm-active");
-            }
-            else if (pageArr.indexOf("HargaWilayah") > -1) {
+            } else if (pageArr.indexOf("HargaWilayah") > -1) {
                 $("#change-price-nav").addClass("mm-active");
+            } else if (pageArr.indexOf("RiwayatPembelian") > -1) {
+                $("#purchasing-nav").addClass("mm-active");
             }
         }
         changeNav();

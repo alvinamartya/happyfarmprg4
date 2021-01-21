@@ -7,38 +7,33 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HappyFarmProjectAPI
+namespace HappyFarmProjectAPI.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Promo
+    public partial class SubDistrict
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Promo()
+        public SubDistrict()
         {
-            this.Banners = new HashSet<Banner>();
+            this.Sellings = new HashSet<Selling>();
         }
     
         public int Id { get; set; }
+        public int RegionId { get; set; }
+        public string Name { get; set; }
+        public decimal ShippingCharges { get; set; }
         public int CreatedBy { get; set; }
         public int ModifiedBy { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public string Image { get; set; }
-        public System.DateTime StartDate { get; set; }
-        public System.DateTime EndDate { get; set; }
-        public string IsFreeDelivery { get; set; }
-        public double Discount { get; set; }
-        public decimal MinTransaction { get; set; }
-        public decimal MaxDiscount { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public System.DateTime ModifiedAt { get; set; }
         public string RowStatus { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Banner> Banners { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual Employee Employee1 { get; set; }
+        public virtual Region Region { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Selling> Sellings { get; set; }
     }
 }

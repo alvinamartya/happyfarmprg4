@@ -7,15 +7,15 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PromoId" Type="Int32" />
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CreatedBy" Type="Int32" Nullable="false" />
     <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="RowStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK__Banner__CreatedB__5FB337D6" FromRole="Banner" ToRole="Employee" />
-    <NavigationProperty Name="Employee1" Relationship="Self.FK__Banner__Modified__60A75C0F" FromRole="Banner" ToRole="Employee" />
-    <NavigationProperty Name="Promo" Relationship="Self.FK__Banner__PromoId__619B8048" FromRole="Banner" ToRole="Promo" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__Banner__CreatedB__5AEE82B9" FromRole="Banner" ToRole="Employee" />
+    <NavigationProperty Name="Employee1" Relationship="Self.FK__Banner__Modified__5BE2A6F2" FromRole="Banner" ToRole="Employee" />
+    <NavigationProperty Name="Promo" Relationship="Self.FK__Banner__PromoId__5CD6CB2B" FromRole="Banner" ToRole="Promo" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
@@ -28,21 +28,9 @@
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="RowStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK__Category__Create__628FA481" FromRole="Category" ToRole="Employee" />
-    <NavigationProperty Name="Employee1" Relationship="Self.FK__Category__Modifi__6383C8BA" FromRole="Category" ToRole="Employee" />
-    <NavigationProperty Name="Goods" Relationship="Self.FK__Goods__CategoryI__6E01572D" FromRole="Category" ToRole="Goods" />
-  </EntityType>
-  <EntityType Name="Chat">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="From" Type="Int32" Nullable="false" />
-    <Property Name="To" Type="Int32" Nullable="false" />
-    <Property Name="Message" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK__Chat__From__6477ECF3" FromRole="Chat" ToRole="Employee" />
-    <NavigationProperty Name="Employee1" Relationship="Self.FK__Chat__To__656C112C" FromRole="Chat" ToRole="Employee" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__Category__Create__5DCAEF64" FromRole="Category" ToRole="Employee" />
+    <NavigationProperty Name="Employee1" Relationship="Self.FK__Category__Modifi__5EBF139D" FromRole="Category" ToRole="Employee" />
+    <NavigationProperty Name="Goods" Relationship="Self.FK__Goods__CategoryI__656C112C" FromRole="Category" ToRole="Goods" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -54,20 +42,8 @@
     <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Customer__UserLo__66603565" FromRole="Customer" ToRole="UserLogin" />
-    <NavigationProperty Name="CustomerAddresses" Relationship="Self.FK__CustomerA__Custo__6754599E" FromRole="Customer" ToRole="CustomerAddress" />
-  </EntityType>
-  <EntityType Name="CustomerAddress">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CustomerId" Type="Int32" Nullable="false" />
-    <Property Name="SubDistrictId" Type="Int32" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Customer" Relationship="Self.FK__CustomerA__Custo__6754599E" FromRole="CustomerAddress" ToRole="Customer" />
-    <NavigationProperty Name="SubDistrict" Relationship="Self.FK__CustomerA__SubDi__68487DD7" FromRole="CustomerAddress" ToRole="SubDistrict" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Customer__UserLo__5FB337D6" FromRole="Customer" ToRole="UserLogin" />
+    <NavigationProperty Name="Sellings" Relationship="Self.FK__Selling__Custome__01142BA1" FromRole="Customer" ToRole="Selling" />
   </EntityType>
   <EntityType Name="CustomerFeedback">
     <Key>
@@ -77,7 +53,7 @@
     <Property Name="OrderId" Type="Int32" Nullable="false" />
     <Property Name="Rating" Type="Double" Nullable="false" />
     <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Selling" Relationship="Self.FK__CustomerF__Order__693CA210" FromRole="CustomerFeedback" ToRole="Selling" />
+    <NavigationProperty Name="Selling" Relationship="Self.FK__CustomerF__Order__60A75C0F" FromRole="CustomerFeedback" ToRole="Selling" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
@@ -96,30 +72,28 @@
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="RowStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Banners" Relationship="Self.FK__Banner__CreatedB__5FB337D6" FromRole="Employee" ToRole="Banner" />
-    <NavigationProperty Name="Banners1" Relationship="Self.FK__Banner__Modified__60A75C0F" FromRole="Employee" ToRole="Banner" />
-    <NavigationProperty Name="Categories" Relationship="Self.FK__Category__Create__628FA481" FromRole="Employee" ToRole="Category" />
-    <NavigationProperty Name="Categories1" Relationship="Self.FK__Category__Modifi__6383C8BA" FromRole="Employee" ToRole="Category" />
-    <NavigationProperty Name="Chats" Relationship="Self.FK__Chat__From__6477ECF3" FromRole="Employee" ToRole="Chat" />
-    <NavigationProperty Name="Chats1" Relationship="Self.FK__Chat__To__656C112C" FromRole="Employee" ToRole="Chat" />
-    <NavigationProperty Name="Employee1" Relationship="Self.FK__Employee__Create__6A30C649" FromRole="Employee" ToRole="Employee1" />
-    <NavigationProperty Name="Employee2" Relationship="Self.FK__Employee__Create__6A30C649" FromRole="Employee1" ToRole="Employee" />
-    <NavigationProperty Name="Employee11" Relationship="Self.FK__Employee__Modifi__6B24EA82" FromRole="Employee" ToRole="Employee1" />
-    <NavigationProperty Name="Employee3" Relationship="Self.FK__Employee__Modifi__6B24EA82" FromRole="Employee1" ToRole="Employee" />
-    <NavigationProperty Name="Region" Relationship="Self.FK__Employee__Region__6C190EBB" FromRole="Employee" ToRole="Region" />
-    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Employee__UserLo__6D0D32F4" FromRole="Employee" ToRole="UserLogin" />
-    <NavigationProperty Name="Goods" Relationship="Self.FK__Goods__CreatedBy__6EF57B66" FromRole="Employee" ToRole="Goods" />
-    <NavigationProperty Name="Goods1" Relationship="Self.FK__Goods__ModifiedB__6FE99F9F" FromRole="Employee" ToRole="Goods" />
-    <NavigationProperty Name="GoodsPriceRegions" Relationship="Self.FK__GoodsPric__Creat__70DDC3D8" FromRole="Employee" ToRole="GoodsPriceRegion" />
-    <NavigationProperty Name="GoodsPriceRegions1" Relationship="Self.FK__GoodsPric__Modif__72C60C4A" FromRole="Employee" ToRole="GoodsPriceRegion" />
-    <NavigationProperty Name="Promoes" Relationship="Self.FK__Promo__CreatedBy__76969D2E" FromRole="Employee" ToRole="Promo" />
-    <NavigationProperty Name="Promoes1" Relationship="Self.FK__Promo__ModifiedB__778AC167" FromRole="Employee" ToRole="Promo" />
-    <NavigationProperty Name="Purchasings" Relationship="Self.FK__Purchasin__Emplo__787EE5A0" FromRole="Employee" ToRole="Purchasing" />
-    <NavigationProperty Name="Regions" Relationship="Self.FK__Region__CreatedB__7B5B524B" FromRole="Employee" ToRole="Region" />
-    <NavigationProperty Name="Regions1" Relationship="Self.FK__Region__Modified__7C4F7684" FromRole="Employee" ToRole="Region" />
-    <NavigationProperty Name="SellingActivities" Relationship="Self.FK__SellingAc__Creat__7D439ABD" FromRole="Employee" ToRole="SellingActivity" />
-    <NavigationProperty Name="SubDistricts" Relationship="Self.FK__SubDistri__Creat__02084FDA" FromRole="Employee" ToRole="SubDistrict" />
-    <NavigationProperty Name="SubDistricts1" Relationship="Self.FK__SubDistri__Modif__02FC7413" FromRole="Employee" ToRole="SubDistrict" />
+    <NavigationProperty Name="Banners" Relationship="Self.FK__Banner__CreatedB__5AEE82B9" FromRole="Employee" ToRole="Banner" />
+    <NavigationProperty Name="Banners1" Relationship="Self.FK__Banner__Modified__5BE2A6F2" FromRole="Employee" ToRole="Banner" />
+    <NavigationProperty Name="Categories" Relationship="Self.FK__Category__Create__5DCAEF64" FromRole="Employee" ToRole="Category" />
+    <NavigationProperty Name="Categories1" Relationship="Self.FK__Category__Modifi__5EBF139D" FromRole="Employee" ToRole="Category" />
+    <NavigationProperty Name="Employee1" Relationship="Self.FK__Employee__Create__619B8048" FromRole="Employee" ToRole="Employee1" />
+    <NavigationProperty Name="Employee2" Relationship="Self.FK__Employee__Create__619B8048" FromRole="Employee1" ToRole="Employee" />
+    <NavigationProperty Name="Employee11" Relationship="Self.FK__Employee__Modifi__628FA481" FromRole="Employee" ToRole="Employee1" />
+    <NavigationProperty Name="Employee3" Relationship="Self.FK__Employee__Modifi__628FA481" FromRole="Employee1" ToRole="Employee" />
+    <NavigationProperty Name="Region" Relationship="Self.FK__Employee__Region__6383C8BA" FromRole="Employee" ToRole="Region" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Employee__UserLo__6477ECF3" FromRole="Employee" ToRole="UserLogin" />
+    <NavigationProperty Name="Goods" Relationship="Self.FK__Goods__CreatedBy__66603565" FromRole="Employee" ToRole="Goods" />
+    <NavigationProperty Name="Goods1" Relationship="Self.FK__Goods__ModifiedB__6754599E" FromRole="Employee" ToRole="Goods" />
+    <NavigationProperty Name="GoodsPriceRegions" Relationship="Self.FK__GoodsPric__Creat__68487DD7" FromRole="Employee" ToRole="GoodsPriceRegion" />
+    <NavigationProperty Name="GoodsPriceRegions1" Relationship="Self.FK__GoodsPric__Modif__6A30C649" FromRole="Employee" ToRole="GoodsPriceRegion" />
+    <NavigationProperty Name="Promoes" Relationship="Self.FK__Promo__CreatedBy__6E01572D" FromRole="Employee" ToRole="Promo" />
+    <NavigationProperty Name="Promoes1" Relationship="Self.FK__Promo__ModifiedB__6EF57B66" FromRole="Employee" ToRole="Promo" />
+    <NavigationProperty Name="Purchasings" Relationship="Self.FK__Purchasin__Emplo__6FE99F9F" FromRole="Employee" ToRole="Purchasing" />
+    <NavigationProperty Name="Regions" Relationship="Self.FK__Region__CreatedB__72C60C4A" FromRole="Employee" ToRole="Region" />
+    <NavigationProperty Name="Regions1" Relationship="Self.FK__Region__Modified__73BA3083" FromRole="Employee" ToRole="Region" />
+    <NavigationProperty Name="SellingActivities" Relationship="Self.FK__SellingAc__Creat__75A278F5" FromRole="Employee" ToRole="SellingActivity" />
+    <NavigationProperty Name="SubDistricts" Relationship="Self.FK__SubDistri__Creat__7A672E12" FromRole="Employee" ToRole="SubDistrict" />
+    <NavigationProperty Name="SubDistricts1" Relationship="Self.FK__SubDistri__Modif__7B5B524B" FromRole="Employee" ToRole="SubDistrict" />
   </EntityType>
   <EntityType Name="Good">
     <Key>
@@ -129,18 +103,19 @@
     <Property Name="CreatedBy" Type="Int32" Nullable="false" />
     <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
     <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="RowStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Category" Relationship="Self.FK__Goods__CategoryI__6E01572D" FromRole="Goods" ToRole="Category" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK__Goods__CreatedBy__6EF57B66" FromRole="Goods" ToRole="Employee" />
-    <NavigationProperty Name="Employee1" Relationship="Self.FK__Goods__ModifiedB__6FE99F9F" FromRole="Goods" ToRole="Employee" />
-    <NavigationProperty Name="GoodsPriceRegions" Relationship="Self.FK__GoodsPric__Goods__71D1E811" FromRole="Goods" ToRole="GoodsPriceRegion" />
-    <NavigationProperty Name="GoodsStockRegions" Relationship="Self.FK__GoodsStoc__Goods__74AE54BC" FromRole="Goods" ToRole="GoodsStockRegion" />
-    <NavigationProperty Name="PurchasingDetails" Relationship="Self.FK__Purchasin__Goods__797309D9" FromRole="Goods" ToRole="PurchasingDetails" />
-    <NavigationProperty Name="SellingDetails" Relationship="Self.FK__SellingDe__Goods__00200768" FromRole="Goods" ToRole="SellingDetails" />
+    <NavigationProperty Name="Category" Relationship="Self.FK__Goods__CategoryI__656C112C" FromRole="Goods" ToRole="Category" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__Goods__CreatedBy__66603565" FromRole="Goods" ToRole="Employee" />
+    <NavigationProperty Name="Employee1" Relationship="Self.FK__Goods__ModifiedB__6754599E" FromRole="Goods" ToRole="Employee" />
+    <NavigationProperty Name="GoodsPriceRegions" Relationship="Self.FK__GoodsPric__Goods__693CA210" FromRole="Goods" ToRole="GoodsPriceRegion" />
+    <NavigationProperty Name="GoodsStockRegions" Relationship="Self.FK__GoodsStoc__Goods__6C190EBB" FromRole="Goods" ToRole="GoodsStockRegion" />
+    <NavigationProperty Name="PurchasingDetails" Relationship="Self.FK__Purchasin__Goods__70DDC3D8" FromRole="Goods" ToRole="PurchasingDetails" />
+    <NavigationProperty Name="SellingDetails" Relationship="Self.FK__SellingDe__Goods__787EE5A0" FromRole="Goods" ToRole="SellingDetails" />
   </EntityType>
   <EntityType Name="GoodsPriceRegion">
     <Key>
@@ -155,10 +130,10 @@
     <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
     <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="RowStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK__GoodsPric__Creat__70DDC3D8" FromRole="GoodsPriceRegion" ToRole="Employee" />
-    <NavigationProperty Name="Employee1" Relationship="Self.FK__GoodsPric__Modif__72C60C4A" FromRole="GoodsPriceRegion" ToRole="Employee" />
-    <NavigationProperty Name="Good" Relationship="Self.FK__GoodsPric__Goods__71D1E811" FromRole="GoodsPriceRegion" ToRole="Goods" />
-    <NavigationProperty Name="Region" Relationship="Self.FK__GoodsPric__Regio__73BA3083" FromRole="GoodsPriceRegion" ToRole="Region" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__GoodsPric__Creat__68487DD7" FromRole="GoodsPriceRegion" ToRole="Employee" />
+    <NavigationProperty Name="Employee1" Relationship="Self.FK__GoodsPric__Modif__6A30C649" FromRole="GoodsPriceRegion" ToRole="Employee" />
+    <NavigationProperty Name="Good" Relationship="Self.FK__GoodsPric__Goods__693CA210" FromRole="GoodsPriceRegion" ToRole="Goods" />
+    <NavigationProperty Name="Region" Relationship="Self.FK__GoodsPric__Regio__6B24EA82" FromRole="GoodsPriceRegion" ToRole="Region" />
   </EntityType>
   <EntityType Name="GoodsStockRegion">
     <Key>
@@ -168,8 +143,8 @@
     <Property Name="GoodsId" Type="Int32" Nullable="false" />
     <Property Name="RegionId" Type="Int32" Nullable="false" />
     <Property Name="Stock" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Good" Relationship="Self.FK__GoodsStoc__Goods__74AE54BC" FromRole="GoodsStockRegion" ToRole="Goods" />
-    <NavigationProperty Name="Region" Relationship="Self.FK__GoodsStoc__Regio__75A278F5" FromRole="GoodsStockRegion" ToRole="Region" />
+    <NavigationProperty Name="Good" Relationship="Self.FK__GoodsStoc__Goods__6C190EBB" FromRole="GoodsStockRegion" ToRole="Goods" />
+    <NavigationProperty Name="Region" Relationship="Self.FK__GoodsStoc__Regio__6D0D32F4" FromRole="GoodsStockRegion" ToRole="Region" />
   </EntityType>
   <EntityType Name="Promo">
     <Key>
@@ -180,7 +155,7 @@
     <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
     <Property Name="Code" Type="String" MaxLength="7" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="IsFreeDelivery" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
@@ -190,9 +165,10 @@
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="RowStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Banners" Relationship="Self.FK__Banner__PromoId__619B8048" FromRole="Promo" ToRole="Banner" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK__Promo__CreatedBy__76969D2E" FromRole="Promo" ToRole="Employee" />
-    <NavigationProperty Name="Employee1" Relationship="Self.FK__Promo__ModifiedB__778AC167" FromRole="Promo" ToRole="Employee" />
+    <NavigationProperty Name="Banners" Relationship="Self.FK__Banner__PromoId__5CD6CB2B" FromRole="Promo" ToRole="Banner" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__Promo__CreatedBy__6E01572D" FromRole="Promo" ToRole="Employee" />
+    <NavigationProperty Name="Employee1" Relationship="Self.FK__Promo__ModifiedB__6EF57B66" FromRole="Promo" ToRole="Employee" />
+    <NavigationProperty Name="Sellings" Relationship="Self.FK__Selling__PromoId__02084FDA" FromRole="Promo" ToRole="Selling" />
   </EntityType>
   <EntityType Name="Purchasing">
     <Key>
@@ -205,8 +181,8 @@
     <Property Name="FarmerAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="TotalPurchasePrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK__Purchasin__Emplo__787EE5A0" FromRole="Purchasing" ToRole="Employee" />
-    <NavigationProperty Name="PurchasingDetails" Relationship="Self.FK__Purchasin__Purch__7A672E12" FromRole="Purchasing" ToRole="PurchasingDetails" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__Purchasin__Emplo__6FE99F9F" FromRole="Purchasing" ToRole="Employee" />
+    <NavigationProperty Name="PurchasingDetails" Relationship="Self.FK__Purchasin__Purch__71D1E811" FromRole="Purchasing" ToRole="PurchasingDetails" />
   </EntityType>
   <EntityType Name="PurchasingDetail">
     <Key>
@@ -216,8 +192,9 @@
     <Property Name="PurchasingId" Type="Int32" Nullable="false" />
     <Property Name="GoodsId" Type="Int32" Nullable="false" />
     <Property Name="Qty" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Good" Relationship="Self.FK__Purchasin__Goods__797309D9" FromRole="PurchasingDetails" ToRole="Goods" />
-    <NavigationProperty Name="Purchasing" Relationship="Self.FK__Purchasin__Purch__7A672E12" FromRole="PurchasingDetails" ToRole="Purchasing" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Good" Relationship="Self.FK__Purchasin__Goods__70DDC3D8" FromRole="PurchasingDetails" ToRole="Goods" />
+    <NavigationProperty Name="Purchasing" Relationship="Self.FK__Purchasin__Purch__71D1E811" FromRole="PurchasingDetails" ToRole="Purchasing" />
   </EntityType>
   <EntityType Name="Region">
     <Key>
@@ -230,12 +207,12 @@
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="RowStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__Region__6C190EBB" FromRole="Region" ToRole="Employee" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK__Region__CreatedB__7B5B524B" FromRole="Region" ToRole="Employee" />
-    <NavigationProperty Name="Employee1" Relationship="Self.FK__Region__Modified__7C4F7684" FromRole="Region" ToRole="Employee" />
-    <NavigationProperty Name="GoodsPriceRegions" Relationship="Self.FK__GoodsPric__Regio__73BA3083" FromRole="Region" ToRole="GoodsPriceRegion" />
-    <NavigationProperty Name="GoodsStockRegions" Relationship="Self.FK__GoodsStoc__Regio__75A278F5" FromRole="Region" ToRole="GoodsStockRegion" />
-    <NavigationProperty Name="SubDistricts" Relationship="Self.FK__SubDistri__Regio__03F0984C" FromRole="Region" ToRole="SubDistrict" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__Region__6383C8BA" FromRole="Region" ToRole="Employee" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__Region__CreatedB__72C60C4A" FromRole="Region" ToRole="Employee" />
+    <NavigationProperty Name="Employee1" Relationship="Self.FK__Region__Modified__73BA3083" FromRole="Region" ToRole="Employee" />
+    <NavigationProperty Name="GoodsPriceRegions" Relationship="Self.FK__GoodsPric__Regio__6B24EA82" FromRole="Region" ToRole="GoodsPriceRegion" />
+    <NavigationProperty Name="GoodsStockRegions" Relationship="Self.FK__GoodsStoc__Regio__6D0D32F4" FromRole="Region" ToRole="GoodsStockRegion" />
+    <NavigationProperty Name="SubDistricts" Relationship="Self.FK__SubDistri__Regio__7C4F7684" FromRole="Region" ToRole="SubDistrict" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -243,7 +220,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="UserLogins" Relationship="Self.FK__UserLogin__RoleI__04E4BC85" FromRole="Role" ToRole="UserLogin" />
+    <NavigationProperty Name="UserLogins" Relationship="Self.FK__UserLogin__RoleI__7D439ABD" FromRole="Role" ToRole="UserLogin" />
   </EntityType>
   <EntityType Name="Selling">
     <Key>
@@ -251,18 +228,21 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CustomerId" Type="Int32" Nullable="false" />
-    <Property Name="SellingStatusId" Type="Int32" Nullable="false" />
-    <Property Name="CustomerAddressId" Type="Int32" Nullable="false" />
-    <Property Name="PromoId" Type="Int32" Nullable="false" />
+    <Property Name="PromoId" Type="Int32" />
     <Property Name="RecipientName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="RecipientPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="PaymentImage" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="RecipientAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SubDistrictId" Type="Int32" Nullable="false" />
+    <Property Name="PaymentImage" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="ShippingCharges" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="TotalSalePrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="CustomerFeedbacks" Relationship="Self.FK__CustomerF__Order__693CA210" FromRole="Selling" ToRole="CustomerFeedback" />
-    <NavigationProperty Name="SellingActivities" Relationship="Self.FK__SellingAc__Selli__7E37BEF6" FromRole="Selling" ToRole="SellingActivity" />
-    <NavigationProperty Name="SellingDetails" Relationship="Self.FK__SellingDe__Selli__01142BA1" FromRole="Selling" ToRole="SellingDetails" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Selling__Custome__01142BA1" FromRole="Selling" ToRole="Customer" />
+    <NavigationProperty Name="CustomerFeedbacks" Relationship="Self.FK__CustomerF__Order__60A75C0F" FromRole="Selling" ToRole="CustomerFeedback" />
+    <NavigationProperty Name="Promo" Relationship="Self.FK__Selling__PromoId__02084FDA" FromRole="Selling" ToRole="Promo" />
+    <NavigationProperty Name="SubDistrict" Relationship="Self.FK__Selling__SubDist__74AE54BC" FromRole="Selling" ToRole="SubDistrict" />
+    <NavigationProperty Name="SellingActivities" Relationship="Self.FK__SellingAc__Selli__76969D2E" FromRole="Selling" ToRole="SellingActivity" />
+    <NavigationProperty Name="SellingDetails" Relationship="Self.FK__SellingDe__Selli__797309D9" FromRole="Selling" ToRole="SellingDetails" />
   </EntityType>
   <EntityType Name="SellingActivity">
     <Key>
@@ -273,9 +253,9 @@
     <Property Name="SellingStatusid" Type="Int32" Nullable="false" />
     <Property Name="CreatedBy" Type="Int32" Nullable="false" />
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK__SellingAc__Creat__7D439ABD" FromRole="SellingActivity" ToRole="Employee" />
-    <NavigationProperty Name="Selling" Relationship="Self.FK__SellingAc__Selli__7E37BEF6" FromRole="SellingActivity" ToRole="Selling" />
-    <NavigationProperty Name="SellingStatu" Relationship="Self.FK__SellingAc__Selli__7F2BE32F" FromRole="SellingActivity" ToRole="SellingStatus" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__SellingAc__Creat__75A278F5" FromRole="SellingActivity" ToRole="Employee" />
+    <NavigationProperty Name="Selling" Relationship="Self.FK__SellingAc__Selli__76969D2E" FromRole="SellingActivity" ToRole="Selling" />
+    <NavigationProperty Name="SellingStatu" Relationship="Self.FK__SellingAc__Selli__778AC167" FromRole="SellingActivity" ToRole="SellingStatus" />
   </EntityType>
   <EntityType Name="SellingDetail">
     <Key>
@@ -286,8 +266,8 @@
     <Property Name="GoodsId" Type="Int32" Nullable="false" />
     <Property Name="Qty" Type="Int32" Nullable="false" />
     <Property Name="GoodsPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-    <NavigationProperty Name="Good" Relationship="Self.FK__SellingDe__Goods__00200768" FromRole="SellingDetails" ToRole="Goods" />
-    <NavigationProperty Name="Selling" Relationship="Self.FK__SellingDe__Selli__01142BA1" FromRole="SellingDetails" ToRole="Selling" />
+    <NavigationProperty Name="Good" Relationship="Self.FK__SellingDe__Goods__787EE5A0" FromRole="SellingDetails" ToRole="Goods" />
+    <NavigationProperty Name="Selling" Relationship="Self.FK__SellingDe__Selli__797309D9" FromRole="SellingDetails" ToRole="Selling" />
   </EntityType>
   <EntityType Name="SellingStatu">
     <Key>
@@ -295,7 +275,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="SellingActivities" Relationship="Self.FK__SellingAc__Selli__7F2BE32F" FromRole="SellingStatus" ToRole="SellingActivity" />
+    <NavigationProperty Name="SellingActivities" Relationship="Self.FK__SellingAc__Selli__778AC167" FromRole="SellingStatus" ToRole="SellingActivity" />
   </EntityType>
   <EntityType Name="SubDistrict">
     <Key>
@@ -310,10 +290,10 @@
     <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ModifiedAt" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="RowStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="CustomerAddresses" Relationship="Self.FK__CustomerA__SubDi__68487DD7" FromRole="SubDistrict" ToRole="CustomerAddress" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK__SubDistri__Creat__02084FDA" FromRole="SubDistrict" ToRole="Employee" />
-    <NavigationProperty Name="Employee1" Relationship="Self.FK__SubDistri__Modif__02FC7413" FromRole="SubDistrict" ToRole="Employee" />
-    <NavigationProperty Name="Region" Relationship="Self.FK__SubDistri__Regio__03F0984C" FromRole="SubDistrict" ToRole="Region" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK__SubDistri__Creat__7A672E12" FromRole="SubDistrict" ToRole="Employee" />
+    <NavigationProperty Name="Employee1" Relationship="Self.FK__SubDistri__Modif__7B5B524B" FromRole="SubDistrict" ToRole="Employee" />
+    <NavigationProperty Name="Region" Relationship="Self.FK__SubDistri__Regio__7C4F7684" FromRole="SubDistrict" ToRole="Region" />
+    <NavigationProperty Name="Sellings" Relationship="Self.FK__Selling__SubDist__74AE54BC" FromRole="SubDistrict" ToRole="Selling" />
   </EntityType>
   <EntityType Name="UserLogin">
     <Key>
@@ -323,11 +303,11 @@
     <Property Name="RoleId" Type="Int32" Nullable="false" />
     <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__UserLo__66603565" FromRole="UserLogin" ToRole="Customer" />
-    <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__UserLo__6D0D32F4" FromRole="UserLogin" ToRole="Employee" />
-    <NavigationProperty Name="Role" Relationship="Self.FK__UserLogin__RoleI__04E4BC85" FromRole="UserLogin" ToRole="Role" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__UserLo__5FB337D6" FromRole="UserLogin" ToRole="Customer" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__UserLo__6477ECF3" FromRole="UserLogin" ToRole="Employee" />
+    <NavigationProperty Name="Role" Relationship="Self.FK__UserLogin__RoleI__7D439ABD" FromRole="UserLogin" ToRole="Role" />
   </EntityType>
-  <Association Name="FK__Banner__CreatedB__5FB337D6">
+  <Association Name="FK__Banner__CreatedB__5AEE82B9">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="Banner" Type="Self.Banner" Multiplicity="*" />
     <ReferentialConstraint>
@@ -339,7 +319,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Banner__Modified__60A75C0F">
+  <Association Name="FK__Banner__Modified__5BE2A6F2">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="Banner" Type="Self.Banner" Multiplicity="*" />
     <ReferentialConstraint>
@@ -351,7 +331,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Banner__PromoId__619B8048">
+  <Association Name="FK__Banner__PromoId__5CD6CB2B">
     <End Role="Promo" Type="Self.Promo" Multiplicity="0..1" />
     <End Role="Banner" Type="Self.Banner" Multiplicity="*" />
     <ReferentialConstraint>
@@ -363,7 +343,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Category__Create__628FA481">
+  <Association Name="FK__Category__Create__5DCAEF64">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="Category" Type="Self.Category" Multiplicity="*" />
     <ReferentialConstraint>
@@ -375,7 +355,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Category__Modifi__6383C8BA">
+  <Association Name="FK__Category__Modifi__5EBF139D">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="Category" Type="Self.Category" Multiplicity="*" />
     <ReferentialConstraint>
@@ -387,7 +367,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Goods__CategoryI__6E01572D">
+  <Association Name="FK__Goods__CategoryI__656C112C">
     <End Role="Category" Type="Self.Category" Multiplicity="1" />
     <End Role="Goods" Type="Self.Good" Multiplicity="*" />
     <ReferentialConstraint>
@@ -399,31 +379,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Chat__From__6477ECF3">
-    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-    <End Role="Chat" Type="Self.Chat" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Chat">
-        <PropertyRef Name="From" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Chat__To__656C112C">
-    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-    <End Role="Chat" Type="Self.Chat" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Chat">
-        <PropertyRef Name="To" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Customer__UserLo__66603565">
+  <Association Name="FK__Customer__UserLo__5FB337D6">
     <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="1" />
     <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
     <ReferentialConstraint>
@@ -435,31 +391,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__CustomerA__Custo__6754599E">
+  <Association Name="FK__Selling__Custome__01142BA1">
     <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-    <End Role="CustomerAddress" Type="Self.CustomerAddress" Multiplicity="*" />
+    <End Role="Selling" Type="Self.Selling" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Customer">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="CustomerAddress">
+      <Dependent Role="Selling">
         <PropertyRef Name="CustomerId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__CustomerA__SubDi__68487DD7">
-    <End Role="SubDistrict" Type="Self.SubDistrict" Multiplicity="1" />
-    <End Role="CustomerAddress" Type="Self.CustomerAddress" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SubDistrict">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="CustomerAddress">
-        <PropertyRef Name="SubDistrictId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__CustomerF__Order__693CA210">
+  <Association Name="FK__CustomerF__Order__60A75C0F">
     <End Role="Selling" Type="Self.Selling" Multiplicity="1" />
     <End Role="CustomerFeedback" Type="Self.CustomerFeedback" Multiplicity="*" />
     <ReferentialConstraint>
@@ -471,7 +415,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Employee__Create__6A30C649">
+  <Association Name="FK__Employee__Create__619B8048">
     <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
     <End Role="Employee1" Type="Self.Employee" Multiplicity="*" />
     <ReferentialConstraint>
@@ -483,7 +427,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Employee__Modifi__6B24EA82">
+  <Association Name="FK__Employee__Modifi__628FA481">
     <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
     <End Role="Employee1" Type="Self.Employee" Multiplicity="*" />
     <ReferentialConstraint>
@@ -495,7 +439,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Employee__Region__6C190EBB">
+  <Association Name="FK__Employee__Region__6383C8BA">
     <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
     <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
     <ReferentialConstraint>
@@ -507,7 +451,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Employee__UserLo__6D0D32F4">
+  <Association Name="FK__Employee__UserLo__6477ECF3">
     <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="1" />
     <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
     <ReferentialConstraint>
@@ -519,7 +463,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Goods__CreatedBy__6EF57B66">
+  <Association Name="FK__Goods__CreatedBy__66603565">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="Goods" Type="Self.Good" Multiplicity="*" />
     <ReferentialConstraint>
@@ -531,7 +475,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Goods__ModifiedB__6FE99F9F">
+  <Association Name="FK__Goods__ModifiedB__6754599E">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="Goods" Type="Self.Good" Multiplicity="*" />
     <ReferentialConstraint>
@@ -543,7 +487,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__GoodsPric__Creat__70DDC3D8">
+  <Association Name="FK__GoodsPric__Creat__68487DD7">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="GoodsPriceRegion" Type="Self.GoodsPriceRegion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -555,7 +499,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__GoodsPric__Modif__72C60C4A">
+  <Association Name="FK__GoodsPric__Modif__6A30C649">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="GoodsPriceRegion" Type="Self.GoodsPriceRegion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -567,7 +511,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Promo__CreatedBy__76969D2E">
+  <Association Name="FK__Promo__CreatedBy__6E01572D">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="Promo" Type="Self.Promo" Multiplicity="*" />
     <ReferentialConstraint>
@@ -579,7 +523,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Promo__ModifiedB__778AC167">
+  <Association Name="FK__Promo__ModifiedB__6EF57B66">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="Promo" Type="Self.Promo" Multiplicity="*" />
     <ReferentialConstraint>
@@ -591,7 +535,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Purchasin__Emplo__787EE5A0">
+  <Association Name="FK__Purchasin__Emplo__6FE99F9F">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="Purchasing" Type="Self.Purchasing" Multiplicity="*" />
     <ReferentialConstraint>
@@ -603,7 +547,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Region__CreatedB__7B5B524B">
+  <Association Name="FK__Region__CreatedB__72C60C4A">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="Region" Type="Self.Region" Multiplicity="*" />
     <ReferentialConstraint>
@@ -615,7 +559,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Region__Modified__7C4F7684">
+  <Association Name="FK__Region__Modified__73BA3083">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="Region" Type="Self.Region" Multiplicity="*" />
     <ReferentialConstraint>
@@ -627,7 +571,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SellingAc__Creat__7D439ABD">
+  <Association Name="FK__SellingAc__Creat__75A278F5">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="SellingActivity" Type="Self.SellingActivity" Multiplicity="*" />
     <ReferentialConstraint>
@@ -639,7 +583,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SubDistri__Creat__02084FDA">
+  <Association Name="FK__SubDistri__Creat__7A672E12">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="SubDistrict" Type="Self.SubDistrict" Multiplicity="*" />
     <ReferentialConstraint>
@@ -651,7 +595,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SubDistri__Modif__02FC7413">
+  <Association Name="FK__SubDistri__Modif__7B5B524B">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
     <End Role="SubDistrict" Type="Self.SubDistrict" Multiplicity="*" />
     <ReferentialConstraint>
@@ -663,7 +607,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__GoodsPric__Goods__71D1E811">
+  <Association Name="FK__GoodsPric__Goods__693CA210">
     <End Role="Goods" Type="Self.Good" Multiplicity="1" />
     <End Role="GoodsPriceRegion" Type="Self.GoodsPriceRegion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -675,7 +619,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__GoodsStoc__Goods__74AE54BC">
+  <Association Name="FK__GoodsStoc__Goods__6C190EBB">
     <End Role="Goods" Type="Self.Good" Multiplicity="1" />
     <End Role="GoodsStockRegion" Type="Self.GoodsStockRegion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -687,7 +631,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Purchasin__Goods__797309D9">
+  <Association Name="FK__Purchasin__Goods__70DDC3D8">
     <End Role="Goods" Type="Self.Good" Multiplicity="1" />
     <End Role="PurchasingDetails" Type="Self.PurchasingDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -699,7 +643,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SellingDe__Goods__00200768">
+  <Association Name="FK__SellingDe__Goods__787EE5A0">
     <End Role="Goods" Type="Self.Good" Multiplicity="1" />
     <End Role="SellingDetails" Type="Self.SellingDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -711,7 +655,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__GoodsPric__Regio__73BA3083">
+  <Association Name="FK__GoodsPric__Regio__6B24EA82">
     <End Role="Region" Type="Self.Region" Multiplicity="1" />
     <End Role="GoodsPriceRegion" Type="Self.GoodsPriceRegion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -723,7 +667,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__GoodsStoc__Regio__75A278F5">
+  <Association Name="FK__GoodsStoc__Regio__6D0D32F4">
     <End Role="Region" Type="Self.Region" Multiplicity="1" />
     <End Role="GoodsStockRegion" Type="Self.GoodsStockRegion" Multiplicity="*" />
     <ReferentialConstraint>
@@ -735,7 +679,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Purchasin__Purch__7A672E12">
+  <Association Name="FK__Selling__PromoId__02084FDA">
+    <End Role="Promo" Type="Self.Promo" Multiplicity="0..1" />
+    <End Role="Selling" Type="Self.Selling" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Promo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Selling">
+        <PropertyRef Name="PromoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Purchasin__Purch__71D1E811">
     <End Role="Purchasing" Type="Self.Purchasing" Multiplicity="1" />
     <End Role="PurchasingDetails" Type="Self.PurchasingDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -747,7 +703,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SubDistri__Regio__03F0984C">
+  <Association Name="FK__SubDistri__Regio__7C4F7684">
     <End Role="Region" Type="Self.Region" Multiplicity="1" />
     <End Role="SubDistrict" Type="Self.SubDistrict" Multiplicity="*" />
     <ReferentialConstraint>
@@ -759,7 +715,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UserLogin__RoleI__04E4BC85">
+  <Association Name="FK__UserLogin__RoleI__7D439ABD">
     <End Role="Role" Type="Self.Role" Multiplicity="1" />
     <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
     <ReferentialConstraint>
@@ -771,7 +727,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SellingAc__Selli__7E37BEF6">
+  <Association Name="FK__Selling__SubDist__74AE54BC">
+    <End Role="SubDistrict" Type="Self.SubDistrict" Multiplicity="1" />
+    <End Role="Selling" Type="Self.Selling" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubDistrict">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Selling">
+        <PropertyRef Name="SubDistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SellingAc__Selli__76969D2E">
     <End Role="Selling" Type="Self.Selling" Multiplicity="1" />
     <End Role="SellingActivity" Type="Self.SellingActivity" Multiplicity="*" />
     <ReferentialConstraint>
@@ -783,7 +751,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SellingDe__Selli__01142BA1">
+  <Association Name="FK__SellingDe__Selli__797309D9">
     <End Role="Selling" Type="Self.Selling" Multiplicity="1" />
     <End Role="SellingDetails" Type="Self.SellingDetail" Multiplicity="*" />
     <ReferentialConstraint>
@@ -795,7 +763,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__SellingAc__Selli__7F2BE32F">
+  <Association Name="FK__SellingAc__Selli__778AC167">
     <End Role="SellingStatus" Type="Self.SellingStatu" Multiplicity="1" />
     <End Role="SellingActivity" Type="Self.SellingActivity" Multiplicity="*" />
     <ReferentialConstraint>
@@ -810,9 +778,7 @@
   <EntityContainer Name="HappyFarmPRG4Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Banners" EntityType="Self.Banner" />
     <EntitySet Name="Categories" EntityType="Self.Category" />
-    <EntitySet Name="Chats" EntityType="Self.Chat" />
     <EntitySet Name="Customers" EntityType="Self.Customer" />
-    <EntitySet Name="CustomerAddresses" EntityType="Self.CustomerAddress" />
     <EntitySet Name="CustomerFeedbacks" EntityType="Self.CustomerFeedback" />
     <EntitySet Name="Employees" EntityType="Self.Employee" />
     <EntitySet Name="Goods" EntityType="Self.Good" />
@@ -829,163 +795,159 @@
     <EntitySet Name="SellingStatus" EntityType="Self.SellingStatu" />
     <EntitySet Name="SubDistricts" EntityType="Self.SubDistrict" />
     <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
-    <AssociationSet Name="FK__Banner__CreatedB__5FB337D6" Association="Self.FK__Banner__CreatedB__5FB337D6">
+    <AssociationSet Name="FK__Banner__CreatedB__5AEE82B9" Association="Self.FK__Banner__CreatedB__5AEE82B9">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Banner" EntitySet="Banners" />
     </AssociationSet>
-    <AssociationSet Name="FK__Banner__Modified__60A75C0F" Association="Self.FK__Banner__Modified__60A75C0F">
+    <AssociationSet Name="FK__Banner__Modified__5BE2A6F2" Association="Self.FK__Banner__Modified__5BE2A6F2">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Banner" EntitySet="Banners" />
     </AssociationSet>
-    <AssociationSet Name="FK__Banner__PromoId__619B8048" Association="Self.FK__Banner__PromoId__619B8048">
+    <AssociationSet Name="FK__Banner__PromoId__5CD6CB2B" Association="Self.FK__Banner__PromoId__5CD6CB2B">
       <End Role="Promo" EntitySet="Promoes" />
       <End Role="Banner" EntitySet="Banners" />
     </AssociationSet>
-    <AssociationSet Name="FK__Category__Create__628FA481" Association="Self.FK__Category__Create__628FA481">
+    <AssociationSet Name="FK__Category__Create__5DCAEF64" Association="Self.FK__Category__Create__5DCAEF64">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Category" EntitySet="Categories" />
     </AssociationSet>
-    <AssociationSet Name="FK__Category__Modifi__6383C8BA" Association="Self.FK__Category__Modifi__6383C8BA">
+    <AssociationSet Name="FK__Category__Modifi__5EBF139D" Association="Self.FK__Category__Modifi__5EBF139D">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Category" EntitySet="Categories" />
     </AssociationSet>
-    <AssociationSet Name="FK__Goods__CategoryI__6E01572D" Association="Self.FK__Goods__CategoryI__6E01572D">
+    <AssociationSet Name="FK__Goods__CategoryI__656C112C" Association="Self.FK__Goods__CategoryI__656C112C">
       <End Role="Category" EntitySet="Categories" />
       <End Role="Goods" EntitySet="Goods" />
     </AssociationSet>
-    <AssociationSet Name="FK__Chat__From__6477ECF3" Association="Self.FK__Chat__From__6477ECF3">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="Chat" EntitySet="Chats" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Chat__To__656C112C" Association="Self.FK__Chat__To__656C112C">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="Chat" EntitySet="Chats" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Customer__UserLo__66603565" Association="Self.FK__Customer__UserLo__66603565">
+    <AssociationSet Name="FK__Customer__UserLo__5FB337D6" Association="Self.FK__Customer__UserLo__5FB337D6">
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="Customer" EntitySet="Customers" />
     </AssociationSet>
-    <AssociationSet Name="FK__CustomerA__Custo__6754599E" Association="Self.FK__CustomerA__Custo__6754599E">
+    <AssociationSet Name="FK__Selling__Custome__01142BA1" Association="Self.FK__Selling__Custome__01142BA1">
       <End Role="Customer" EntitySet="Customers" />
-      <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
+      <End Role="Selling" EntitySet="Sellings" />
     </AssociationSet>
-    <AssociationSet Name="FK__CustomerA__SubDi__68487DD7" Association="Self.FK__CustomerA__SubDi__68487DD7">
-      <End Role="SubDistrict" EntitySet="SubDistricts" />
-      <End Role="CustomerAddress" EntitySet="CustomerAddresses" />
-    </AssociationSet>
-    <AssociationSet Name="FK__CustomerF__Order__693CA210" Association="Self.FK__CustomerF__Order__693CA210">
+    <AssociationSet Name="FK__CustomerF__Order__60A75C0F" Association="Self.FK__CustomerF__Order__60A75C0F">
       <End Role="Selling" EntitySet="Sellings" />
       <End Role="CustomerFeedback" EntitySet="CustomerFeedbacks" />
     </AssociationSet>
-    <AssociationSet Name="FK__Employee__Create__6A30C649" Association="Self.FK__Employee__Create__6A30C649">
+    <AssociationSet Name="FK__Employee__Create__619B8048" Association="Self.FK__Employee__Create__619B8048">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Employee1" EntitySet="Employees" />
     </AssociationSet>
-    <AssociationSet Name="FK__Employee__Modifi__6B24EA82" Association="Self.FK__Employee__Modifi__6B24EA82">
+    <AssociationSet Name="FK__Employee__Modifi__628FA481" Association="Self.FK__Employee__Modifi__628FA481">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Employee1" EntitySet="Employees" />
     </AssociationSet>
-    <AssociationSet Name="FK__Employee__Region__6C190EBB" Association="Self.FK__Employee__Region__6C190EBB">
+    <AssociationSet Name="FK__Employee__Region__6383C8BA" Association="Self.FK__Employee__Region__6383C8BA">
       <End Role="Region" EntitySet="Regions" />
       <End Role="Employee" EntitySet="Employees" />
     </AssociationSet>
-    <AssociationSet Name="FK__Employee__UserLo__6D0D32F4" Association="Self.FK__Employee__UserLo__6D0D32F4">
+    <AssociationSet Name="FK__Employee__UserLo__6477ECF3" Association="Self.FK__Employee__UserLo__6477ECF3">
       <End Role="UserLogin" EntitySet="UserLogins" />
       <End Role="Employee" EntitySet="Employees" />
     </AssociationSet>
-    <AssociationSet Name="FK__Goods__CreatedBy__6EF57B66" Association="Self.FK__Goods__CreatedBy__6EF57B66">
+    <AssociationSet Name="FK__Goods__CreatedBy__66603565" Association="Self.FK__Goods__CreatedBy__66603565">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Goods" EntitySet="Goods" />
     </AssociationSet>
-    <AssociationSet Name="FK__Goods__ModifiedB__6FE99F9F" Association="Self.FK__Goods__ModifiedB__6FE99F9F">
+    <AssociationSet Name="FK__Goods__ModifiedB__6754599E" Association="Self.FK__Goods__ModifiedB__6754599E">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Goods" EntitySet="Goods" />
     </AssociationSet>
-    <AssociationSet Name="FK__GoodsPric__Creat__70DDC3D8" Association="Self.FK__GoodsPric__Creat__70DDC3D8">
+    <AssociationSet Name="FK__GoodsPric__Creat__68487DD7" Association="Self.FK__GoodsPric__Creat__68487DD7">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="GoodsPriceRegion" EntitySet="GoodsPriceRegions" />
     </AssociationSet>
-    <AssociationSet Name="FK__GoodsPric__Modif__72C60C4A" Association="Self.FK__GoodsPric__Modif__72C60C4A">
+    <AssociationSet Name="FK__GoodsPric__Modif__6A30C649" Association="Self.FK__GoodsPric__Modif__6A30C649">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="GoodsPriceRegion" EntitySet="GoodsPriceRegions" />
     </AssociationSet>
-    <AssociationSet Name="FK__Promo__CreatedBy__76969D2E" Association="Self.FK__Promo__CreatedBy__76969D2E">
+    <AssociationSet Name="FK__Promo__CreatedBy__6E01572D" Association="Self.FK__Promo__CreatedBy__6E01572D">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Promo" EntitySet="Promoes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Promo__ModifiedB__778AC167" Association="Self.FK__Promo__ModifiedB__778AC167">
+    <AssociationSet Name="FK__Promo__ModifiedB__6EF57B66" Association="Self.FK__Promo__ModifiedB__6EF57B66">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Promo" EntitySet="Promoes" />
     </AssociationSet>
-    <AssociationSet Name="FK__Purchasin__Emplo__787EE5A0" Association="Self.FK__Purchasin__Emplo__787EE5A0">
+    <AssociationSet Name="FK__Purchasin__Emplo__6FE99F9F" Association="Self.FK__Purchasin__Emplo__6FE99F9F">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Purchasing" EntitySet="Purchasings" />
     </AssociationSet>
-    <AssociationSet Name="FK__Region__CreatedB__7B5B524B" Association="Self.FK__Region__CreatedB__7B5B524B">
+    <AssociationSet Name="FK__Region__CreatedB__72C60C4A" Association="Self.FK__Region__CreatedB__72C60C4A">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Region" EntitySet="Regions" />
     </AssociationSet>
-    <AssociationSet Name="FK__Region__Modified__7C4F7684" Association="Self.FK__Region__Modified__7C4F7684">
+    <AssociationSet Name="FK__Region__Modified__73BA3083" Association="Self.FK__Region__Modified__73BA3083">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="Region" EntitySet="Regions" />
     </AssociationSet>
-    <AssociationSet Name="FK__SellingAc__Creat__7D439ABD" Association="Self.FK__SellingAc__Creat__7D439ABD">
+    <AssociationSet Name="FK__SellingAc__Creat__75A278F5" Association="Self.FK__SellingAc__Creat__75A278F5">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="SellingActivity" EntitySet="SellingActivities" />
     </AssociationSet>
-    <AssociationSet Name="FK__SubDistri__Creat__02084FDA" Association="Self.FK__SubDistri__Creat__02084FDA">
+    <AssociationSet Name="FK__SubDistri__Creat__7A672E12" Association="Self.FK__SubDistri__Creat__7A672E12">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="SubDistrict" EntitySet="SubDistricts" />
     </AssociationSet>
-    <AssociationSet Name="FK__SubDistri__Modif__02FC7413" Association="Self.FK__SubDistri__Modif__02FC7413">
+    <AssociationSet Name="FK__SubDistri__Modif__7B5B524B" Association="Self.FK__SubDistri__Modif__7B5B524B">
       <End Role="Employee" EntitySet="Employees" />
       <End Role="SubDistrict" EntitySet="SubDistricts" />
     </AssociationSet>
-    <AssociationSet Name="FK__GoodsPric__Goods__71D1E811" Association="Self.FK__GoodsPric__Goods__71D1E811">
+    <AssociationSet Name="FK__GoodsPric__Goods__693CA210" Association="Self.FK__GoodsPric__Goods__693CA210">
       <End Role="Goods" EntitySet="Goods" />
       <End Role="GoodsPriceRegion" EntitySet="GoodsPriceRegions" />
     </AssociationSet>
-    <AssociationSet Name="FK__GoodsStoc__Goods__74AE54BC" Association="Self.FK__GoodsStoc__Goods__74AE54BC">
+    <AssociationSet Name="FK__GoodsStoc__Goods__6C190EBB" Association="Self.FK__GoodsStoc__Goods__6C190EBB">
       <End Role="Goods" EntitySet="Goods" />
       <End Role="GoodsStockRegion" EntitySet="GoodsStockRegions" />
     </AssociationSet>
-    <AssociationSet Name="FK__Purchasin__Goods__797309D9" Association="Self.FK__Purchasin__Goods__797309D9">
+    <AssociationSet Name="FK__Purchasin__Goods__70DDC3D8" Association="Self.FK__Purchasin__Goods__70DDC3D8">
       <End Role="Goods" EntitySet="Goods" />
       <End Role="PurchasingDetails" EntitySet="PurchasingDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__SellingDe__Goods__00200768" Association="Self.FK__SellingDe__Goods__00200768">
+    <AssociationSet Name="FK__SellingDe__Goods__787EE5A0" Association="Self.FK__SellingDe__Goods__787EE5A0">
       <End Role="Goods" EntitySet="Goods" />
       <End Role="SellingDetails" EntitySet="SellingDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__GoodsPric__Regio__73BA3083" Association="Self.FK__GoodsPric__Regio__73BA3083">
+    <AssociationSet Name="FK__GoodsPric__Regio__6B24EA82" Association="Self.FK__GoodsPric__Regio__6B24EA82">
       <End Role="Region" EntitySet="Regions" />
       <End Role="GoodsPriceRegion" EntitySet="GoodsPriceRegions" />
     </AssociationSet>
-    <AssociationSet Name="FK__GoodsStoc__Regio__75A278F5" Association="Self.FK__GoodsStoc__Regio__75A278F5">
+    <AssociationSet Name="FK__GoodsStoc__Regio__6D0D32F4" Association="Self.FK__GoodsStoc__Regio__6D0D32F4">
       <End Role="Region" EntitySet="Regions" />
       <End Role="GoodsStockRegion" EntitySet="GoodsStockRegions" />
     </AssociationSet>
-    <AssociationSet Name="FK__Purchasin__Purch__7A672E12" Association="Self.FK__Purchasin__Purch__7A672E12">
+    <AssociationSet Name="FK__Selling__PromoId__02084FDA" Association="Self.FK__Selling__PromoId__02084FDA">
+      <End Role="Promo" EntitySet="Promoes" />
+      <End Role="Selling" EntitySet="Sellings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Purchasin__Purch__71D1E811" Association="Self.FK__Purchasin__Purch__71D1E811">
       <End Role="Purchasing" EntitySet="Purchasings" />
       <End Role="PurchasingDetails" EntitySet="PurchasingDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__SubDistri__Regio__03F0984C" Association="Self.FK__SubDistri__Regio__03F0984C">
+    <AssociationSet Name="FK__SubDistri__Regio__7C4F7684" Association="Self.FK__SubDistri__Regio__7C4F7684">
       <End Role="Region" EntitySet="Regions" />
       <End Role="SubDistrict" EntitySet="SubDistricts" />
     </AssociationSet>
-    <AssociationSet Name="FK__UserLogin__RoleI__04E4BC85" Association="Self.FK__UserLogin__RoleI__04E4BC85">
+    <AssociationSet Name="FK__UserLogin__RoleI__7D439ABD" Association="Self.FK__UserLogin__RoleI__7D439ABD">
       <End Role="Role" EntitySet="Roles" />
       <End Role="UserLogin" EntitySet="UserLogins" />
     </AssociationSet>
-    <AssociationSet Name="FK__SellingAc__Selli__7E37BEF6" Association="Self.FK__SellingAc__Selli__7E37BEF6">
+    <AssociationSet Name="FK__Selling__SubDist__74AE54BC" Association="Self.FK__Selling__SubDist__74AE54BC">
+      <End Role="SubDistrict" EntitySet="SubDistricts" />
+      <End Role="Selling" EntitySet="Sellings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SellingAc__Selli__76969D2E" Association="Self.FK__SellingAc__Selli__76969D2E">
       <End Role="Selling" EntitySet="Sellings" />
       <End Role="SellingActivity" EntitySet="SellingActivities" />
     </AssociationSet>
-    <AssociationSet Name="FK__SellingDe__Selli__01142BA1" Association="Self.FK__SellingDe__Selli__01142BA1">
+    <AssociationSet Name="FK__SellingDe__Selli__797309D9" Association="Self.FK__SellingDe__Selli__797309D9">
       <End Role="Selling" EntitySet="Sellings" />
       <End Role="SellingDetails" EntitySet="SellingDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__SellingAc__Selli__7F2BE32F" Association="Self.FK__SellingAc__Selli__7F2BE32F">
+    <AssociationSet Name="FK__SellingAc__Selli__778AC167" Association="Self.FK__SellingAc__Selli__778AC167">
       <End Role="SellingStatus" EntitySet="SellingStatus" />
       <End Role="SellingActivity" EntitySet="SellingActivities" />
     </AssociationSet>

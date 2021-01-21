@@ -184,6 +184,7 @@
     <Compile Include="Controllers\Manager\ManagerSubDistrictController.cs" />
     <Compile Include="Controllers\MarketingAdmin\MarketingAdminBannerController.cs" />
     <Compile Include="Controllers\MarketingAdmin\MarketingAdminPromoController.cs" />
+    <Compile Include="Controllers\ProductionAdmin\ProductionAdminPurchasingController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminChangePriceProductController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminCategoryController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminGoodsController.cs" />
@@ -197,6 +198,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\DeletePurchasingRequest.cs" />
+    <Compile Include="Models\PurchasingSession.cs" />
+    <Compile Include="Models\Request\AddPurchasingRequest.cs" />
+    <Compile Include="Models\ModelView\PurchasingModelView.cs" />
+    <Compile Include="Models\Request\PurchasingDetailRequest.cs" />
     <Compile Include="Models\Request\AddGoodsPriceRegionRequest.cs" />
     <Compile Include="Models\ModelView\GoodsListModelView.cs" />
     <Compile Include="Models\ModelView\GoodsPriceModelView.cs" />
@@ -236,6 +242,7 @@
     <Compile Include="Models\ModelView\SubDistrictModelView.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="App_Code\Purchasing.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.css" />
@@ -470,6 +477,10 @@
     <Content Include="Views\ForgotPassword\Index.cshtml" />
     <Content Include="Views\ProductionAdminChangePriceProduct\Index.cshtml" />
     <Content Include="Views\ProductionAdminChangePriceProduct\Edit.cshtml" />
+    <Content Include="Views\ProductionAdminPurchasing\Index.cshtml" />
+    <Content Include="Views\ProductionAdminPurchasing\Add.cshtml" />
+    <Content Include="Views\ProductionAdminPurchasing\AddDetail.cshtml" />
+    <Content Include="Views\ProductionAdminPurchasing\EditDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

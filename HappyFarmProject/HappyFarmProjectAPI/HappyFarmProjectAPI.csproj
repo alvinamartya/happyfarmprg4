@@ -181,15 +181,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Banner.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Category.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Chat.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\BusinessLogic\BannerLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\CategoryLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\EmployeeLogic.cs" />
@@ -205,6 +196,7 @@
     <Compile Include="Controllers\Manager\ManagerSubDistrictController.cs" />
     <Compile Include="Controllers\MarketingAdmin\MarketingAdminPromoController.cs" />
     <Compile Include="Controllers\MarketingAdmin\MarketingAdminBannerController.cs" />
+    <Compile Include="Controllers\ProductionAdmin\ProductionAdminPurchasingController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminRegionController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminChangePriceProductController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminCategoryController.cs" />
@@ -216,6 +208,7 @@
     <Compile Include="Controllers\Repository\GoodsPriceRegionRepository.cs" />
     <Compile Include="Controllers\Repository\GoodsRepository.cs" />
     <Compile Include="Controllers\Repository\PromoRepository.cs" />
+    <Compile Include="Controllers\Repository\PurchasingRepository.cs" />
     <Compile Include="Controllers\Repository\RegionRepository.cs" />
     <Compile Include="Controllers\Repository\RoleRepository.cs" />
     <Compile Include="Controllers\Repository\SubDistrictRepository.cs" />
@@ -228,46 +221,64 @@
     <Compile Include="Controllers\SuperAdmin\SuperAdminGoodsController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminEmployeeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Customer.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerAddress.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerFeedback.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContext.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbContext.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContext.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContext.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DbContext.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Employee.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="App_Code\Helper.cs" />
-    <Compile Include="Good.cs">
+    <Compile Include="Models\Banner.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="GoodsPriceRegion.cs">
+    <Compile Include="Models\Category.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="GoodsStockRegion.cs">
+    <Compile Include="Models\Customer.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomerFeedback.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DbContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DbContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DbContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeletePurchasingRequest.cs" />
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Good.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GoodsPriceRegion.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GoodsStockRegion.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Promo.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Purchasing.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PurchasingDetail.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Region.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Request\AddPurchasingRequest.cs" />
+    <Compile Include="Models\Request\PurchasingDetailRequest.cs" />
     <Compile Include="Models\Response\GoodsPriceResponse.cs" />
     <Compile Include="Models\Request\ForgotPasswordRequest.cs" />
     <Compile Include="Models\Request\AddGoodsPriceRegionRequest.cs" />
@@ -294,41 +305,29 @@
     <Compile Include="Models\Response\ResponseWithData.cs" />
     <Compile Include="Models\Response\ResponseWithoutData.cs" />
     <Compile Include="Models\AuthModel.cs" />
-    <Compile Include="Promo.cs">
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Selling.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SellingActivity.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SellingDetail.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SellingStatu.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SubDistrict.cs">
+      <DependentUpon>DbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserLogin.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Code\TokenManager.cs" />
-    <Compile Include="Purchasing.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PurchasingDetail.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Region.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Role.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Selling.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SellingActivity.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SellingDetail.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SellingStatu.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SubDistrict.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserLogin.cs">
-      <DependentUpon>DbContext.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -336,19 +335,19 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="DbContext.Context.tt">
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Models\DbContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DbContext.edmx</DependentUpon>
       <LastGenOutput>DbContext.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DbContext.tt">
+    <Content Include="Models\DbContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DbContext.edmx</DependentUpon>
       <LastGenOutput>DbContext.cs</LastGenOutput>
     </Content>
-    <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -370,11 +369,11 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="DbContext.edmx">
+    <EntityDeploy Include="Models\DbContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DbContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="DbContext.edmx.diagram">
+    <Content Include="Models\DbContext.edmx.diagram">
       <DependentUpon>DbContext.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />

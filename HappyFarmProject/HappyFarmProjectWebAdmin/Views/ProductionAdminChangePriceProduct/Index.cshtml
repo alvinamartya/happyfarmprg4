@@ -65,6 +65,13 @@
         }
     </tbody>
 </table>
+@* Error Data Empty *@
+@if (TempData["ErrMessageData"] != null)
+{
+    <div class="data-err">
+        @TempData["ErrMessageData"]
+    </div>
+}
 
 @* Paging *@
 <br />

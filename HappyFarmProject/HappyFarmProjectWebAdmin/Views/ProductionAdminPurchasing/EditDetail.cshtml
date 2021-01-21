@@ -1,0 +1,56 @@
+﻿@model HappyFarmProjectWebAdmin.Models.PurchasingDetailRequest
+
+@{
+    ViewBag.Title = "EditDetail";
+    Layout = "~/Views/Shared/_LayoutPA.cshtml";
+}
+
+<h2>EditDetail</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>PurchasingDetailRequest</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.EditorFor(model => model.GoodsId, new { htmlAttributes = new { @class = "form-control", style = "display: none" } })
+        <div class="form-group">
+            <label for="GoodsName" class="control-label col-md-2">Produk</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GoodsName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.GoodsName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Qty" class="control-label col-md-2">Jumlah <span style="color:red">*</span></label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Price" class="control-label col-md-2">Harga <span style="color:red">*</span></label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Kembali", "Add", "ProductionAdminPurchasing", null, new { @class = "btn btn-danger" })
+                <input type="submit" value="Ubah" class="btn btn-primary btn-margin-left" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
