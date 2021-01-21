@@ -8,7 +8,7 @@
 <h2>Riwayat Pembelian</h2>
 <hr />
 
-@Html.ActionLink("Pembelian Produk", "Add", "ProductionAdminPurchasing", new { GoodsId = ViewBag.ProductId }, new { @class = "btn btn-primary", style="margin-bottom:10px" })
+@Html.ActionLink("Pembelian Produk", "Add", "ProductionAdminPurchasing", new { GoodsId = ViewBag.ProductId }, new { @class = "btn btn-primary", style = "margin-bottom:10px" })
 <table class="table table-bordered table-striped">
     <tr>
         <th>
@@ -26,7 +26,7 @@
         <th>
             Total Pembelian
         </th>
-        <th></th>
+        <th>Aksi</th>
     </tr>
 
     @foreach (var item in Model)
@@ -60,4 +60,82 @@
     <div class="data-err">
         @TempData["ErrMessageData"]
     </div>
+}
+
+@foreach (var item in Model)
+{
+    using (Html.BeginForm("DeletePurchasing", "ProductionAdminPurchasing", FormMethod.Post))
+    {
+        <!-- The Delete Modal -->
+        <div id="deleteModal@(item.Id)" class="modal" style="display:none">
+            <!-- Delete Modal content -->
+            <div class="modal-content">
+                <input type="text" name="Id" id="Id" value="@(item.Id)" style="display:none" />
+                <div class="modal-content--header">
+                    <span class="close" id="close@(item.Id)">&times;</span>
+                    <p>Hapus Detail Produk</p>
+                </div>
+                <hr style="width: 100%" />
+                <div class="modal-content--description">
+                    Anda yakin akan menghapus data penjualan tanggal @(item.DateTime) dari petani @(item.FarmerName)?
+                </div>
+                <hr style="width: 100%" />
+                <div class="modal-content--footer">
+                    <a href="#" class="btn btn-secondary" onclick="closeModalDelete@(item.Id)();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+                    <input type="submit" value="Hapus" class="btn btn-danger" style="margin-bottom: 10px; margin-top: -5px" />
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Get the modal
+            var modal@(item.Id) = document.getElementById("deleteModal@(item.Id)");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("close@(item.Id)");
+
+            modal@(item.Id).style.display = "none";
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal@(item.Id).style.display = "none";
+            }
+
+            function closeModalDelete@(item.Id)() {
+                modal@(item.Id).style.display = "none";
+            }
+
+            const btn@(item.Id) = document.getElementById("btn-delete@(item.Id)");
+            btn@(item.Id).addEventListener('click', () => {
+                modal@(item.Id).style.display = "block";
+            })
+        </script>
+    }
+}
+
+
+@if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
+{
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-content--header">
+                <span class="close">&times;</span>
+                <p>@TempData["ErrHeader"]</p>
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--description">
+                @TempData["ErrMessage"]
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--footer">
+                <a href="#" class="btn btn-danger" onclick="closeModal();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="~/Scripts/data-error.js"></script>
 }

@@ -25,6 +25,32 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         }
 
         /// <summary>
+        /// delete purchasing
+        /// </summary>
+        /// <param name="deletePurchasing"></param>
+        public void DeletePurchasing(DeletePurchasingRequest deletePurchasing)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                // select purchasing details
+                List<PurchasingDetail> details = db.PurchasingDetails.Where(x => x.PurchasingId == deletePurchasing.Id).ToList();
+                int region = db.Employees.Where(x => x.Id == deletePurchasing.EmployeeId).FirstOrDefault().RegionId ?? db.Regions.FirstOrDefault().Id;
+                foreach (PurchasingDetail x in details)
+                {
+                    GoodsStockRegion stockRegion = db.GoodsStockRegions.Where(z => z.GoodsId == x.GoodsId && z.RegionId == region).FirstOrDefault();
+                    stockRegion.Stock -= x.Qty;
+
+                    db.PurchasingDetails.Remove(x);
+                    db.SaveChanges();
+                }
+
+                Purchasing purchasing = db.Purchasings.Where(x => x.Id == deletePurchasing.Id).FirstOrDefault();
+                db.Purchasings.Remove(purchasing);
+                db.SaveChanges();
+            }
+        }
+
+        /// <summary>
         /// add purchasing
         /// </summary>
         /// <param name="purchasingRequest"></param>
@@ -47,6 +73,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
 
                 long totalPurchasing = 0;
                 int lastId = db.Purchasings.OrderByDescending(x => x.Id).FirstOrDefault().Id;
+                int regionId = db.Employees.Where(x => x.Id == purchasingRequest.EmployeeId).FirstOrDefault().RegionId ?? db.Regions.OrderBy(x => x.Id).FirstOrDefault().Id;
                 foreach (PurchasingDetailRequest detail in purchasingRequest.PurchasingDetails)
                 {
                     PurchasingDetail purchasingDetail = new PurchasingDetail()
@@ -56,6 +83,23 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                         Qty = detail.Qty,
                         Price = detail.Price
                     };
+
+                    // add goods stock region
+                    var goodsStokRegion = db.GoodsStockRegions.Where(x => x.GoodsId == detail.GoodsId && x.RegionId == regionId).FirstOrDefault();
+                    if (goodsStokRegion == null)
+                    {
+                        GoodsStockRegion newGoodsStockRegion = new GoodsStockRegion()
+                        {
+                            GoodsId = detail.GoodsId,
+                            RegionId = regionId,
+                            Stock = detail.Qty
+                        };
+                        db.GoodsStockRegions.Add(newGoodsStockRegion);
+                    }
+                    else
+                    {
+                        goodsStokRegion.Stock += detail.Qty;
+                    }
 
                     totalPurchasing += detail.Qty * detail.Price;
 

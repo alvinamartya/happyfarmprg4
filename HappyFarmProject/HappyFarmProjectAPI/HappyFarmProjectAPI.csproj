@@ -252,6 +252,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbContext.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DeletePurchasingRequest.cs" />
     <Compile Include="Models\Employee.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>

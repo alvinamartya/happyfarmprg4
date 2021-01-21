@@ -123,6 +123,51 @@ namespace HappyFarmProjectAPI.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        /// <summary>
+        /// Delete purchasing
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("api/v1/PA/Purchasing/Delete")]
+        [HttpPost]
+        public async Task<IHttpActionResult> DeletePurchasing(DeletePurchasingRequest deletePurchasing)
+        {
+            try
+            {
+                // validate token
+                if (tokenLogic.ValidateTokenInHeader(Request, "Admin Produksi"))
+                {
+                    // get goods by id
+                    await Task.Run(() => repo.DeletePurchasing(deletePurchasing));
+
+                    // response success
+                    var response = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Message = "Berhasil"
+                    };
+
+                    return Ok(response);
+                }
+                else
+                {
+                    // unauthorized
+                    var unAuthorizedResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        Message = "Anda tidak memiliki hak akses"
+                    };
+
+                    return Ok(unAuthorizedResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
         #endregion
     }
 }

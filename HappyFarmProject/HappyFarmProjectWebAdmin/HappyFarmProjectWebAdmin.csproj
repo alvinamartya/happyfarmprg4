@@ -198,6 +198,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\DeletePurchasingRequest.cs" />
     <Compile Include="Models\PurchasingSession.cs" />
     <Compile Include="Models\Request\AddPurchasingRequest.cs" />
     <Compile Include="Models\ModelView\PurchasingModelView.cs" />

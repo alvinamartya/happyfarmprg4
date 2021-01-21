@@ -18,10 +18,21 @@ namespace HappyFarmProjectWebAdmin.Controllers
         [Route("api/v1/PA/RiwayatPembelian")]
         public ActionResult Index(string Sorting_Order, int? Page_No)
         {
+            // session
             Purchasing.ClearDetailPurchasing();
             Session["FarmerName"] = null;
             Session["FarmerAddress"] = null;
             Session["FarmerPhone"] = null;
+
+            // error
+            if (Session["ErrMessage"] != null)
+            {
+                TempData["ErrMessage"] = Session["ErrMessage"];
+                TempData["ErrHeader"] = Session["ErrHeader"];
+
+                Session["ErrMessage"] = null;
+                Session["ErrHeader"] = null;
+            }
 
             // get purchasing
             ResponseWithData<List<PurchasingModelView>> purchasingHistoryRequest = GetPurchasing();
@@ -262,7 +273,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
             return RedirectToAction("Add");
         }
         #endregion
-        #region Delete Purchasing
+        #region Delete Purchasing Detail
         [Route("~/PA/Pembelian/Tambah/Detail/Hapus/{id}")]
         [HttpPost]
         public ActionResult DeleteDetail(int id)
@@ -270,6 +281,48 @@ namespace HappyFarmProjectWebAdmin.Controllers
             // delete detail
             Purchasing.DeleteDetailPurchasing(id);
             return RedirectToAction("Add");
+        }
+        #endregion
+        #region Delete Purchasing
+        [Route("~/PA/Pembelian/Hapus")]
+        [HttpPost]
+        public ActionResult DeletePurchasing(DeletePurchasingRequest deletePurchasingRequest)
+        {
+            System.Diagnostics.Debug.WriteLine(deletePurchasingRequest.Id);
+            deletePurchasingRequest.EmployeeId = (int)Session["UserId"];
+
+            // insert data using API
+            HttpClient hcPurchasingDelete = APIHelper.GetHttpClient(APIHelper.PA + "/Purchasing/Delete");
+            hcPurchasingDelete.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
+            var apiDelete = hcPurchasingDelete.PostAsJsonAsync<DeletePurchasingRequest>("Delete", deletePurchasingRequest);
+            apiDelete.Wait();
+
+            var dataDelete = apiDelete.Result;
+            if (dataDelete.IsSuccessStatusCode)
+            {
+                var displayDataDelete = dataDelete.Content.ReadAsAsync<ResponseWithoutData>();
+                displayDataDelete.Wait();
+                if (displayDataDelete.Result.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    Session["ErrMessage"] = displayDataDelete.Result.Message;
+                    return RedirectToAction("Index", "Login");
+                }
+                else if (displayDataDelete.Result.StatusCode == HttpStatusCode.OK)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    Session["ErrMessage"] = displayDataDelete.Result.Message;
+                    Session["ErrHeader"] = "Gagal Menghapus Pembelian";
+                }
+            }
+            else
+            {
+                Session["ErrMessage"] = "Terjadi kesalahan pada sistem";
+                Session["ErrHeader"] = "Gagal Menghapus Pembelian";
+            }
+            return RedirectToAction("Index");
         }
         #endregion
         #region Save Session Purchasing
