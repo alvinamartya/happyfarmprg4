@@ -179,6 +179,7 @@
     <Compile Include="Controllers\Account\LoginController.cs" />
     <Compile Include="Controllers\Account\LogoutController.cs" />
     <Compile Include="Controllers\Account\ForgotPasswordController.cs" />
+    <Compile Include="Controllers\CustomerService\CustomerServiceCustomerFeedbackController.cs" />
     <Compile Include="Controllers\Manager\ManagerEmployeeController.cs" />
     <Compile Include="Controllers\Manager\ManagerRegionController.cs" />
     <Compile Include="Controllers\Manager\ManagerSubDistrictController.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelView\CustomerFeedbackModelView.cs" />
     <Compile Include="Models\Request\DeletePurchasingRequest.cs" />
     <Compile Include="Models\PurchasingSession.cs" />
     <Compile Include="Models\Request\AddPurchasingRequest.cs" />
@@ -481,10 +483,11 @@
     <Content Include="Views\ProductionAdminPurchasing\Add.cshtml" />
     <Content Include="Views\ProductionAdminPurchasing\AddDetail.cshtml" />
     <Content Include="Views\ProductionAdminPurchasing\EditDetail.cshtml" />
+    <Content Include="Views\Shared\_LayoutCS.cshtml" />
+    <Content Include="Views\CustomerServiceCustomerFeedback\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\CustomerService\" />
     <Folder Include="Controllers\SalesAdmin\" />
     <Folder Include="Views\Logout\" />
   </ItemGroup>
