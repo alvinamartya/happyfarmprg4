@@ -45,7 +45,14 @@
                 @Html.DisplayFor(modelItem => item.FarmerPhone)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TotalPurchasePrice)
+                @if (item.TotalPurchasePrice == 0)
+                {
+                    @Html.Raw("-")
+                }
+                else
+                {
+                    @Html.Raw("Rp. ") @Html.DisplayFor(modelItem => item.TotalPurchasePrice)
+                }
             </td>
             <td>
                 <button type="button" class="btn btn-danger" id="btn-delete@(item.Id)">Hapus</button>
