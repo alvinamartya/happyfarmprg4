@@ -14,6 +14,7 @@ namespace HappyFarmProjectWebAdmin.Models
         public string FarmerName { get; set; }
         public string FarmerAddress { get; set; }
         public string FarmerPhone { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N}")]
         public decimal TotalPurchasePrice { get; set; }
     }
 }

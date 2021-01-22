@@ -98,10 +98,11 @@ namespace HappyFarmProjectWebAdmin.Controllers
             return View(indexViewModel);
         }
 
-        [Route("~/CS/CustomerFeedback")]
+        [Route("~/CS/ReviewPelanggan")]
         [HttpPost]
         public ActionResult Index(IndexModelView<IEnumerable<SubDistrictModelView>> indexSubDistrict, string Sorting_Order, int? Page_No)
         {
+            System.Diagnostics.Debug.WriteLine(indexSubDistrict.DataPaging.Search);
             if (Session["ErrMessage"] != null)
             {
                 TempData["ErrMessage"] = Session["ErrMessage"];

@@ -22,6 +22,24 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 // get customerFeedbacks
                 var customerFeedbacks = db.CustomerFeedbacks.ToList();
 
+                if (search != null && search != "")
+                {
+                    try
+                    {
+                        search = int.Parse(search.Replace("ORD", "")).ToString();
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Debug.WriteLine(e.Message);
+                    }
+
+                    customerFeedbacks = customerFeedbacks
+                                     .Where(x =>
+                                         x.OrderId.ToString().Contains(search.ToLower()) 
+                                     )
+                                     .ToList();
+                }
+
                 // get total customerFeedbacks
                 var totalPages = Math.Ceiling((decimal)customerFeedbacks.Count / limitPage);
 

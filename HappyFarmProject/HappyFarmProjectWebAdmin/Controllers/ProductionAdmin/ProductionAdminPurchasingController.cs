@@ -90,7 +90,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 totalPurchase += detailRequest.Price * detailRequest.Qty;
             }
 
-            ViewBag.TotalPurchases = string.Format("{0:C}", totalPurchase);
+            ViewBag.TotalPurchases = "Rp. " + string.Format("{0:C}", totalPurchase).Remove(0,1);
             AddPurchasingRequest purchasingRequest = new AddPurchasingRequest()
             {
                 PurchasingDetails = purchasingDetailRequest,
