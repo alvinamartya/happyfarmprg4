@@ -14,6 +14,7 @@ namespace HappyFarmProjectWebAdmin
         public static string MA = "MA";
         public static string PA = "PA";
         public static string CS = "CS";
+        public static string SALA = "SALA";
         public static HttpClient GetHttpClient(string url)
         {
             HttpClient hc = new HttpClient();

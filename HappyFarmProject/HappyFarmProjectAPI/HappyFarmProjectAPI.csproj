@@ -189,6 +189,7 @@
     <Compile Include="Controllers\BusinessLogic\GoodsPriceRegionLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\PromoLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\RegionLogic.cs" />
+    <Compile Include="Controllers\BusinessLogic\SellingActivityLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\SubDistrictLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\TokenLogic.cs" />
     <Compile Include="Controllers\CustomerService\CustomerServiceCustomerFeedbackController.cs" />
@@ -214,7 +215,11 @@
     <Compile Include="Controllers\Repository\PurchasingRepository.cs" />
     <Compile Include="Controllers\Repository\RegionRepository.cs" />
     <Compile Include="Controllers\Repository\RoleRepository.cs" />
+    <Compile Include="Controllers\Repository\SellingActivityRepository.cs" />
+    <Compile Include="Controllers\Repository\SellingStatusRepository.cs" />
     <Compile Include="Controllers\Repository\SubDistrictRepository.cs" />
+    <Compile Include="Controllers\SalesAdmin\SalesAdminSellingActivityController.cs" />
+    <Compile Include="Controllers\SalesAdmin\SalesAdminSellingStatusController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminCategoryController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminSubDistrictController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminRoleController.cs" />
@@ -281,6 +286,7 @@
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Request\AddPurchasingRequest.cs" />
+    <Compile Include="Models\Request\EditSellingActivityRequest.cs" />
     <Compile Include="Models\Request\PurchasingDetailRequest.cs" />
     <Compile Include="Models\Response\GoodsPriceResponse.cs" />
     <Compile Include="Models\Request\ForgotPasswordRequest.cs" />
@@ -403,7 +409,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\Customer\" />
-    <Folder Include="Controllers\SalesAdmin\" />
     <Folder Include="Images\Banner\" />
     <Folder Include="Images\Goods\" />
     <Folder Include="Images\Promo\" />
