@@ -1,0 +1,127 @@
+﻿using HappyFarmProjectAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace HappyFarmProjectAPI.Controllers.Repository
+{
+    public class SellingActivityRepository
+    {
+        /// <summary>
+        /// Edit SellingStatus Repository
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="sellingActivityRequest"></param>
+        public void EditSellingActivity(int id, EditSellingActivityRequest sellingActivityRequest)
+        {
+            
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                var sellingStatus = db.SellingActivities.Where(x => x.Id == id).FirstOrDefault();
+                sellingStatus.SellingStatusid = sellingActivityRequest.SellingStatusid;
+                sellingStatus.CreatedBy = sellingActivityRequest.CreatedBy;
+                sellingStatus.CreatedAt = DateTime.Now;
+                db.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Get SellingStatus with paging
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="limitPage"></param>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        public ResponsePagingModel<List<SellingActivity>> GetSellingActivityPaging(int currentPage, int limitPage, string search)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                // get SellingStatus
+                var sellingStatus = db.SellingActivities.ToList();
+
+                if (search != null && search != "")
+                {
+                    try
+                    {
+                        search = int.Parse(search.Replace("ORD", "")).ToString();
+                    }
+                    catch (Exception e)
+                    {
+                        System.Diagnostics.Debug.WriteLine(e.Message);
+                    }
+
+                    sellingStatus = sellingStatus
+                        .Where(x =>
+                            x.SellingId.ToString().Contains(search.ToLower())
+                        )
+                        .ToList();
+                }
+
+                // filter by row status
+                // with paging
+                //SellingStatuss = SellingStatuss
+                //    .Where(x=>x.RowStatus == "A")
+                //    .OrderBy(x=>x.Name)
+                //    .Skip((currentPage - 1) * limitPage)
+                //    .Take(limitPage)
+                //    .ToList();
+
+                // without paging
+                sellingStatus = sellingStatus
+                    .OrderBy(x => x.SellingId)
+                    .ToList();
+
+                // get total SellingStatuss
+                var totalPages = Math.Ceiling((decimal)db.SellingStatus.Count() / limitPage);
+
+                // return employees
+                return new ResponsePagingModel<List<SellingActivity>>()
+                {
+                    Data = sellingStatus,
+                    CurrentPage = currentPage,
+                    TotalPage = (int)totalPages
+                };
+            }
+        }
+
+        /// <summary>
+        /// Get SellingStatus
+        /// </summary>
+        /// <returns></returns>
+        public List<SellingActivity> GetSellingActivity()
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                // get employees
+                var sellingStatus = db.SellingActivities.ToList();
+
+                // return employees
+                return sellingStatus;
+            }
+        }
+
+        /// <summary>
+        /// Get SellingStatus By Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Object GetSellingActivityById(int id)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                var sellingStatus = db.SellingActivities
+                    .Where(x => x.Id == id)
+                     .Select(x => new
+                     {
+                         x.Id,
+                         x.SellingId,
+                         SellingStatus = x.SellingStatu.Name,
+                         x.SellingStatusid
+                     })
+                    .FirstOrDefault();
+                return sellingStatus;
+            }
+        }
+    }
+}

@@ -87,7 +87,7 @@
                     @Html.Raw("-")
                 }
             </td>
-            <td>
+            <td align="right">
                 @if (item.MinTransaction > 0)
                 {
                     @Html.Raw("Rp. ") @Html.DisplayFor(modelItem => item.MinTransaction)
@@ -97,7 +97,7 @@
                     @Html.Raw("-")
                 }
             </td>
-            <td>
+            <td align="right">
                 @if (item.MaxDiscount > 0)
                 {
                     @Html.Raw("Rp. ") @Html.DisplayFor(modelItem => item.MaxDiscount)

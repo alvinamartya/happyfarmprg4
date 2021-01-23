@@ -1,0 +1,230 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Happy Farm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!--
+    =========================================================
+    * ArchitectUI HTML Theme Dashboard - v1.0.0
+    =========================================================
+    * Product Page: https://dashboardpack.com
+    * Copyright 2019 DashboardPack (https://dashboardpack.com)
+    * Licensed under MIT (https://github.com/DashboardPack/architectui-html-theme-free/blob/master/LICENSE)
+    =========================================================
+    * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+    -->
+    <link href="~/Content/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- The Modal -->
+    <div id="logoutModal" class="modal-logout">
+
+        <!-- Modal content -->
+        <div class="modal-content-logout">
+            <div class="modal-content--header">
+                <span class="close" id="close-logout">&times;</span>
+                <p>Keluar</p>
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--description">
+                Anda yakin ingin keluar?
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--footer">
+                <a href="#" class="btn btn-secondary" onclick="closeLogout();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+                <a href="@Url.Action("Index","Logout")" class="btn btn-danger" style="margin-bottom: 10px; margin-top: -5px">Keluar</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+        <div class="app-header header-shadow">
+            <div class="app-header__logo">
+                <div class="logo-src"></div>
+                <div class="header__pane ml-auto">
+                    <div>
+                        <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="app-header__mobile-menu">
+                <div>
+                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="app-header__menu">
+                <span>
+                    <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                        <span class="btn-icon-wrapper">
+                            <i class="fa fa-ellipsis-v fa-w-6"></i>
+                        </span>
+                    </button>
+                </span>
+            </div>
+            <div class="app-header__content">
+                <div class="app-header-right">
+                    <div class="header-btn-lg pr-0">
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left  ml-3 header-user-info">
+                                    <div class="widget-heading" id="employee-name"></div>
+                                    <div class="widget-subheading" id="employee-role"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="app-main">
+            <div class="app-sidebar sidebar-shadow">
+                <div class="app-header__logo">
+                    <div class="logo-src"></div>
+                    <div class="header__pane ml-auto">
+                        <div>
+                            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-header__mobile-menu">
+                    <div>
+                        <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="app-header__menu">
+                    <span>
+                        <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                            <span class="btn-icon-wrapper">
+                                <i class="fa fa-ellipsis-v fa-w-6"></i>
+                            </span>
+                        </button>
+                    </span>
+                </div>    <div class="scrollbar-sidebar">
+                    <div class="app-sidebar__inner">
+                        <ul class="vertical-nav-menu">
+                            <li class="app-sidebar__heading">Admin Penjualan</li>
+                            <li>
+                                <a href="@Url.Action("Index","SalesAdminSellingStatus")" id="review-nav">
+                                    <i class="metismenu-icon pe-7s-display1"></i>
+                                    Status Penjualan
+                                </a>
+                            </li>
+                            <li class="app-sidebar__heading">Akun</li>
+                            <li>
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-user"></i>
+                                    Profil
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-lock"></i>
+                                    Ganti Kata Sandi
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" onclick="showLogout(); return false;">
+                                    <i class="metismenu-icon pe-7s-power"></i>
+                                    Keluar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="app-main__outer">
+                <div class="app-main__inner">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Logout Script *@
+    <script>
+        // Get the modal
+        const modalLogout = document.getElementById("logoutModal");
+
+        // Get the <span> element that closes the modal
+        const spanLogout = document.getElementById("close-logout");
+
+        modalLogout.style.display = "none";
+
+        // When the user clicks on <span> (x), close the modal
+        spanLogout.onclick = function () {
+            modalLogout.style.display = "none";
+        }
+
+        function closeLogout() {
+            modalLogout.style.display = "none";
+        }
+
+        function showLogout() {
+            modalLogout.style.display = "block";
+        }
+    </script>
+    <script type="text/javascript" src="~/Scripts/main.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+    async function getData() {
+        const url = 'https://localhost:44301/api/v1/User/Employee/' + '@Session["UserId"]';
+        const token = "Bearer " + '@Session["Token"]';
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            contentType: "application/json",
+            dataType: 'json',
+            async: true,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", token);
+            },
+            success: async function (result) {
+                document.getElementById("employee-name").innerHTML = result.Data.Name;
+                document.getElementById("employee-role").innerHTML = result.Data.Role;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('Error: ' + textStatus + ' ' + errorThrown);
+            }
+        })
+    }
+
+        getData();
+
+        function changeNav() {
+            const pageArr = window.location.href.split("/");
+            if (pageArr.indexOf("ReviewPelanggan") > -1) {
+                $("#review-nav").addClass("mm-active");
+            }
+        }
+        changeNav();
+    </script>
+</body>
+</html>
