@@ -1,4 +1,5 @@
 ﻿using HappyFarmProjectAPI.Controllers.BusinessLogic;
+using HappyFarmProjectAPI.Controllers.Repository;
 using HappyFarmProjectAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,12 @@ namespace HappyFarmProjectAPI.Controllers
     public class UserController : ApiController
     {
         #region Variable
+        private UserLoginLogic userLoginLogic = new UserLoginLogic();
         private TokenLogic tokenLogic = new TokenLogic();
+       
+        // repo
+        private ChangePasswordRepository repo = new ChangePasswordRepository();
+        
         #endregion
 
         #region Action
@@ -220,6 +226,121 @@ namespace HappyFarmProjectAPI.Controllers
                         return Ok(userNotAvailableResponse);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+       
+
+        /// <summary>
+        /// Change Password
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/v1/User/Employee/ChangePassword/{id}")]
+        [HttpPut]
+        public async Task<IHttpActionResult> ChangePasswordEmployee(int id, ChangePasswordRequest changeRequest)
+        {
+            try
+            {
+                ResponseModel responseModel = userLoginLogic.EditUserLogin(id, changeRequest);
+                if (responseModel.StatusCode == HttpStatusCode.OK)
+                {
+                    // update region
+                    await Task.Run(() => repo.ChangePassword(id, changeRequest));
+
+                    // response success
+                    var response = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Message = "Berhasil mengubah password"
+                    };
+
+                    return Ok(response);
+                }
+                else
+                {
+                    // bad request
+                    var badRequestResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        Message = responseModel.Message
+                    };
+
+                    return Ok(badRequestResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+        /// <summary>
+        /// To get userlogin
+        /// </summary>
+        /// <param name="getListData"></param>
+        /// <returns></returns>
+        [Route("api/v1/User/Employee/UserLogin")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserLogins()
+        {
+            try
+            {
+                    List<UserLogin> userLogin = await Task.Run(() => repo.GetUserLogin());
+
+                    // response success
+                    var response = new ResponseWithData<Object>()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Message = "Berhasil",
+                        Data = userLogin
+                            .Select(x => new
+                            {
+                                x.Id,
+                                x.Password,
+                                x.Username
+                            })
+                            .ToList(),
+                    };
+
+                    return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+        /// <summary>
+        /// To get userlogin by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("api/v1/User/Employee/UserLogin/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserLoginById(int id)
+        {
+            try
+            {
+                // get goods by id
+                Object userLogin = await Task.Run(() => repo.GetUserLoginById(id));
+
+                // response success
+                var response = new ResponseWithData<Object>()
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Message = "Berhasil",
+                    Data = userLogin
+                };
+
+                return Ok(response);
+                    
             }
             catch (Exception ex)
             {

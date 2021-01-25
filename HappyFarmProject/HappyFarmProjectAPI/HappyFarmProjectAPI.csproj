@@ -192,6 +192,7 @@
     <Compile Include="Controllers\BusinessLogic\SellingActivityLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\SubDistrictLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\TokenLogic.cs" />
+    <Compile Include="Controllers\BusinessLogic\UserLoginLogic.cs" />
     <Compile Include="Controllers\CustomerService\CustomerServiceCustomerFeedbackController.cs" />
     <Compile Include="Controllers\Manager\ManagerRoleController.cs" />
     <Compile Include="Controllers\Manager\ManagerRegionController.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Controllers\Repository\BannerRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Repository\CategoryRepository.cs" />
+    <Compile Include="Controllers\Repository\ChangePasswordRepository.cs" />
     <Compile Include="Controllers\Repository\CustomerFeedbackRepository.cs" />
     <Compile Include="Controllers\Repository\EmployeeRepository.cs" />
     <Compile Include="Controllers\Repository\GoodsPriceRegionRepository.cs" />
@@ -286,6 +288,7 @@
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Request\AddPurchasingRequest.cs" />
+    <Compile Include="Models\Request\ChangePasswordRequest.cs" />
     <Compile Include="Models\Request\EditSellingActivityRequest.cs" />
     <Compile Include="Models\Request\PurchasingDetailRequest.cs" />
     <Compile Include="Models\Response\GoodsPriceResponse.cs" />

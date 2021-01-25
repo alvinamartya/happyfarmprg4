@@ -176,6 +176,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Account\ChangePasswordController.cs" />
     <Compile Include="Controllers\Account\LoginController.cs" />
     <Compile Include="Controllers\Account\LogoutController.cs" />
     <Compile Include="Controllers\Account\ForgotPasswordController.cs" />
@@ -203,6 +204,8 @@
     <Compile Include="Models\ModelView\CustomerFeedbackModelView.cs" />
     <Compile Include="Models\ModelView\SellingActivityModelView.cs" />
     <Compile Include="Models\ModelView\SellingStatusModelView.cs" />
+    <Compile Include="Models\ModelView\UserLoginModelView.cs" />
+    <Compile Include="Models\Request\ChangePasswordRequest.cs" />
     <Compile Include="Models\Request\DeletePurchasingRequest.cs" />
     <Compile Include="Models\PurchasingSession.cs" />
     <Compile Include="Models\Request\AddPurchasingRequest.cs" />
@@ -492,6 +495,7 @@
     <Content Include="Views\SalesAdminSellingActivity\Edit.cshtml" />
     <Content Include="Views\SalesAdminSellingActivity\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutSALA.cshtml" />
+    <Content Include="Views\ChangePassword\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
