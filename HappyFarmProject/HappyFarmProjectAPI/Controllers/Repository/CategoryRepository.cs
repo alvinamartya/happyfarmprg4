@@ -135,6 +135,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 // get category
                 var category = db.Categories
                     .Where(x=>x.RowStatus == "A")
+                    .OrderBy(x=>x.Name)
                     .ToList();
 
                 return category;

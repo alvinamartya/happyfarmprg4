@@ -116,6 +116,46 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         }
 
         /// <summary>
+        /// Get banner 
+        /// </summary>
+        /// <param name="currentPage"></param>
+        /// <param name="limitPage"></param>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        public List<Banner> GetBanners()
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                List<Banner> result = null;
+
+                // get promos
+                var banners = db.Banners
+                    .Where(x => x.RowStatus == "A")
+                    .ToList();
+
+                if(banners.Count > 5)
+                {
+                    result = new List<Banner>();
+                    Random rand = new Random();
+                    for(int i = 0; i < 5; i++)
+                    {
+                        int index = rand.Next(banners.Count - 1);
+                        result.Add(banners[index]);
+                    }
+                }
+                else
+                {
+                    result = banners;
+                }
+
+                result = result.OrderBy(x => x.Name).ToList();
+
+                // return banners
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Get Banner by Id
         /// </summary>
         /// <param name="id"></param>

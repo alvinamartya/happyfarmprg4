@@ -489,6 +489,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\SalesAdmin\" />
+    <Folder Include="Images\Banner\" />
+    <Folder Include="Images\Goods\" />
+    <Folder Include="Images\Promo\" />
     <Folder Include="Views\Logout\" />
   </ItemGroup>
   <ItemGroup>

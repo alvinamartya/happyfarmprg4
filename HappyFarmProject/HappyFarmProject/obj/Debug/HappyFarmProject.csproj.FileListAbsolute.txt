@@ -160,3 +160,7 @@ C:\Users\user\Documents\GitHub\happyfarmprg4\HappyFarmProject\HappyFarmProject\b
 C:\Users\user\Documents\GitHub\happyfarmprg4\HappyFarmProject\HappyFarmProject\bin\PagedList.Mvc.dll
 C:\Users\user\Documents\GitHub\happyfarmprg4\HappyFarmProject\HappyFarmProject\bin\PagedList.xml
 C:\Users\user\Documents\GitHub\happyfarmprg4\HappyFarmProject\HappyFarmProject\bin\PagedList.Mvc.xml
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\bin\PagedList.dll
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\bin\PagedList.Mvc.dll
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\bin\PagedList.xml
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProject\bin\PagedList.Mvc.xml

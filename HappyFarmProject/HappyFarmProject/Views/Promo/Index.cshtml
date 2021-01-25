@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* Product Bread Crumb *@
+@section products_breadcrumb{
+    <div class="products-breadcrumb">
+        <div class="container">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="index.html">Home</a><span>|</span></li>
+                <li>Promo</li>
+            </ul>
+        </div>
+    </div>
+}
+
+<div class="w3l_banner_nav_right" style="margin-top: 80px">
+    <div class="w3ls_w3l_banner_nav_right_grid">
+        <div class="w3ls_w3l_banner_nav_right_grid_head">
+            <h6>Tawaran Spesial dari Happy Farm</h6>
+        </div>
+        <div id="promo"></div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<script>
+    $(document).ready(function () {
+        const api_url = "https://localhost:44301/api/v1";
+        const admin_url = "https://localhost:44366";
+
+        async function GetPromo() {
+            await $.get(api_url + "/Promo", function (data) {
+                console.log(data);
+                let promo = `
+                    <div class="w3ls_w3l_banner_nav_right_grid_head_grids">
+                `;
+                let n = data.Data.length + 1;
+                for (let i = 1; i < n; i++) {
+                    const item = data.Data[i - 1];
+                    if (i % 4 == 0)
+                    {
+                        promo = `
+                            <div class="w3ls_w3l_banner_nav_right_grid_head_grids" style="margin-top: 50px">
+                        `;
+                    }
+
+                    promo += `
+                        <div class="col-md-4 w3ls_w3l_banner_nav_right_grid_head_grid">
+                            <img src="`+ admin_url + '/Images/Promo/' + item.Image + `" alt=" " class="img-responsive" />
+                            <h4>`+ item.Name +`</h4>
+                            <ul>
+                                <li><a href="bread.html">Raising rolls</a></li>
+                                <li><a href="bread.html">Butter Croissants</a></li>
+                                <li><a href="bread.html">wheat pita</a></li>
+                                <li><a href="bread.html">Hot dog roll</a></li>
+                            </ul>
+                        </div>
+                    `;
+
+                    if ((i > 0 && i % 3 == 0) || i == n - 1) {
+                        promo += `
+                            </div>
+                            <div class="clearfix"></div>
+                        `;
+                        $("#promo").append(promo);
+                    }
+                }
+            })
+        }
+
+        GetPromo();
+    })
+</script>

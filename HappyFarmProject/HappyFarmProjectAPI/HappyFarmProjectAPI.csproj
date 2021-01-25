@@ -181,6 +181,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\Customer\BannerController.cs" />
     <Compile Include="Controllers\BusinessLogic\BannerLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\CategoryLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\CustomerFeedbackLogic.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Controllers\BusinessLogic\RegionLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\SubDistrictLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\TokenLogic.cs" />
+    <Compile Include="Controllers\Customer\CategoryController.cs" />
     <Compile Include="Controllers\CustomerService\CustomerServiceCustomerFeedbackController.cs" />
     <Compile Include="Controllers\Manager\ManagerRoleController.cs" />
     <Compile Include="Controllers\Manager\ManagerRegionController.cs" />
@@ -203,6 +205,7 @@
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminChangePriceProductController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminCategoryController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminGoodsController.cs" />
+    <Compile Include="Controllers\Customer\PromoController.cs" />
     <Compile Include="Controllers\Repository\BannerRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Repository\CategoryRepository.cs" />
@@ -402,7 +405,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\Customer\" />
     <Folder Include="Controllers\SalesAdmin\" />
     <Folder Include="Images\Banner\" />
     <Folder Include="Images\Goods\" />
