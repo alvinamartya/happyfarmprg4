@@ -17,6 +17,91 @@ namespace HappyFarmProjectAPI.Controllers
         #endregion
 
         #region Action
+        [Route("api/v1/Register")]
+        [HttpPost]
+        public IHttpActionResult Register(RegisterRequest registerRequest)
+        {
+            try
+            {
+                using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+                {
+                    var emailAlreadyExists = db.Customers.Where(x => x.Email == registerRequest.Email).FirstOrDefault() != null;
+
+                    if (registerRequest.ConfirmPassword != registerRequest.Password)
+                    {
+                        var confirmPasswordResponse = new ResponseWithoutData()
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            Message = "Konfirmasi password tidak sama dengan password"
+                        };
+                        return Ok(confirmPasswordResponse);
+                    }
+                    else
+                    {
+                        if (emailAlreadyExists)
+                        {
+                            var responseEmail = new ResponseWithoutData()
+                            {
+                                StatusCode = HttpStatusCode.BadRequest,
+                                Message = "Email sudah tersedia"
+                            };
+                            return Ok(responseEmail);
+                        }
+                        else
+                        {
+                            var usernameAlreadyExists = db.UserLogins.Where(x => x.Username == registerRequest.Username).FirstOrDefault() != null;
+                            if (usernameAlreadyExists)
+                            {
+                                var responseEmail = new ResponseWithoutData()
+                                {
+                                    StatusCode = HttpStatusCode.BadRequest,
+                                    Message = "Nama pengguna sudah tersedia"
+                                };
+                                return Ok(responseEmail);
+                            }
+                            else
+                            {
+                                UserLogin login = new UserLogin()
+                                {
+                                    RoleId = db.Roles.Where(x => x.Name == "Customer").FirstOrDefault().Id,
+                                    Username = registerRequest.Username,
+                                    Password = Helper.EncryptStringSha256Hash(registerRequest.Password)
+                                };
+
+                                db.UserLogins.Add(login);
+                                db.SaveChanges();
+
+                                int lastUserLoginId = db.UserLogins.OrderByDescending(x => x.Id).FirstOrDefault().Id;
+                                Customer customer = new Customer()
+                                {
+                                    UserLoginId = lastUserLoginId,
+                                    Name = registerRequest.Name,
+                                    PhoneNumber = registerRequest.PhoneNumber,
+                                    Email = registerRequest.Email,
+                                    Gender = registerRequest.Gender
+                                };
+
+                                db.Customers.Add(customer);
+                                db.SaveChanges();
+
+                                var response = new ResponseWithoutData()
+                                {
+                                    Message = "Pendaftaran berhasil",
+                                    StatusCode = HttpStatusCode.OK
+                                };
+                                return Ok(response);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
         /// <summary>
         /// Login To Application
         /// </summary>

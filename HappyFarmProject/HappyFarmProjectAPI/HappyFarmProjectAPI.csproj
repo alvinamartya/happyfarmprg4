@@ -283,6 +283,7 @@
     <Compile Include="Models\Region.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\RegisterRequest.cs" />
     <Compile Include="Models\Request\AddPurchasingRequest.cs" />
     <Compile Include="Models\Request\PurchasingDetailRequest.cs" />
     <Compile Include="Models\Response\GoodsPriceResponse.cs" />

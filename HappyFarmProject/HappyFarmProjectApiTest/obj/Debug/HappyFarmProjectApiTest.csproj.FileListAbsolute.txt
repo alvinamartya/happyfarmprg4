@@ -106,3 +106,6 @@ D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectApiTest\obj\Deb
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectApiTest\obj\Debug\HappyFarmProjectAPITest.csproj.CopyComplete
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectApiTest\obj\Debug\HappyFarmProjectApiTest.dll
 D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectApiTest\obj\Debug\HappyFarmProjectApiTest.pdb
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectApiTest\bin\Debug\System.Web.Http.Cors.dll
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectApiTest\bin\Debug\System.Web.Cors.dll
+D:\programming\c#\happyfarmprg4\HappyFarmProject\HappyFarmProjectApiTest\bin\Debug\System.Web.Http.Cors.xml

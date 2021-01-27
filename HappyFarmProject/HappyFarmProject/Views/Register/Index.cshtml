@@ -1,0 +1,97 @@
+﻿@model HappyFarmProject.Models.RegisterRequest
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Masuk Happy Farm</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="~/fonts/ionicons/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/register.css">
+</head>
+
+<body>
+    <div class="register-clean">
+        @using (Html.BeginForm("Register", "Register", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <h2 class="sr-only">Login Form</h2>
+            <div class="illustration"><i class="icon ion-ios-navigate" style="color: rgb(50,164,21);"></i></div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nama" } })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "No Telepon" } })
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+            </div>
+
+            <div class="form-group">
+                <label for="Gender" class="control-label">Jenis Kelamin <span style="color:red">*</span></label>
+                <div style="display: flex; align-items: center">
+                    @Html.RadioButtonFor(model => model.Gender, "M", new { @class = "rb-male", style = "margin-right: 5px" })
+                    Laki-Laki
+
+                    @Html.RadioButtonFor(model => model.Gender, "F", new { @class = "rb-female", style = "margin-right: 5px; margin-left:10px" })
+                    Perempuan
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", placeholder = "Nama Pengguna" } })
+            </div>
+
+            <div class="form-group">
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Kata Sandi" })
+
+            </div>
+
+            <div class="form-group">
+                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Konfirmasi Kata Sandi" })
+            </div>
+
+            if (TempData["SuccMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible alert-validate-login" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    @TempData["SuccMessage"]
+                </div>
+            }
+
+            if (TempData["ErrMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible alert-validate-login" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    @TempData["ErrMessage"]
+                </div>
+            }
+
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" type="submit">Daftar</button>
+                <a class="btn btn-info btn-block" href="@Url.Action("Index","Login")">Masuk</a>
+            </div>
+        }
+    </div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+
+</html>
+
