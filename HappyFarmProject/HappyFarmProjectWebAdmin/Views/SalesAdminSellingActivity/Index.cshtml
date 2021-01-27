@@ -1,0 +1,97 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model HappyFarmProjectWebAdmin.Models.IndexModelView<IPagedList<HappyFarmProjectWebAdmin.Models.SellingActivityModelView>>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSALA.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h4>Data Status Penjualan</h4>
+    <hr />
+    <div class="search-box">
+        <div class="search-box__find">
+            @Html.EditorFor(model => model.DataPaging.Search, new { htmlAttributes = new { @class = "form-control search-box__content", placeholder = "Masukkan kata yang dicari" } })
+            <input type="submit" name="search-btn" value="Cari" id="search-btn" class="btn btn-primary" style="margin-left: 5px" />
+        </div>
+        @Html.ActionLink("Tambah Status", "Add", "SalesAdminSellingActivity", null, new { @class = "btn btn-primary" })
+    </div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Order Id", "Index", new { Sorting_Order = ViewBag.SortingOrderId})
+            </th>
+            <th>
+                @Html.ActionLink("Keterangan status", "Index", new { Sorting_Order = ViewBag.SortingName })
+            </th>
+            <th>
+                @Html.ActionLink("Tanggal status", "Index", new { Sorting_Order = ViewBag.SortingDate })
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in (IEnumerable<HappyFarmProjectWebAdmin.Models.SellingActivityModelView>)Model.ModelViews)
+        {
+        <tr>
+            <td>
+                @Html.Raw("ORD" + item.SellingId.ToString().PadLeft(4, '0'))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SellingStatusName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt, new { @Value = item.CreatedAt.ToString("dd-MMM-yyyy HH:mm") })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@* Error Data Empty *@
+@if (TempData["ErrMessageData"] != null)
+{
+    <div class="data-err">
+        @TempData["ErrMessageData"]
+    </div>
+}
+
+@* Paging *@
+<br />
+Halaman @(Model.ModelViews.PageCount < Model.ModelViews.PageNumber ? 0 : Model.ModelViews.PageNumber) dari @Model.ModelViews.PageCount
+@Html.PagedListPager((IPagedList)Model.ModelViews, Page_No => Url.Action("Index", new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder }))
+
+
+@if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
+{
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-content--header">
+                <span class="close">&times;</span>
+                <p>@TempData["ErrHeader"]</p>
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--description">
+                @TempData["ErrMessage"]
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--footer">
+                <a href="#" class="btn btn-danger" onclick="closeModal();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+            </div>
+        </div>
+
+    </div>
+    <script src="~/Scripts/data-error.js"></script>
+}
+
+
+@section Scripts {
+
+}
