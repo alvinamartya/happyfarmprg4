@@ -286,6 +286,7 @@
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Request\AddPurchasingRequest.cs" />
+    <Compile Include="Models\Request\AddSellingActivityRequest.cs" />
     <Compile Include="Models\Request\EditSellingActivityRequest.cs" />
     <Compile Include="Models\Request\PurchasingDetailRequest.cs" />
     <Compile Include="Models\Response\GoodsPriceResponse.cs" />

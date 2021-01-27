@@ -14,6 +14,7 @@ namespace HappyFarmProjectWebAdmin.Controllers.SalesAdmin
     public class SalesAdminSellingActivityController : Controller
     {
         #region Variable
+        HttpClient hcSellingActivityAdd = APIHelper.GetHttpClient(APIHelper.SALA + "/SellingActivity/Add");
         HttpClient hcSellingActivityEdit = APIHelper.GetHttpClient(APIHelper.SALA + "/SellingActivity/Edit");
         #endregion
 
@@ -36,6 +37,8 @@ namespace HappyFarmProjectWebAdmin.Controllers.SalesAdmin
             // sorting
             ViewBag.CurrentSortOrder = Sorting_Order;
             ViewBag.SortingName = Sorting_Order == "Name_Desc" ? "Name_Asc" : "Name_Desc";
+            ViewBag.SortingOrderId = Sorting_Order == "OrderId_Desc" ? "OrderId_Asc" : "OrderId_Desc";
+            ViewBag.SortingDate = Sorting_Order == "Date_Desc" ? "Date_Asc" : "Date_Desc";
 
             // default request paging
             var dataPaging = new GetListDataRequest()
@@ -75,6 +78,18 @@ namespace HappyFarmProjectWebAdmin.Controllers.SalesAdmin
                     break;
                 case "Name_Asc":
                     sellingActivityRequest.Data = sellingActivityRequest.Data.OrderBy(x => x.SellingStatusName).ToList();
+                    break;
+                case "OrderId_Desc":
+                    sellingActivityRequest.Data = sellingActivityRequest.Data.OrderByDescending(x => x.SellingId).ToList();
+                    break;
+                case "OrderId_Asc":
+                    sellingActivityRequest.Data = sellingActivityRequest.Data.OrderBy(x => x.SellingId).ToList();
+                    break;
+                case "Date_Desc":
+                    sellingActivityRequest.Data = sellingActivityRequest.Data.OrderByDescending(x => x.CreatedAt).ToList();
+                    break;
+                case "Date_Asc":
+                    sellingActivityRequest.Data = sellingActivityRequest.Data.OrderBy(x => x.CreatedAt).ToList();
                     break;
             }
 
@@ -156,6 +171,89 @@ namespace HappyFarmProjectWebAdmin.Controllers.SalesAdmin
             };
 
             return View(indexViewModel);
+        }
+        #endregion
+
+        #region Add Selling Activity
+        // Add Selling Activity
+        [Route("~/SALA/StatusPenjualan/Tambah")]
+        [HttpGet]
+        public ActionResult Add()
+        {
+            // get selling status
+            ResponseWithData<List<SellingStatusModelView>> sellingStatusRequest = GetSellingStatus();
+            if (sellingStatusRequest.StatusCode == HttpStatusCode.OK)
+            {
+                ViewBag.SellingStatus = new SelectList(sellingStatusRequest.Data, "Id", "Name");
+            }
+            else if (sellingStatusRequest.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                Session["ErrMessage"] = sellingStatusRequest.Message;
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                TempData["ErrMessage"] = sellingStatusRequest.Message;
+                TempData["ErrHeader"] = "Gagal meload status";
+            }
+            return View();
+        }
+
+        [Route("~/SALA/StatusPenjualan/Tambah")]
+        [HttpPost]
+        public ActionResult Add(AddSellingActivityRequest sellingActivityRequest)
+        {
+            // get selling status
+            ResponseWithData<List<SellingStatusModelView>> sellingStatusRequest = GetSellingStatus();
+            if (sellingStatusRequest.StatusCode == HttpStatusCode.OK)
+            {
+                ViewBag.SellingStatus = new SelectList(sellingStatusRequest.Data, "Id", "Name");
+            }
+            else if (sellingStatusRequest.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                Session["ErrMessage"] = sellingStatusRequest.Message;
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                TempData["ErrMessage"] = sellingStatusRequest.Message;
+                TempData["ErrHeader"] = "Gagal meload status";
+            }
+
+            // add created by
+            sellingActivityRequest.CreatedBy = (int)Session["UserId"];
+
+            // insert data using API
+            hcSellingActivityAdd.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
+            var apiSave = hcSellingActivityAdd.PostAsJsonAsync<AddSellingActivityRequest>("Add", sellingActivityRequest);
+            apiSave.Wait();
+
+            var dataSave = apiSave.Result;
+            if (dataSave.IsSuccessStatusCode)
+            {
+                var displayDataSave = dataSave.Content.ReadAsAsync<ResponseWithoutData>();
+                displayDataSave.Wait();
+                if (displayDataSave.Result.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    Session["ErrMessage"] = displayDataSave.Result.Message;
+                    return RedirectToAction("Index", "Login");
+                }
+                else if (displayDataSave.Result.StatusCode == HttpStatusCode.Created)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["ErrMessage"] = displayDataSave.Result.Message;
+                    TempData["ErrHeader"] = "Gagal Menambah Status";
+                }
+            }
+            else
+            {
+                TempData["ErrMessage"] = "Order ID Tidak Ditemukan";
+                TempData["ErrHeader"] = "Gagal Menambah Status";
+            }
+            return View();
         }
         #endregion
 
@@ -332,19 +430,19 @@ namespace HappyFarmProjectWebAdmin.Controllers.SalesAdmin
             // get regions
             HttpClient hcSellingStatus = APIHelper.GetHttpClient(APIHelper.SALA + "/SellingStatus");
             hcSellingStatus.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
-            var apiGetRegion = hcSellingStatus.GetAsync("SellingStatus");
-            apiGetRegion.Wait();
+            var apiGetSellingStatus = hcSellingStatus.GetAsync("SellingStatus");
+            apiGetSellingStatus.Wait();
 
-            var dataRegion = apiGetRegion.Result;
-            if (dataRegion.IsSuccessStatusCode)
+            var dataSellingStatus = apiGetSellingStatus.Result;
+            if (dataSellingStatus.IsSuccessStatusCode)
             {
-                var displayDataRegion = dataRegion.Content.ReadAsAsync<ResponseWithData<List<SellingStatusModelView>>>();
-                displayDataRegion.Wait();
+                var displaydataSellingStatus = dataSellingStatus.Content.ReadAsAsync<ResponseWithData<List<SellingStatusModelView>>>();
+                displaydataSellingStatus.Wait();
                 return new ResponseWithData<List<SellingStatusModelView>>()
                 {
-                    StatusCode = displayDataRegion.Result.StatusCode,
-                    Message = displayDataRegion.Result.Message,
-                    Data = displayDataRegion.Result.StatusCode == HttpStatusCode.OK ? displayDataRegion.Result.Data : null
+                    StatusCode = displaydataSellingStatus.Result.StatusCode,
+                    Message = displaydataSellingStatus.Result.Message,
+                    Data = displaydataSellingStatus.Result.StatusCode == HttpStatusCode.OK ? displaydataSellingStatus.Result.Data : null
                 };
             }
             else

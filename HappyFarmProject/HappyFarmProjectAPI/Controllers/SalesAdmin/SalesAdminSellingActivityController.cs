@@ -26,6 +26,78 @@ namespace HappyFarmProjectAPI.Controllers
 
         #region Action
         /// <summary>
+        /// To create new region using super admin account
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        [Route("api/v1/SALA/SellingActivity/Add")]
+        [HttpPost]
+        public async Task<IHttpActionResult> AddSellingActivity(AddSellingActivityRequest sellingActivityRequest)
+        {
+            try
+            {
+                // validate data
+                ResponseModel responseModel = sellingActivityLogic.AddSellingActivity(sellingActivityRequest);
+                if (responseModel.StatusCode == HttpStatusCode.Created)
+                {
+                    // validate token
+                    if (tokenLogic.ValidateTokenInHeader(Request, "Admin Penjualan"))
+                    {
+                        // create region
+                        await Task.Run(() => repo.AddSellingActivity(sellingActivityRequest));
+
+                        // response success
+                        var response = new ResponseWithoutData()
+                        {
+                            StatusCode = HttpStatusCode.Created,
+                            Message = "Berhasil menambah status"
+                        };
+
+                        return Ok(response);
+                    }
+                    else
+                    {
+                        // unauthorized
+                        var unAuthorizedResponse = new ResponseWithoutData()
+                        {
+                            StatusCode = HttpStatusCode.Unauthorized,
+                            Message = "Anda tidak memiliki hak akses"
+                        };
+
+                        return Ok(unAuthorizedResponse);
+                    }
+                }
+                else if (responseModel.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    // unauthorized
+                    var unAuthorizedResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.Unauthorized,
+                        Message = "Anda tidak memiliki hak akses"
+                    };
+
+                    return Ok(unAuthorizedResponse);
+                }
+                else
+                {
+                    // bad request
+                    var badRequestResponse = new ResponseWithoutData()
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        Message = responseModel.Message
+                    };
+
+                    return Ok(badRequestResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+        /// <summary>
         /// To edit selling status using sales admin account
         /// </summary>
         /// <param name="id"></param>
@@ -189,7 +261,8 @@ namespace HappyFarmProjectAPI.Controllers
                                 x.Id,
                                 x.SellingId,
                                 SellingStatusName = db.SellingStatus.Where(z => z.Id == x.SellingStatusid).FirstOrDefault() == null ? null : db.SellingStatus.Where(z => z.Id == x.SellingStatusid).FirstOrDefault().Name,
-                                x.SellingStatusid
+                                x.SellingStatusid,
+                                x.CreatedAt
                             })
                             .ToList(),
                             CurrentPage = listSellingStatusPaging.CurrentPage,

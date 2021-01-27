@@ -10,6 +10,35 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
     public class SellingActivityLogic
     {
         /// <summary>
+        /// Validate Data When Add Selling Activity
+        /// </summary>
+        /// <param name="sellingActivityRequest"></param>
+        /// <returns></returns>
+        public ResponseModel AddSellingActivity(AddSellingActivityRequest sellingActivityRequest)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                int sellingId = int.Parse(sellingActivityRequest.SellingId.Replace("ORD", ""));
+                // validate namstatus
+                bool statusAlreadyExists = db.SellingActivities.Where(x => x.SellingStatusid >= sellingActivityRequest.SellingStatusid  && x.SellingId == sellingId).FirstOrDefault() != null;
+                if (statusAlreadyExists)
+                {
+                    // name is exists
+                    return new ResponseModel()
+                    {
+                        Message = "Status sudah tersedia",
+                        StatusCode = HttpStatusCode.BadRequest
+                    };
+                }
+                else
+                {
+                    // check authorization
+                    return checkAuthorization(sellingActivityRequest.CreatedBy, HttpStatusCode.Created);
+                }
+            }
+        }
+
+        /// <summary>
         /// Validate Data when Edit Selling Status
         /// </summary>
         /// <param name="sellingActivityRequest"></param>
@@ -25,7 +54,7 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
                 {
                     // validate name cannot same with same id
                     bool nameAlreadyExists = db.SellingActivities
-                        .Where(x => x.SellingStatusid.ToString().Equals(sellingActivityRequest.SellingStatusid.ToString()) && x.Id == id)
+                        .Where(x => x.SellingStatusid > sellingActivityRequest.SellingStatusid && x.Id == id)
                         .FirstOrDefault() != null;
                     if (nameAlreadyExists)
                     {
@@ -95,6 +124,49 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
                     return new ResponseModel()
                     {
                         Message = "Status penjualan tidak tersedia",
+                        StatusCode = HttpStatusCode.BadRequest
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Check Authorization
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private ResponseModel checkAuthorization(int id, HttpStatusCode responseSuccess)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                var employee = db.Employees.Where(x => x.Id == id && x.RowStatus == "A").FirstOrDefault();
+                if (employee != null)
+                {
+                    if (employee.UserLogin.Role.Name != "Admin Penjualan")
+                    {
+                        // unauthroized
+                        return new ResponseModel()
+                        {
+                            StatusCode = HttpStatusCode.Unauthorized,
+                            Message = "Anda tidak memiliki hak akses"
+                        };
+                    }
+                    else
+                    {
+                        // return ok
+                        return new ResponseModel()
+                        {
+                            Message = "Berhasil",
+                            StatusCode = responseSuccess
+                        };
+                    }
+                }
+                else
+                {
+                    // employee not found
+                    return new ResponseModel()
+                    {
+                        Message = "Data karyawan tidak ditemukan",
                         StatusCode = HttpStatusCode.BadRequest
                     };
                 }

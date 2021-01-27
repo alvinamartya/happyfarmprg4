@@ -203,6 +203,7 @@
     <Compile Include="Models\ModelView\CustomerFeedbackModelView.cs" />
     <Compile Include="Models\ModelView\SellingActivityModelView.cs" />
     <Compile Include="Models\ModelView\SellingStatusModelView.cs" />
+    <Compile Include="Models\Request\AddSellingActivityRequest.cs" />
     <Compile Include="Models\Request\DeletePurchasingRequest.cs" />
     <Compile Include="Models\PurchasingSession.cs" />
     <Compile Include="Models\Request\AddPurchasingRequest.cs" />
@@ -492,6 +493,7 @@
     <Content Include="Views\SalesAdminSellingActivity\Edit.cshtml" />
     <Content Include="Views\SalesAdminSellingActivity\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutSALA.cshtml" />
+    <Content Include="Views\SalesAdminSellingActivity\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

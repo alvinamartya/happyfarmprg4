@@ -27,7 +27,38 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         }
 
         /// <summary>
-        /// Get SellingStatus with paging
+        /// Add selling activity Repository
+        /// </summary>
+        /// <param name="sellingActivityRequest"></param>
+        public void AddSellingActivity(AddSellingActivityRequest sellingActivityRequest)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+
+                // get last id user login
+                int lastUserLoginId = db.UserLogins
+                    .OrderByDescending(x => x.Id)
+                    .FirstOrDefault()
+                    .Id;
+
+                string sellingId = sellingActivityRequest.SellingId.Replace("ORD", "");
+                int sellingId2 = int.Parse(sellingId.TrimStart('0'));
+
+                // create new selling activity
+                SellingActivity newSellingActivity = new SellingActivity()
+                {
+                    SellingId = sellingId2,
+                    SellingStatusid = sellingActivityRequest.SellingStatusid,
+                    CreatedAt = DateTime.Now,
+                    CreatedBy = sellingActivityRequest.CreatedBy,
+                };
+                db.SellingActivities.Add(newSellingActivity);
+                db.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Get Selling Activity with paging
         /// </summary>
         /// <param name="page"></param>
         /// <param name="limitPage"></param>
