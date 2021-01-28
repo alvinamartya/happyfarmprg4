@@ -128,20 +128,20 @@
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Data</li>
                             <li>
-                                <a href="@Url.Action("Index","SuperAdminPromo")" id="promo-nav">
+                                <a href="@Url.Action("Index","Promo")" id="promo-nav">
                                     <i class="metismenu-icon pe-7s-display1"></i>
                                     Promo
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index","SuperAdminGoods")" id="goods-nav">
+                                <a href="@Url.Action("Index","Product")" id="product-nav">
                                     <i class="metismenu-icon pe-7s-shopbag"></i>
                                     Produk
                                 </a>
                             </li>
                             <li class="app-sidebar__heading">Transaksi</li>
                             <li>
-                                <a href="@Url.Action("Index","SuperAdminGoods")" id="goods-nav">
+                                <a href="@Url.Action("Index","HistoryTransaction")" id="history-nav">
                                     <i class="metismenu-icon pe-7s-shopbag"></i>
                                     Riwayat Transaksi
                                 </a>
@@ -150,12 +150,6 @@
                                 <a href="@Url.Action("Index","SuperAdminGoods")" id="goods-nav">
                                     <i class="metismenu-icon pe-7s-shopbag"></i>
                                     Pembelian
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Index","SuperAdminGoods")" id="goods-nav">
-                                    <i class="metismenu-icon pe-7s-shopbag"></i>
-                                    Feedback
                                 </a>
                             </li>
                             <li class="app-sidebar__heading">Akun</li>
@@ -245,16 +239,10 @@
 
         function changeNav() {
             const pageArr = window.location.href.split("/");
-            if (pageArr.indexOf("Karyawan") > -1) {
-                $("#employee-nav").addClass("mm-active");
-            } else if (pageArr.indexOf("Wilayah") > -1) {
-                $("#region-nav").addClass("mm-active");
-            } else if (pageArr.indexOf("Kecamatan") > -1) {
-                $("#subdistrict-nav").addClass("mm-active");
-            } else if (pageArr.indexOf("Promo") > -1) {
+           if (pageArr.indexOf("Promo") > -1) {
                 $("#promo-nav").addClass("mm-active");
-            } else if (pageArr.indexOf("Banner") > -1) {
-                $("#banner-nav").addClass("mm-active");
+           } else if (pageArr.indexOf("HistoryTransaction") > -1) {
+               $("#history-nav").addClass("mm-active");
             } else if (pageArr.indexOf("Kategori") > -1) {
                 $("#category-nav").addClass("mm-active");
             } else if (pageArr.indexOf("Produk") > -1) {

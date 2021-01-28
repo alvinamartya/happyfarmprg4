@@ -1,0 +1,40 @@
+﻿@model IEnumerable<HappyFarmProject.Models.SellingDetail>
+
+@{
+    ViewBag.Title = "SellingDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detail Produk</h2>
+<hr />
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            Nama Produk
+        </th>
+        <th>
+            Jumlah
+        </th>
+        <th>
+            Harga
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GoodsName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+            <td>
+                @Html.Raw("Rp. ") @Html.DisplayFor(modelItem => item.GoodsPrice)
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Kembali", "Index", "HistoryTransaction", null, new { @class = "btn btn-danger" })

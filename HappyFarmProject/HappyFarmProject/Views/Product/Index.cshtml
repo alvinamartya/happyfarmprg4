@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript" src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<h2>List Produk</h2>
+<hr />
+
+<div>
+    <div class="row mx-auto" style="display:flex; align-items: center">
+        <div>
+            Kategori:
+        </div>
+        <div class="col-4">
+            @if (ViewBag.Categories != null)
+            {
+                using (@Html.BeginForm("Index", "Product", FormMethod.Get, new { id = "goodsChanged" }))
+                {
+                    @Html.DropDownList("Category", ViewBag.Categories as SelectList, new { @class = "form-control" })
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+<div id="goods-card"></div>
+
+<script>
+    $(document).ready(() => {
+        $("#Category").change(() => {
+            $("#goodsChanged").submit();
+
+            console.log("changed");
+        })
+    })
+
+    async function getData() {
+        const url = 'https://localhost:44301/api/v1/Goods/' + @ViewBag.CategoryId;
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            contentType: "application/json",
+            dataType: 'json',
+            async: true,
+            success: async function (result) {
+                console.log(result);
+                let document = ``;
+                let n = result.Data.length + 1;
+                $('#goods-card').empty();
+
+                for (let i = 1; i < result.Data.length + 1; i++) {
+                    const item = result.Data[i - 1];
+                    if (i % 4 == 1) {
+                        console.log(i);
+                        document += `
+                                <div class="row">
+                            `
+                    }
+
+                    document += `
+                            <div class="card" style="width: 22em; margin: 20px">
+                                <img class="card-img-top" src="https://localhost:44366/Images/Goods/`+ item.Image + `" alt="` + item.Name +`">
+                                <div class="card-body">
+                                    <h5 class="card-title">` + item.Name + `</h5>
+                                    <p class="card-text">`+ item.Description + `</p>
+                                </div>
+                            </div>
+                        `;
+
+                    if (i % 4 == 0 || n == 2) {
+                        console.log(i);
+                        document += `
+                                </div>
+                            `;
+
+                        $('#goods-card').append(document);
+                        document = ``;
+                    }
+                    n--;
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('Error: ' + textStatus + ' ' + errorThrown);
+            }
+        })
+    }
+
+    getData();
+</script>

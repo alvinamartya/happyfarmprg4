@@ -22,6 +22,18 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             }
         }
 
+        public List<Good> GetGoodsByCategoryId(int cateogryId)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                var listGoods = db.Goods
+                    .Where(x => x.CategoryId == cateogryId)
+                    .ToList();
+
+                return listGoods;
+            }
+        }
+
         /// <summary>
         /// Edit Goods using repository
         /// </summary>

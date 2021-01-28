@@ -194,6 +194,8 @@
     <Compile Include="Controllers\BusinessLogic\TokenLogic.cs" />
     <Compile Include="Controllers\Customer\CategoryController.cs" />
     <Compile Include="Controllers\CustomerService\CustomerServiceCustomerFeedbackController.cs" />
+    <Compile Include="Controllers\Customer\GoodsController.cs" />
+    <Compile Include="Controllers\Customer\HistoryTransactionController.cs" />
     <Compile Include="Controllers\Manager\ManagerRoleController.cs" />
     <Compile Include="Controllers\Manager\ManagerRegionController.cs" />
     <Compile Include="Controllers\Manager\ManagerEmployeeController.cs" />
@@ -217,6 +219,7 @@
     <Compile Include="Controllers\Repository\PurchasingRepository.cs" />
     <Compile Include="Controllers\Repository\RegionRepository.cs" />
     <Compile Include="Controllers\Repository\RoleRepository.cs" />
+    <Compile Include="Controllers\Repository\SellingRepository.cs" />
     <Compile Include="Controllers\Repository\SubDistrictRepository.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminCategoryController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminSubDistrictController.cs" />
@@ -237,6 +240,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\CreateCustomerFeedback.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
@@ -258,7 +262,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbContext.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\DeletePurchasingRequest.cs" />
+    <Compile Include="Models\Request\DeletePurchasingRequest.cs" />
     <Compile Include="Models\Employee.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
@@ -330,6 +334,7 @@
     <Compile Include="Models\SubDistrict.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Request\UploadBuktiTransfer.cs" />
     <Compile Include="Models\UserLogin.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>

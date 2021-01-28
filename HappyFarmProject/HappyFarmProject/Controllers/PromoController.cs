@@ -36,7 +36,7 @@ namespace HappyFarmProject.Controllers
             // get categories
             HttpClient hcCategoryGet = APIHelper.GetHttpClient("Promo");
 
-            var apiGet = hcCategoryGet.GetAsync("Category");
+            var apiGet = hcCategoryGet.GetAsync("Promo");
             apiGet.Wait();
 
             var data = apiGet.Result;
