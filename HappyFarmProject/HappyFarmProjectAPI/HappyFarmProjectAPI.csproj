@@ -182,6 +182,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BusinessLogic\SellingActivityLogic.cs" />
+    <Compile Include="Controllers\Customer\ChangePasswordController.cs" />
     <Compile Include="Controllers\Customer\BannerController.cs" />
     <Compile Include="Controllers\BusinessLogic\BannerLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\CategoryLogic.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminCategoryController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminGoodsController.cs" />
     <Compile Include="Controllers\Customer\PromoController.cs" />
+    <Compile Include="Controllers\Customer\ProfileController.cs" />
     <Compile Include="Controllers\Repository\BannerRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Repository\CategoryRepository.cs" />
@@ -219,6 +221,7 @@
     <Compile Include="Controllers\Repository\GoodsPriceRegionRepository.cs" />
     <Compile Include="Controllers\Repository\GoodsRepository.cs" />
     <Compile Include="Controllers\Repository\ProfileEmployeeRepository.cs" />
+    <Compile Include="Controllers\Repository\ProfileRepository.cs" />
     <Compile Include="Controllers\Repository\PromoRepository.cs" />
     <Compile Include="Controllers\Repository\PurchasingRepository.cs" />
     <Compile Include="Controllers\Repository\RegionRepository.cs" />
@@ -250,6 +253,7 @@
     </Compile>
     <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\DashboardModel.cs" />
+    <Compile Include="Models\Request\ProfileRequest.cs" />
     <Compile Include="Models\Request\EditProfileEmployeeRequest.cs" />
     <Compile Include="Models\Request\AddSellingActivityRequest.cs" />
     <Compile Include="Models\Request\ChangePasswordRequest.cs" />

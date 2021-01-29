@@ -6,14 +6,14 @@ using System.Web;
 
 namespace HappyFarmProjectAPI.Controllers.Repository
 {
-    public class ProfileEmployeeRepository
+    public class ProfileRepository
     {
-        public void ChangePasswordEmployee(ChangePasswordRequest changePasswordRequest)
+        public void ChangePassword(ChangePasswordRequest changePasswordRequest)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                Employee employee = db.Employees.Where(x => x.Id == changePasswordRequest.UserId).FirstOrDefault();
-                UserLogin login = db.UserLogins.Where(x => x.Id == employee.UserLoginId).FirstOrDefault();
+                Customer customer = db.Customers.Where(x => x.Id == changePasswordRequest.UserId).FirstOrDefault();
+                UserLogin login = db.UserLogins.Where(x => x.Id == customer.UserLoginId).FirstOrDefault();
                 login.Password = Helper.EncryptStringSha256Hash(changePasswordRequest.NewPassword);
                 db.SaveChanges();
             }
@@ -23,17 +23,17 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                Employee employee = db.Employees.Where(x => x.Id == id).FirstOrDefault();
-                UserLogin login = db.UserLogins.Where(x => x.Id == employee.UserLoginId).FirstOrDefault();
+                Customer customer = db.Customers.Where(x => x.Id == id).FirstOrDefault();
+                UserLogin login = db.UserLogins.Where(x => x.Id == customer.UserLoginId).FirstOrDefault();
                 return login.Password;
             }
         }
 
-        public Object GetEmployeeById(int id)
+        public Object GetProfileById(int id)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                var employee = db.Employees
+                var customer = db.Customers
                     .Where(x => x.Id == id)
                     .Select(x => new
                     {
@@ -41,26 +41,22 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                         x.Name,
                         x.PhoneNumber,
                         x.Email,
-                        x.Address,
                         x.Gender
                     })
                     .FirstOrDefault();
-                return employee;
+                return customer;
             }
         }
 
-        public void EditEmployee(EditProfileEmployeeRequest request)
+        public void EditCustomer(ProfileRequest request)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                Employee employee = db.Employees.Where(x => x.Id == request.Id).FirstOrDefault();
-                employee.ModifiedBy = employee.Id;
-                employee.ModifiedAt = DateTime.Now;
-                employee.Name = request.Name;
-                employee.PhoneNumber = request.PhoneNumber;
-                employee.Address = request.Address;
-                employee.Gender = request.Gender;
-                employee.Email = request.Email;
+                Customer custoemr = db.Customers.Where(x => x.Id == request.Id).FirstOrDefault();
+                custoemr.Name = request.Name;
+                custoemr.PhoneNumber = request.PhoneNumber;
+                custoemr.Gender = request.Gender;
+                custoemr.Email = request.Email;
                 db.SaveChanges();
             }
         }
