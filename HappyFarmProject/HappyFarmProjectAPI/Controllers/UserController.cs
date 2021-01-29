@@ -19,7 +19,45 @@ namespace HappyFarmProjectAPI.Controllers
         #endregion
 
         #region Action
-        [Route("api/v1/User/Employee/{id}")]
+        [Route("api/v1/User/Employee/EditProfileEmployee")]
+        [HttpPost]
+        public async Task<IHttpActionResult> EditProfileEmployee(EditProfileEmployeeRequest request)
+        {
+            try
+            {
+               using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+                {
+                    var emailAlreadyExists = db.Employees.Where(x => x.Email == request.Email && x.Id != request.Id).FirstOrDefault() != null;
+                    if(emailAlreadyExists)
+                    {
+                        var responseEmailExists = new ResponseWithoutData()
+                        {
+                            Message = "Email sudah tersedia",
+                            StatusCode = HttpStatusCode.BadRequest
+                        };
+                        return Ok(responseEmailExists);
+                    }
+                    else
+                    {
+                        await Task.Run(() => employeeRepository.EditEmployee(request));
+                        var response = new ResponseWithoutData()
+                        {
+                            Message = "Berhasil",
+                            StatusCode = HttpStatusCode.OK
+                        };
+
+                        return Ok(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/v1/User/Employee/Profile/{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetProfileEmployee(int id)
         {

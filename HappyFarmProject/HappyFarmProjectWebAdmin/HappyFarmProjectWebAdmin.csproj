@@ -181,6 +181,7 @@
     <Compile Include="Controllers\Account\LogoutController.cs" />
     <Compile Include="Controllers\Account\ForgotPasswordController.cs" />
     <Compile Include="Controllers\CustomerService\CustomerServiceCustomerFeedbackController.cs" />
+    <Compile Include="Controllers\Manager\ManagerDashboardController.cs" />
     <Compile Include="Controllers\Manager\ManagerEmployeeController.cs" />
     <Compile Include="Controllers\Manager\ManagerRegionController.cs" />
     <Compile Include="Controllers\Manager\ManagerSubDistrictController.cs" />
@@ -265,6 +266,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\c3.min.css" />
+    <Content Include="Content\chartist.min.css" />
     <Content Include="Content\daterangepicker.css" />
     <Content Include="Content\hamburgers.css" />
     <Content Include="Content\hamburgers.min.css" />
@@ -407,7 +410,13 @@
     <Content Include="fonts\ionicons\ionicons.ttf" />
     <Content Include="fonts\ionicons\ionicons.woff" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\c3.min.js" />
+    <Content Include="Scripts\chartist-plugin-legend.js" />
+    <Content Include="Scripts\chartist-plugin-tooltip.min.js" />
+    <Content Include="Scripts\chartist.min.js" />
     <Content Include="Scripts\countdowntime.js" />
+    <Content Include="Scripts\d3.min.js" />
+    <Content Include="Scripts\dashboard1.js" />
     <Content Include="Scripts\data-error.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -502,6 +511,7 @@
     <Content Include="Views\Shared\_LayoutSALA.cshtml" />
     <Content Include="Views\ChangePassword\Edit.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\ManagerDashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

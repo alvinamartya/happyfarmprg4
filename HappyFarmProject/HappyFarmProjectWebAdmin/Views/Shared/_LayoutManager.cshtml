@@ -127,6 +127,13 @@
                 <div class="scrollbar-sidebar">
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
+                            <li class="app-sidebar__heading">Laporan</li>
+                            <li>
+                                <a href="@Url.Action("Index","ManagerDashboard")" id="dashboard-nav">
+                                    <i class="metismenu-icon pe-7s-users" id="dashboard-nav"></i>
+                                    Dashboard
+                                </a>
+                            </li>
                             <li class="app-sidebar__heading">Administrasi</li>
                             <li>
                                 <a href="@Url.Action("Index","ManagerEmployee")" id="employee-nav">
@@ -148,7 +155,7 @@
                             </li>
                             <li class="app-sidebar__heading">Akun</li>
                             <li>
-                                <a href="@Url.Action("Index","SuperAdminCategory")">
+                                <a href="@Url.Action("Index","Profile")" id="profile-nav">
                                     <i class="metismenu-icon pe-7s-user"></i>
                                     Profil
                                 </a>
@@ -230,7 +237,7 @@
     }
 
         getData();
-
+        
         function changeNav() {
             const pageArr = window.location.href.split("/");
             if (pageArr.indexOf("Karyawan") > -1) {
@@ -241,7 +248,11 @@
                 $("#subdistrict-nav").addClass("mm-active");
             } else if (pageArr.indexOf("GantiPassword") > -1) {
                 $("#password-nav").addClass("mm-active");
-            }
+            } else if (pageArr.indexOf("Profil") > -1) {
+                $("#profile-nav").addClass("mm-active");
+            } else if (pageArr.indexOf("Dashboard") > -1) {
+                $("#dashboard-nav").addClass("mm-active");
+            } 
         }
         changeNav();
     </script>
