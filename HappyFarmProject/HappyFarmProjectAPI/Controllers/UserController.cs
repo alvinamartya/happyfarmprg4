@@ -15,43 +15,93 @@ namespace HappyFarmProjectAPI.Controllers
     {
         #region Variable
         private TokenLogic tokenLogic = new TokenLogic();
-        private UserLoginLogic userLoginLogic = new UserLoginLogic();
-
-        private ChangePasswordRepository repo = new ChangePasswordRepository();
+        private ProfileEmployeeRepository employeeRepository = new ProfileEmployeeRepository();
         #endregion
 
         #region Action
-        [Route("api/v1/User/Employee/ChangePassword/{id}")]
-        [HttpPut]
-        public async Task<IHttpActionResult> ChangePasswordEmployee(int id, ChangePasswordRequest changeRequest)
+        [Route("api/v1/User/Employee/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetProfileEmployee(int id)
         {
             try
             {
-                ResponseModel responseModel = userLoginLogic.EditUserLogin(id, changeRequest);
-                if (responseModel.StatusCode == HttpStatusCode.OK)
+                Object employee = await Task.Run(() => employeeRepository.GetEmployeeById(id));
+                var response = new ResponseWithData<Object>()
                 {
-                    // update region
-                    await Task.Run(() => repo.ChangePassword(id, changeRequest));
+                    Data = employee,
+                    Message = "Berhasil",
+                    StatusCode = HttpStatusCode.OK
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
 
-                    // response success
-                    var response = new ResponseWithoutData()
+        [Route("api/v1/User/Employee/ChangePassword")]
+        [HttpPost]
+        public async Task<IHttpActionResult> ChangePasswordEmployee(ChangePasswordRequest changeRequest)
+        {
+            try
+            {
+                string oldPassword = await Task.Run(() => employeeRepository.GetOldPassword(changeRequest.UserId));
+                if(changeRequest.OldPassword == "")
+                {
+                    var responseEmptyOldPassword = new ResponseWithoutData()
                     {
-                        StatusCode = HttpStatusCode.OK,
-                        Message = "Berhasil mengubah password"
+                        Message = "Kata sandi lama harus diisi",
+                        StatusCode = HttpStatusCode.BadRequest
                     };
-
-                    return Ok(response);
+                    return Ok(responseEmptyOldPassword);
+                }
+                else if(Helper.EncryptStringSha256Hash(changeRequest.OldPassword) != oldPassword)
+                {
+                    var responseOldPassword = new ResponseWithoutData()
+                    {
+                        Message = "Kata sandi lama tidak valid",
+                        StatusCode = HttpStatusCode.BadRequest
+                    };
+                    return Ok(responseOldPassword);
+                }
+                else if(changeRequest.NewPassword == "")
+                {
+                    var responseNewPassword = new ResponseWithoutData()
+                    {
+                        Message = "Kata sandi baru harus diisi",
+                        StatusCode = HttpStatusCode.BadRequest
+                    };
+                    return Ok(responseNewPassword);
+                }
+                else if(changeRequest.ConfirmPassword == "")
+                {
+                    var responseConfirmPassword = new ResponseWithoutData()
+                    {
+                        Message = "Konfirmasi kata sandi harus diisi",
+                        StatusCode = HttpStatusCode.BadRequest
+                    };
+                    return Ok(responseConfirmPassword);
+                }
+                else if(changeRequest.NewPassword != changeRequest.ConfirmPassword)
+                {
+                    var responseConfirmPassword = new ResponseWithoutData()
+                    {
+                        Message = "Konfirmasi kata sandi tidak sama dengan kata sandi baru",
+                        StatusCode = HttpStatusCode.BadRequest
+                    };
+                    return Ok(responseConfirmPassword);
                 }
                 else
                 {
-                    // bad request
-                    var badRequestResponse = new ResponseWithoutData()
+                    await Task.Run(() => employeeRepository.ChangePasswordEmployee(changeRequest));
+                    var response = new ResponseWithoutData()
                     {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        Message = responseModel.Message
+                        Message = "Berhasil mengubah kata sandi",
+                        StatusCode = HttpStatusCode.OK
                     };
-
-                    return Ok(badRequestResponse);
+                    return Ok(response);
                 }
             }
             catch (Exception ex)

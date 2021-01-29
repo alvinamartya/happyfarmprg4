@@ -182,7 +182,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BusinessLogic\SellingActivityLogic.cs" />
-    <Compile Include="Controllers\BusinessLogic\UserLoginLogic.cs" />
     <Compile Include="Controllers\Customer\BannerController.cs" />
     <Compile Include="Controllers\BusinessLogic\BannerLogic.cs" />
     <Compile Include="Controllers\BusinessLogic\CategoryLogic.cs" />
@@ -213,11 +212,11 @@
     <Compile Include="Controllers\Repository\BannerRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Repository\CategoryRepository.cs" />
-    <Compile Include="Controllers\Repository\ChangePasswordRepository.cs" />
     <Compile Include="Controllers\Repository\CustomerFeedbackRepository.cs" />
     <Compile Include="Controllers\Repository\EmployeeRepository.cs" />
     <Compile Include="Controllers\Repository\GoodsPriceRegionRepository.cs" />
     <Compile Include="Controllers\Repository\GoodsRepository.cs" />
+    <Compile Include="Controllers\Repository\ProfileEmployeeRepository.cs" />
     <Compile Include="Controllers\Repository\PromoRepository.cs" />
     <Compile Include="Controllers\Repository\PurchasingRepository.cs" />
     <Compile Include="Controllers\Repository\RegionRepository.cs" />

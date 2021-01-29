@@ -190,6 +190,7 @@
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminChangePriceProductController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminCategoryController.cs" />
     <Compile Include="Controllers\ProductionAdmin\ProductionAdminGoodsController.cs" />
+    <Compile Include="Controllers\Account\ProfileController.cs" />
     <Compile Include="Controllers\SalesAdmin\SalesAdminSellingActivityController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminCategoryController.cs" />
     <Compile Include="Controllers\SuperAdmin\SuperAdminEmployeeController.cs" />
@@ -201,6 +202,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelView\EmployeeProfileModelView.cs" />
+    <Compile Include="Models\ModelView\ChangePassword.cs" />
     <Compile Include="Models\ModelView\CustomerFeedbackModelView.cs" />
     <Compile Include="Models\ModelView\SellingActivityModelView.cs" />
     <Compile Include="Models\ModelView\SellingStatusModelView.cs" />
@@ -496,7 +499,9 @@
     <Content Include="Views\SalesAdminSellingActivity\Add.cshtml" />
     <Content Include="Views\SalesAdminSellingActivity\Edit.cshtml" />
     <Content Include="Views\SalesAdminSellingActivity\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutSALA.cshtml" />
     <Content Include="Views\ChangePassword\Edit.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

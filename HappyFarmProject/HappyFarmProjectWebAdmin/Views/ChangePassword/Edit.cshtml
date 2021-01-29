@@ -1,47 +1,73 @@
-﻿@model HappyFarmProjectWebAdmin.Models.ChangePasswordRequest
+﻿@model HappyFarmProjectWebAdmin.Models.ChangePassword
 
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_LayoutSALA.cshtml";
+    if((string)Session["Role"] == "Super Admin")
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if((string)Session["Role"] == "Manager")
+    {
+        Layout = "~/Views/Shared/_LayoutManager.cshtml";
+    }
+    else if ((string)Session["Role"] == "Admin Produksi")
+    {
+        Layout = "~/Views/Shared/_LayoutPA.cshtml";
+    }
+    else if ((string)Session["Role"] == "Admin Promosi")
+    {
+        Layout = "~/Views/Shared/_LayoutMA.cshtml";
+    }
+    else if ((string)Session["Role"] == "Customer Service")
+    {
+        Layout = "~/Views/Shared/_LayoutCS.cshtml";
+    }
+    else if ((string)Session["Role"] == "Admin Penjualan")
+    {
+        Layout = "~/Views/Shared/_LayoutSALA.cshtml";
+    }
 }
 
-@using (Html.BeginForm("Edit", "ChangePassword"))
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Ubah Nama Pengguna dan Kata Sandi Akun</h4>
+        <h4>Ganti kata sandi</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            <label for="Username" class="control-label col-md-2">Nama Pengguna<span style="color:red">*</span></label>
+            <label for="OldPassword" class="control-label col-md-2">Kata sandi lama <span style="color:red">*</span></label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                @Html.PasswordFor(model => model.OldPassword,  new { @class = "form-control" } )
+                @Html.ValidationMessageFor(model => model.OldPassword, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <label for="Password" class="control-label col-md-2">Kata Sandi<span style="color:red">*</span></label>
+            <label for="NewPassword" class="control-label col-md-2">Kata sandi baru <span style="color:red">*</span></label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                @Html.PasswordFor(model => model.NewPassword,  new { @class = "form-control" } )
+                @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="ConfirmPassword" class="control-label col-md-2">Konfirmasi kata sandi baru <span style="color:red">*</span></label>
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" } )
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group btn-box">
             <div class="col-md-offset-2 col-md-10" style="display:flex">
-                @Html.ActionLink("Kembali", "Index", "SalesAdminSellingActivity", null, new { @class = "btn btn-danger" })
-                <input type="submit" value="Ubah" class="btn btn-primary btn-margin-left" />
+                <input type="submit" value="Ganti Kata Sandi" class="btn btn-primary btn-margin-left" />
             </div>
         </div>
     </div>
 }
-
-<script>
-    $(document).ready(function () {
-
-</script>
 
 @if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
 {
@@ -51,7 +77,7 @@
         <!-- Modal content -->
         <div class="modal-content">
             <div class="modal-content--header">
-                <span class="close">&times;</span>
+                <span class="close" id="closeErrModal">&times;</span>
                 <p>@TempData["ErrHeader"]</p>
             </div>
             <hr style="width: 100%" />
@@ -68,6 +94,7 @@
 
     <script src="~/Scripts/data-error.js"></script>
 }
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

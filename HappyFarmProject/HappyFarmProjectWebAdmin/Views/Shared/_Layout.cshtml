@@ -179,7 +179,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index","SuperAdminGoods")" id="password-nav">
+                                <a href="@Url.Action("Edit","ChangePassword")" id="password-nav">
                                     <i class="metismenu-icon pe-7s-lock"></i>
                                     Ganti Kata Sandi
                                 </a>
@@ -272,6 +272,8 @@
                 $("#category-nav").addClass("mm-active");
             } else if (pageArr.indexOf("Produk") > -1) {
                 $("#goods-nav").addClass("mm-active");
+            } else if (pageArr.indexOf("GantiPassword") > -1) {
+                $("#password-nav").addClass("mm-active");
             }
         }
         changeNav();

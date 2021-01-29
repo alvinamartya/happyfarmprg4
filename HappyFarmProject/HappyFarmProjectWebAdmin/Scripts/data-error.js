@@ -6,6 +6,14 @@ var span = document.getElementsByClassName("close")[0];
 
 modal.style.display = "block";
 
+var spanCloseModal = document.getElementById("closeErrModal");
+if (spanCloseModal !== undefined) {
+    spanCloseModal.onclick = function () {
+        modal.style.display = "none";
+    }
+
+}
+
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
     modal.style.display = "none";

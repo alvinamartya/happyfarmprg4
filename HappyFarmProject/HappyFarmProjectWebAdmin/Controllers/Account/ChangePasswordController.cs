@@ -14,176 +14,65 @@ namespace HappyFarmProjectWebAdmin.Controllers
     public class ChangePasswordController : Controller
     {
         #region Variable
-        HttpClient hcUserLoginEdit = APIHelper.GetHttpClient(APIHelper.User + "/ChangePassword");
+        HttpClient hcChangePassword = APIHelper.GetHttpClient(APIHelper.User + "/ChangePassword");
         #endregion
 
         #region Edit Region
-        [Route("~/User/GantiPassword/{id}")]
+        [Route("~/User/GantiPassword")]
         [HttpGet]
         public ActionResult Edit()
         {
-            UserLoginModelView user = null;
-
-            // get userlogin
-            HttpClient hcAccountGet = APIHelper.GetHttpClient(APIHelper.User + "/UserLogin");
-            hcAccountGet.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
-
-            var apiGet = hcAccountGet.GetAsync("UserLogin/" + (int)Session["UserId"]);
-            apiGet.Wait();
-
-            var data = apiGet.Result;
-            if (data.IsSuccessStatusCode)
+            if (Session["ErrMessage"] != null && Session["ErrHeader"] != null)
             {
-                var displayData = data.Content.ReadAsAsync<ResponseWithData<UserLoginModelView>>();
-                displayData.Wait();
+                TempData["ErrMessage"] = Session["ErrMessage"];
+                Session["ErrMessage"] = null;
 
-                if (displayData.Result.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    Session["ErrMessage"] = displayData.Result.Message;
-                    return RedirectToAction("Index", "Login");
-                }
-                else if (displayData.Result.StatusCode != HttpStatusCode.OK)
-                {
-                    TempData["ErrMessage"] = displayData.Result.Message;
-                    TempData["ErrHeader"] = "Gagal meload data wilayah";
-                }
-                else
-                {
-                    user = displayData.Result.Data;
-                }
+                TempData["ErrHeader"] = Session["ErrHeader"];
+                Session["ErrHeader"] = null;
             }
-            else
-            {
-                TempData["ErrMessage"] = "Terjadi kesalahan pada sistem";
-                TempData["ErrHeader"] = "Gagal meload data";
-            }
-
-            ChangePasswordRequest editUser = new ChangePasswordRequest()
-            {
-                Password = user.Password,
-                Username = user.Username
-            };
-
-            return View(editUser);
+            return View();
         }
 
-        [Route("~/User/GantiPassword/{id}")]
+        [Route("~/User/GantiPassword")]
         [HttpPost]
-        public ActionResult Edit(ChangePasswordRequest changePasswordRequest)
+        public ActionResult Edit(ChangePassword changePassword)
         {
-            UserLoginModelView user = null;
-
-            // get userlogin
-            HttpClient hcAccountGet = APIHelper.GetHttpClient(APIHelper.User + "/UserLogin");
-            hcAccountGet.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
-
-            var apiGet = hcAccountGet.GetAsync("UserLogin/" + (int)Session["UserId"]);
-            apiGet.Wait();
-
-            var data = apiGet.Result;
-            if (data.IsSuccessStatusCode)
+            ChangePasswordRequest request = new ChangePasswordRequest()
             {
-                var displayData = data.Content.ReadAsAsync<ResponseWithData<UserLoginModelView>>();
-                displayData.Wait();
-
-                if (displayData.Result.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    Session["ErrMessage"] = displayData.Result.Message;
-                    return RedirectToAction("Index", "Login");
-                }
-                else if (displayData.Result.StatusCode != HttpStatusCode.OK)
-                {
-                    TempData["ErrMessage"] = displayData.Result.Message;
-                    TempData["ErrHeader"] = "Gagal meload data wilayah";
-                }
-                else
-                {
-                    user = displayData.Result.Data;
-                }
-            }
-            else
-            {
-                TempData["ErrMessage"] = "Terjadi kesalahan pada sistem";
-                TempData["ErrHeader"] = "Gagal meload data";
-            }
-
-            ChangePasswordRequest editUser = new ChangePasswordRequest()
-            {
-                Username = user.Username,
-                Password = user.Password
+                ConfirmPassword = changePassword.ConfirmPassword,
+                NewPassword = changePassword.NewPassword,
+                OldPassword = changePassword.OldPassword,
+                UserId = (int)Session["UserId"]
             };
 
-            // update region
-            hcUserLoginEdit.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
-            var apiEdit = hcUserLoginEdit.PutAsJsonAsync<ChangePasswordRequest>("Edit/" + (int)Session["UserId"], changePasswordRequest);
-            apiEdit.Wait();
+            var apiChangePassword = hcChangePassword.PostAsJsonAsync<ChangePasswordRequest>("ChangePassword", request);
+            apiChangePassword.Wait();
 
-            var dateEdit = apiEdit.Result;
-            if (dateEdit.IsSuccessStatusCode)
+            var changePasswordData = apiChangePassword.Result;
+            if (changePasswordData.IsSuccessStatusCode)
             {
-                var displayDataEdit = dateEdit.Content.ReadAsAsync<ResponseWithoutData>();
-                displayDataEdit.Wait();
-                if (displayDataEdit.Result.StatusCode == HttpStatusCode.Unauthorized)
+                var changePasswordResponse = changePasswordData.Content.ReadAsAsync<LoginResponse>();
+                changePasswordResponse.Wait();
+
+                if (changePasswordResponse.Result.StatusCode == HttpStatusCode.OK)
                 {
-                    Session["ErrMessage"] = displayDataEdit.Result.Message;
-                    return RedirectToAction("Index", "Login");
-                }
-                else if (displayDataEdit.Result.StatusCode == HttpStatusCode.OK)
-                {
-                    return RedirectToAction("Index");
+                    Session["ErrHeader"] = "Berhasil";
+                    Session["ErrMessage"] = "Berhasil mengganti kata sandi";
+                    return RedirectToAction("Edit", "ChangePassword");
                 }
                 else
                 {
-                    TempData["ErrMessage"] = displayDataEdit.Result.Message;
-                    TempData["ErrHeader"] = "Gagal Mengubah Data Wilayah";
+                    TempData["ErrHeader"] = "Gagal";
+                    TempData["ErrMessage"] = changePasswordResponse.Result.Message;
                 }
             }
             else
             {
-                TempData["ErrMessage"] = "Terjadi kesalahan pada sistem";
-                TempData["ErrHeader"] = "Gagal Mengubah Data Wilayah";
+                TempData["ErrHeader"] = "Gagal";
+                TempData["ErrMessage"] = "Terjadi kesalahan pada sistem, silahkan hubungi admin.";
             }
 
-            return View(editUser);
-        }
-        #endregion
-
-        #region Request Data
-        public ResponseDataWithPaging<List<UserLoginModelView>> GetAccounts(GetListDataRequest dataPaging)
-        {
-            // get categories
-            HttpClient hcAccountGet = APIHelper.GetHttpClient(APIHelper.User + "/UserLogin");
-            hcAccountGet.DefaultRequestHeaders.Add("Authorization", "Bearer " + Session["Token"]);
-
-            var apiGet = hcAccountGet.PostAsJsonAsync<GetListDataRequest>("UserLogin", dataPaging);
-            apiGet.Wait();
-
-            var data = apiGet.Result;
-            if (data.IsSuccessStatusCode)
-            {
-                var displayData = data.Content.ReadAsAsync<ResponseDataWithPaging<List<UserLoginModelView>>>();
-                displayData.Wait();
-
-                return new ResponseDataWithPaging<List<UserLoginModelView>>()
-                {
-                    StatusCode = displayData.Result.StatusCode,
-                    Message = displayData.Result.Message,
-                    Data = displayData.Result.StatusCode == HttpStatusCode.OK ? displayData.Result.Data : new List<UserLoginModelView>(),
-                    CurrentPage = displayData.Result.StatusCode == HttpStatusCode.OK ? displayData.Result.CurrentPage : 0,
-                    TotalPage = displayData.Result.StatusCode == HttpStatusCode.OK ? displayData.Result.TotalPage : 0
-                };
-            }
-            else
-            {
-                return new ResponseDataWithPaging<List<UserLoginModelView>>()
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    Message = "Terjadi kesalahan pada sistem",
-                    Data = new List<UserLoginModelView>(),
-                    CurrentPage = 0,
-                    TotalPage = 0
-                };
-            }
+            return View(changePassword);
         }
         #endregion
     }

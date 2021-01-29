@@ -53,6 +53,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
                     {
                         Session["UserId"] = loginResponse.Result.UserId;
                         Session["Token"] = loginResponse.Result.Token.Token;
+                        Session["Role"] = loginResponse.Result.Role;
 
                         if (loginResponse.Result.Role == "Super Admin")
                         {
