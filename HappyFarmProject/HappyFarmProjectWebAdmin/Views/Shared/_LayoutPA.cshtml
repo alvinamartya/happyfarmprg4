@@ -146,14 +146,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index","ProductionAdminChangePriceProduct")"  id="change-price-nav">
+                                <a href="@Url.Action("Index","ProductionAdminChangePriceProduct")" id="change-price-nav">
                                     <i class="metismenu-icon pe-7s-cash"></i>
                                     Harga Produk
                                 </a>
                             </li>
                             <li class="app-sidebar__heading">Akun</li>
                             <li>
-                                <a href="@Url.Action("Index","SuperAdminCategory")">
+                                <a href="@Url.Action("Index","Profile")" id="profile-nav">
                                     <i class="metismenu-icon pe-7s-user"></i>
                                     Profil
                                 </a>
@@ -248,6 +248,8 @@
                 $("#purchasing-nav").addClass("mm-active");
             } else if (pageArr.indexOf("GantiPassword") > -1) {
                 $("#password-nav").addClass("mm-active");
+            } else if (pageArr.indexOf("Profil") > -1) {
+                $("#profile-nav").addClass("mm-active");
             }
         }
         changeNav();

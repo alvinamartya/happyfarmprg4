@@ -51,10 +51,17 @@ namespace HappyFarmProject.Controllers
 
                     if (loginResponse.Result.StatusCode == HttpStatusCode.OK)
                     {
-                        Session["UserId"] = loginResponse.Result.UserId;
-                        Session["Token"] = loginResponse.Result.Token.Token;
+                        if(loginResponse.Result.Role != "Customer")
+                        {
+                            TempData["ErrMessage"] = "Anda tidak memiliki hak akses";
+                        }
+                        else
+                        {
+                            Session["UserId"] = loginResponse.Result.UserId;
+                            Session["Token"] = loginResponse.Result.Token.Token;
 
-                        return RedirectToAction("Index", "Promo");
+                            return RedirectToAction("Index", "Promo");
+                        }
                     }
                     else
                     {

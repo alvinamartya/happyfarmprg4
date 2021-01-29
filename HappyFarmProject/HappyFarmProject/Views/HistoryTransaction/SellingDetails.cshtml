@@ -36,5 +36,12 @@
     }
 
 </table>
+@* Error Data Empty *@
+@if (TempData["ErrMessageData"] != null)
+{
+    <div class="data-err">
+        @TempData["ErrMessageData"]
+    </div>
+}
 
 @Html.ActionLink("Kembali", "Index", "HistoryTransaction", null, new { @class = "btn btn-danger" })
