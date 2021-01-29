@@ -176,16 +176,23 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ForgotPasswordController.cs" />
     <Compile Include="Controllers\HistoryTransactionController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\LogoutController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PromoController.cs" />
     <Compile Include="Controllers\PurchasingController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\ChangePassword.cs" />
+    <Compile Include="Models\ForgotPassword.cs" />
+    <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\Request\ChangePasswordRequest.cs" />
     <Compile Include="Models\CustomerFeedback.cs" />
     <Compile Include="Models\Request\CustomerFeedbackRequest.cs" />
     <Compile Include="Models\HistoryTransaction.cs" />
@@ -394,10 +401,14 @@
     <Content Include="Views\HistoryTransaction\UploadBuktiTransfer.cshtml" />
     <Content Include="Views\HistoryTransaction\SellingDetails.cshtml" />
     <Content Include="Views\HistoryTransaction\Feedback.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\User\UpdateProfile.cshtml" />
+    <Content Include="Views\ForgotPassword\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
+    <Folder Include="Views\Logout\" />
     <Folder Include="Views\Purchasing\" />
   </ItemGroup>
   <ItemGroup>

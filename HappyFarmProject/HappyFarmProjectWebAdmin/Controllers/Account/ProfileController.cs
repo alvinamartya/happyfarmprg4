@@ -92,7 +92,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrHeader"] = "Gagal";
                 TempData["ErrMessage"] = "Terjadi kesalahan pada sistem, silahkan hubungi admin.";
             }
-            return View();
+            return View(employeeProfile);
         }
         #endregion
     }
