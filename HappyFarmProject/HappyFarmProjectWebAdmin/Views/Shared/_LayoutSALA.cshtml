@@ -24,7 +24,7 @@
 </head>
 <body>
     <!-- The Modal -->
-    <div id="logoutModal" class="modal-logout">
+    <div id="logoutModal" class="modal-logout" style="display:none">
 
         <!-- Modal content -->
         <div class="modal-content-logout">
@@ -128,7 +128,7 @@
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Admin Penjualan</li>
                             <li>
-                                <a href="@Url.Action("Index","SalesAdminSellingActivity")" id="review-nav">
+                                <a href="@Url.Action("Index","SalesAdminSellingActivity")" id="status-penjualan-nav">
                                     <i class="metismenu-icon pe-7s-display1"></i>
                                     Status Penjualan
                                 </a>
@@ -141,7 +141,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="@Url.Action("Edit","ChangePassword")" id="password-nav">
                                     <i class="metismenu-icon pe-7s-lock"></i>
                                     Ganti Kata Sandi
                                 </a>
@@ -217,11 +217,15 @@
     }
 
         getData();
-
+        
         function changeNav() {
             const pageArr = window.location.href.split("/");
             if (pageArr.indexOf("ReviewPelanggan") > -1) {
                 $("#review-nav").addClass("mm-active");
+            } else if (pageArr.indexOf("GantiPassword") > -1) {
+                $("#password-nav").addClass("mm-active");
+            } else if (pageArr.indexOf("StatusPenjualan") > -1) {
+                $("#status-penjualan-nav").addClass("mm-active");
             }
         }
         changeNav();
