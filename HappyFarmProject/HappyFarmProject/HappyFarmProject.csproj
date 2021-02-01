@@ -191,7 +191,13 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ChangePassword.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
+    <Compile Include="Models\GoodsListModelView.cs" />
+    <Compile Include="Models\GoodsRegion.cs" />
     <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\Purchase.cs" />
+    <Compile Include="Models\PurchasingErrorModel.cs" />
+    <Compile Include="Models\Request\PurchasingDetailRequest.cs" />
+    <Compile Include="Models\PurchasingModel.cs" />
     <Compile Include="Models\Request\ChangePasswordRequest.cs" />
     <Compile Include="Models\CustomerFeedback.cs" />
     <Compile Include="Models\Request\CustomerFeedbackRequest.cs" />
@@ -207,6 +213,7 @@
     <Compile Include="Models\UploadBuktiTransfer.cs" />
     <Compile Include="Models\Request\UploadBuktiTransferRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="App_Code\Purchasing.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.css" />
@@ -223,6 +230,8 @@
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\login.css" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\owl.carousel.min.css" />
+    <Content Include="Content\owl.theme.default.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\perfect-scrollbar.css" />
     <Content Include="Content\register.css" />
@@ -367,6 +376,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -376,6 +386,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\owl.carousel.min.js" />
     <Content Include="Scripts\perfect-scrollbar.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
@@ -404,12 +415,14 @@
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\User\UpdateProfile.cshtml" />
     <Content Include="Views\ForgotPassword\Index.cshtml" />
+    <Content Include="Views\Purchasing\Index.cshtml" />
+    <Content Include="Views\Purchasing\Add.cshtml" />
+    <Content Include="Views\Purchasing\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
     <Folder Include="Views\Logout\" />
-    <Folder Include="Views\Purchasing\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

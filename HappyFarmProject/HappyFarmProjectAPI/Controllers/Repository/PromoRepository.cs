@@ -156,11 +156,40 @@ namespace HappyFarmProjectAPI.Controllers.Repository
 
                 // get promos
                 var promoes = db.Promoes
-                    .Where(x => x.RowStatus == "A" && x.EndDate > now)
+                    .Where(x => x.RowStatus == "A" && x.EndDate > now && x.StartDate < now)
                     .ToList();
 
-                // return banners
+                // return promos
                 return promoes;
+            }
+        }
+
+        public Object GetPromosByCode(string Code)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+                // get promo
+                var promo = db.Promoes
+                    .Where(x => x.RowStatus == "A" && x.EndDate > now && x.StartDate < now && x.Code == Code)
+                    .Select(x => new
+                    {
+                        x.Id,
+                        x.Name,
+                        x.Image,
+                        x.Code,
+                        x.MinTransaction,
+                        x.MaxDiscount,
+                        x.Discount,
+                        x.IsFreeDelivery,
+                        x.StartDate,
+                        x.EndDate
+                    })
+                    .FirstOrDefault();
+
+                // return promo
+                return promo;
             }
         }
 

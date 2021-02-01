@@ -22,12 +22,31 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             }
         }
 
-        public List<Good> GetGoodsByCategoryId(int cateogryId)
+        public List<Good> GetGoodsByCategoryId(int categoryId)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 var listGoods = db.Goods
-                    .Where(x => x.CategoryId == cateogryId)
+                    .Where(x => x.CategoryId == categoryId)
+                    .ToList();
+
+                return listGoods;
+            }
+        }
+
+        public Object GetGoodsByCategoryIdandRegionId(int categoryId, int regionId)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                var listGoods = db.GoodsPriceRegions
+                    .Where(x => x.RegionId == regionId)
+                    .Select(x=>new { 
+                        Id = x.GoodsId,
+                        Name = x.Good.Name,
+                        Price = (int)x.Price,
+                        CategoryId = db.Goods.Where(z=>z.Id == x.Id).FirstOrDefault().CategoryId
+                    })
+                    .Where(x=>x.CategoryId == categoryId)
                     .ToList();
 
                 return listGoods;

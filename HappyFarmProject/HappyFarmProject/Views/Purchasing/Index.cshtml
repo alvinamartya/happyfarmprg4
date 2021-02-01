@@ -1,0 +1,436 @@
+﻿@model HappyFarmProject.Models.PurchasingModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/owl.carousel.min.css" rel="stylesheet" />
+<link href="~/Content/owl.theme.default.min.css" rel="stylesheet" />
+
+<h2>Pembelian</h2>
+<hr />
+<div id="owl-demo" class="owl-carousel" style=""></div>
+
+@using (Html.BeginForm("Purchase","Purchasing", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="card">
+            <div class="card-header">
+                Data Pembeli
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="RecipientName" class="control-label col-md-2">Nama Penerima <span style="color:red">*</span></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.RecipientName, new { htmlAttributes = new { @class = "form-control", placeholder = "Nama Penerima" } })
+                        @Html.ValidationMessageFor(model => model.RecipientName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="RecipientPhone" class="control-label col-md-3">No Telepon Penerima <span style="color:red">*</span></label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.RecipientPhone, new { @class = "form-control", type = "number", placeholder = "No Telepon Penerima" })
+                        @Html.ValidationMessageFor(model => model.RecipientPhone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="RecipientAddress" class="control-label col-md-2">Alamat Penerima <span style="color:red">*</span></label>
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.RecipientAddress, 3, 100, new { @class = "form-control", placeholder="Alamat Penerima" })
+                        @Html.ValidationMessageFor(model => model.RecipientAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="PromoCode" class="control-label col-md-2">Kode Promo</label>
+                    <div class="col-md-10">
+                        <input type="text" name="PromoCode" class="form-control" id="PromoCode" placeholder="Kode Promo" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="RegionId" class="control-label col-md-2">Wilayah <span style="color:red">*</span></label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="RegionId" name="RegionId"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="SubdistrictId" class="control-label col-md-2">Kecamatan <span style="color:red">*</span></label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="SubdistrictId" name="SubdistrictId"></select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="display: none">
+                    <div class="col-md-10">
+                        <input type="text" name="TotalPurchase" class="form-control" id="TotalPurchase" placeholder="Total Pembelian" />
+                    </div>
+                </div>
+
+                <div class="form-group" style="display: none">
+                    <div class="col-md-10">
+                        <input type="text" name="Discount" class="form-control" id="Discount" placeholder="Diskon" />
+                    </div>
+                </div>
+
+                <div class="form-group" style="display: none">
+                    <div class="col-md-10">
+                        <input type="text" name="ShippingCharges" class="form-control" id="ShippingCharges" placeholder="Ongkos Kirim" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="card">
+            <div class="card-header">
+                Detail Produk
+            </div>
+            <div class="card-body">
+                @Html.ActionLink("Tambah Produk", "Add", "Purchasing", null, new { @class = "btn btn-primary", style = "margin-bottom: 20px", id = "addProduct" })
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nama Produk
+                            </th>
+                            <th>
+                                Kategori Produk
+                            </th>
+                            <th>
+                                Jumlah Produk
+                            </th>
+                            <th>
+                                Harga Produk
+                            </th>
+                            <th>
+                                Aksi
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="body-table"></tbody>
+                </table>
+                <div class="data-err">Data tidak tersedia</div>
+            </div>
+        </div>
+
+        <br />
+        <div class="card" style="margin-bottom: 20px; padding: 20px;">
+            <div class="row" style="padding-top:1%; padding-left:5%">
+                <div class="col-8">
+                    <div style="display:flex">
+                        <div style="font-size: 16px; width:200px">Ongkos Kirim: </div> <div style="font-size:16px; width:100px; text-align: right" id="show-shippingcharges">Rp. 5.000,00</div>
+                    </div>
+                    <div style="display: flex">
+                        <div style="font-size: 16px; width:200px">Total Pembelian: </div> <div style="font-size:16px; width:100px; text-align: right" id="show-totalpurchase">Rp. 45.000,00</div>
+                    </div>
+                    <div style="display: flex">
+                        <div style="font-size: 16px; width:200px">Diskon: </div> <div style="font-size:16px; width:100px; text-align: right" id="show-discount">Rp. 5.000,00</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group btn-box">
+                        <div class="col-md-offset-2 col-md-10" style="display:flex; margin-top: 15px">
+                            <input type="submit" value="Beli" class="btn btn-primary btn-margin-left" id="beli" style="width: 200px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
+{
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-content--header">
+                <span class="close">&times;</span>
+                <p>@TempData["ErrHeader"]</p>
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--description">
+                @TempData["ErrMessage"]
+            </div>
+            <hr style="width: 100%" />
+            <div class="modal-content--footer">
+                <a href="#" class="btn btn-danger" onclick="closeModal();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="~/Scripts/data-error.js"></script>
+}
+
+<script>
+    $(document).ready(async function () {
+        const base_api = "https://localhost:44301/api/v1";
+        const base_admin = "https://localhost:44366";
+        let subdistricts = [];
+        let products = [];
+        let deliveryFee = 0;
+        let totalPurchase = 0;
+        let isFreeShippingCharges = false;
+        let discount = 0;
+
+        if ('@Session["RecipientName"]' != '') {
+            $("#RecipientName").val('@Session["RecipientName"]');
+        }
+
+         if ('@Session["RecipientPhone"]' != '') {
+             $("#RecipientPhone").val('@Session["RecipientPhone"]');
+        }
+
+         if ('@Session["RecipientAddress"]' != '') {
+             $("#RecipientAddress").val('@Session["RecipientAddress"]');
+        }
+
+         if ('@Session["PromoCode"]' != '') {
+             $("#PromoCode").val('@Session["PromoCode"]');
+        }
+
+        async function getBanner() {
+            await $.get(base_api + '/Banner', (data) => {
+                $("#owl-demo").empty();
+
+                data.Data.forEach(e => {
+                    const el = `<div class="item"><img src="` + base_admin + `/Images/Banner/` + e.Image + `" alt="` + e.Name + `"></div>`;
+                    $("#owl-demo").append(el);
+                })
+            })
+        }
+
+        async function getRegion() {
+            await $.get(base_api + '/Region', (data) => {
+                $("#RegionId").empty();
+
+                data.Data.forEach(e => {
+                    let el = '';
+                    if ('@Session["RegionId"]' != '') {
+                        const selected = '@Session["RegionId"]' == e.Id ? `selected` : ``;
+                        el = `<option value=` + e.Id + ` `+ selected +`>` + e.Name + `</option>`;
+                    } else {
+                        el = `<option value=` + e.Id + `>` + e.Name + `</option>`;
+                    }
+
+                    $("#RegionId").append(el);
+                })
+            })
+        }
+
+        async function getSubdistrict() {
+            await $.get(base_api + '/SubDistrict/' + $("#RegionId").children("option:selected").val(), (data) => {
+                subdistricts = [];
+                $("#SubdistrictId").empty();
+
+                data.Data.forEach(e => {
+                    let el = '';
+                    if ('@Session["SubdistrictId"]' != '') {
+                        const selected = '@Session["SubdistrictId"]' == e.Id ? `selected` : ``;
+                        el = `<option value=` + e.Id + ` `+ selected +`>` + e.Name + `</option>`;
+                    } else {
+                        el = `<option value=` + e.Id + `>` + e.Name + `</option>`;
+                    }
+                    $("#SubdistrictId").append(el);
+                    subdistricts.push(e);
+                })
+            })
+
+            deliveryFee = subdistricts[$("#SubdistrictId")[0].selectedIndex].ShippingCharges;
+            if (!isFreeShippingCharges) {
+                $("#ShippingCharges").val(deliveryFee);
+                $("#show-shippingcharges").text(new Intl.NumberFormat('in-ID', { style: 'currency', currency: 'IDR' }).format(deliveryFee))
+            } else {
+                $("#ShippingCharges").val(0);
+                $("#show-shippingcharges").text(new Intl.NumberFormat('in-ID', { style: 'currency', currency: 'IDR' }).format(0))
+            }
+        }
+
+        async function GetProducts() {
+            products = [];
+            await $.get("Purchasing/GetPurchasingDetail", (data) => {
+                totalPurchase = 0;
+
+                if (data.length > 0) {
+                    $(".data-err").hide()
+                    $("#RegionId").attr("disabled", "disabled");
+                    $("#SubdistrictId").attr("disabled", "disabled");
+                }
+                else {
+                    $(".data-err").show()
+                    $("#RegionId").removeAttr("disabled");
+                    $("#SubdistrictId").removeAttr("disabled");
+                }
+
+                $("#body-table").empty();
+
+                data.forEach(e => {
+                    totalPurchase += e.Price * e.Qty;
+
+                    const el = `
+                        <tr>
+                            <td>
+                                `+ e.GoodsName + `
+                            </td>
+                            <td>
+                               `+ e.CategoryName + `
+                            </td>
+                            <td>
+                                `+ e.Qty + `
+                            </td>
+                            <td>
+                                `+ e.Price + `
+                            </td>
+                            <td>
+                                  <a href="Purchasing/Delete/`+ e.GoodsId + `" class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Hapus</a>
+                                  <a href="Purchasing/Edit/`+ e.GoodsId + `" class="btn btn-primary">Ubah</a>
+                            </td>
+                        </tr>`;
+                    $("#body-table").append(el);
+                    products.push(e);
+                })
+            })
+
+            $("#show-totalpurchase").text(new Intl.NumberFormat('in-ID', { style: 'currency', currency: 'IDR' }).format(totalPurchase))
+            $("#TotalPurchase").val(totalPurchase)
+        }
+
+        async function GetPromoByCode() {
+            isFreeShippingCharges = false;
+            discount = 0;
+            if ($("#PromoCode").val() !== "") {
+                await $.get(base_api + '/GetPromo/' + $("#PromoCode").val(), (data) => {
+                    if (data.Data !== null) {
+                        const totalPurchase = $("#TotalPurchase").val();
+                        if (totalPurchase > data.Data.MinTransaction) {
+                            discount = totalPurchase * data.Data.Discount / 100;
+
+                            if (discount > data.Data.MaxDiscount && data.Data.MaxDiscount > 0) {
+                                discount = data.Data.MaxDiscount;
+                            }
+
+
+                            isFreeShippingCharges = data.Data.IsFreeDelivery == "Y" ? true : false;
+                        }
+                    }
+                })
+            }
+            if (!isFreeShippingCharges) {
+                $("#ShippingCharges").val(deliveryFee);
+                $("#show-shippingcharges").text(new Intl.NumberFormat('in-ID', { style: 'currency', currency: 'IDR' }).format(deliveryFee))
+            } else {
+                $("#ShippingCharges").val(0);
+                $("#show-shippingcharges").text(new Intl.NumberFormat('in-ID', { style: 'currency', currency: 'IDR' }).format(0))
+            }
+        }
+
+        function setDiscount() {
+            $("#show-discount").text(new Intl.NumberFormat('in-ID', { style: 'currency', currency: 'IDR' }).format(discount))
+            $("#Discount").val(discount)
+        }
+
+        $('#addProduct').click(() => {
+            $.ajax({
+                type: 'POST',
+                url: 'Purchasing/SaveSessionPurchasing',
+                data: {
+                    RecipientName: $("#RecipientName").val(),
+                    RecipientPhone: $("#RecipientPhone").val(),
+                    RecipientAddress: $("#RecipientAddress").val(),
+                    PromoCode: $("#PromoCode").val(),
+                    RegionId: $("#RegionId").children("option:selected").val(),
+                    SubdistrictId: $("#SubdistrictId").children("option:selected").val(),
+                    TotalPurchase: $("#TotalPurchase").val(),
+                    Discount: $("#Discount").val(),
+                    DeliveryFee: $("#ShippingCharges").val(),
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log('berhasil');
+                }
+            })
+        })
+
+        await getBanner();
+        await getRegion();
+        await getSubdistrict();
+        await GetProducts();
+        await GetPromoByCode();
+        setDiscount();
+
+        $("#PromoCode").change(async function () {
+            await GetPromoByCode();
+            setDiscount();
+        });
+
+        $("#RegionId").change(() => {
+            getSubdistrict();
+        })
+
+        $("#SubdistrictId").change(() => {
+            deliveryFee = subdistricts[$("#SubdistrictId")[0].selectedIndex].ShippingCharges;
+            if (!isFreeShippingCharges) {
+                $("#ShippingCharges").val(deliveryFee);
+                $("#show-shippingcharges").text(new Intl.NumberFormat('in-ID', { style: 'currency', currency: 'IDR' }).format(deliveryFee))
+            } else {
+                $("#ShippingCharges").val(0);
+                $("#show-shippingcharges").text(new Intl.NumberFormat('in-ID', { style: 'currency', currency: 'IDR' }).format(0))
+            }
+        })
+
+        $(".owl-carousel").owlCarousel({
+            navigation: true, // Show next and prev buttons
+            items: 2,
+            loop: true,
+            margin: 10,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            slideSpeed: 1000,
+            paginationSpeed: 1000,
+            items: 1,
+            itemsDesktop: false,
+            itemsDesktopSmall: false,
+            itemsTablet: false,
+            itemsMobile: false
+        });
+
+        $("#beli").click(() => {
+            $.ajax({
+                type: 'POST',
+                url: 'Purchasing/SaveSessionPurchasing',
+                data: {
+                    RecipientName: $("#RecipientName").val(),
+                    RecipientPhone: $("#RecipientPhone").val(),
+                    RecipientAddress: $("#RecipientAddress").val(),
+                    PromoCode: $("#PromoCode").val(),
+                    RegionId: $("#RegionId").children("option:selected").val(),
+                    SubdistrictId: $("#SubdistrictId").children("option:selected").val(),
+                    TotalPurchase: $("#TotalPurchase").val(),
+                    ShippingCharges: $("#ShippingCharges").val(),
+                    Discount: $("#Discount").val(),
+                    ShippingCharges: $("#ShippingCharges").val(),
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log('berhasil');
+                }
+            })
+        })
+    });
+
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

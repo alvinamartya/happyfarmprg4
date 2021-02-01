@@ -1,0 +1,64 @@
+﻿@model HappyFarmProject.Models.PurchasingDetailRequest
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>PurchasingDetailRequest</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label for="CategoryName" class="control-label col-md-2">Kategori</label>
+            @Html.HiddenFor(model => model.CategoryId)
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="GoodsName" class="control-label col-md-2">Produk</label>
+            @Html.HiddenFor(model => model.GoodsId)
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GoodsName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.GoodsName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Price" class="control-label col-md-2">Harga </label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Price, new { @class = "form-control", type = "number", disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Qty" class="control-label col-md-2">Jumlah <span style="color:red">*</span></label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Qty, new { @class = "form-control", type = "number" })
+                @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Kembali", "Index", "Purchasing", null, new { @class = "btn btn-danger" })
+                <input type="submit" value="Ubah" class="btn btn-primary btn-margin-left" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
