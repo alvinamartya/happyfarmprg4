@@ -24,6 +24,59 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             }
         }
 
+        public void CustomerPurchasing(CustomerPurchasingRequest request)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                int? promoId = null;
+
+                if(request.PromoCode != "")
+                {
+                    Promo promo = db.Promoes.Where(x => x.Code == request.PromoCode).FirstOrDefault();
+                    if (promo != null) promoId = promo.Id;
+                }
+
+                Selling selling = new Selling()
+                {
+                    CustomerId = request.CustomerId,
+                    PromoId = promoId,
+                    RecipientName = request.RecipientName,
+                    RecipientAddress = request.RecipientAddress,
+                    RecipientPhone = request.RecipientAddress,
+                    SubDistrictId = request.SubdistrictId,
+                    ShippingCharges = request.ShippingCharges,
+                    TotalSalePrice = request.TotalPurchase,
+                    DateTime = DateTime.Now
+                };
+
+                db.Sellings.Add(selling);
+                db.SaveChanges();
+
+                int lastSellingId = db.Sellings.OrderByDescending(x => x.Id).FirstOrDefault().Id;
+                foreach(var x in request.Products)
+                {
+                    SellingDetail details = new SellingDetail()
+                    {
+                        SellingId = lastSellingId,
+                        GoodsId = x.GoodsId,
+                        Qty = x.Qty,
+                        GoodsPrice = x.Price
+                    };
+
+                    db.SellingDetails.Add(details);
+                }
+
+                SellingActivity activity = new SellingActivity()
+                {
+                    SellingId = lastSellingId,
+                    SellingStatusid = 1,
+                    CreatedAt = DateTime.Now
+                };
+                db.SellingActivities.Add(activity);
+                db.SaveChanges();
+            }
+        }
+
         /// <summary>
         /// delete purchasing
         /// </summary>

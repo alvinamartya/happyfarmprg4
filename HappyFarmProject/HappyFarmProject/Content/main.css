@@ -9,6 +9,23 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
 
+/* Owl Image Slider */
+#owl-demo .item img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+#owl-demo {
+    width: 1000px;
+}
+
+@media screen and (min-width: 1440px) {
+    #owl-demo {
+        width: 1550px;
+    }
+}
+
 /* The Modal (background) */
 .search-change-price {
     float: right;

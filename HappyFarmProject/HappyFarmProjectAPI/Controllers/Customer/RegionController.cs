@@ -1,5 +1,4 @@
-﻿using HappyFarmProjectAPI.Controllers.BusinessLogic;
-using HappyFarmProjectAPI.Controllers.Repository;
+﻿using HappyFarmProjectAPI.Controllers.Repository;
 using HappyFarmProjectAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,44 +10,31 @@ using System.Web.Http;
 
 namespace HappyFarmProjectAPI.Controllers
 {
-    public class PromoController : ApiController
+    public class RegionController : ApiController
     {
         #region Variable
-        // repo
-        private PromoRepository repo = new PromoRepository();
+        private RegionRepository regionRepo = new RegionRepository();
+        private SubDistrictRepository subDistrictRepo = new SubDistrictRepository();
         #endregion
-
         #region Action
-        /// <summary>
-        /// To get promoes
-        /// </summary>
-        /// <returns></returns>
-        [Route("api/v1/Promo")]
+        [Route("api/v1/Region")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetPromos()
+        public async Task<IHttpActionResult> GetRegions()
         {
             try
             {
-                List<Promo> promos = await Task.Run(() => repo.GetPromosByDate());
+                List<Region> regions = await Task.Run(() => regionRepo.GetRegions());
 
                 // response success
                 var response = new ResponseWithData<Object>()
                 {
                     StatusCode = HttpStatusCode.OK,
                     Message = "Berhasil",
-                    Data = promos
+                    Data = regions
                         .Select(x => new
                         {
                             x.Id,
                             x.Name,
-                            x.Image,
-                            x.Code,
-                            x.MinTransaction,
-                            x.MaxDiscount,
-                            x.IsFreeDelivery,
-                            x.Discount,
-                            x.StartDate,
-                            x.EndDate
                         })
                         .ToList(),
                 };
@@ -62,20 +48,27 @@ namespace HappyFarmProjectAPI.Controllers
             }
         }
 
-        [Route("api/v1/GetPromo/{code}")]
+        [Route("api/v1/SubDistrict/{regionId}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetPromoByCode(string code)
+        public async Task<IHttpActionResult> GetSubDistricts(int regionId)
         {
             try
             {
-                Object promos = await Task.Run(() => repo.GetPromosByCode(code));
+                List<SubDistrict> subdistricts = await Task.Run(() => subDistrictRepo.GetSubDistrictByRegionId(regionId));
 
                 // response success
                 var response = new ResponseWithData<Object>()
                 {
                     StatusCode = HttpStatusCode.OK,
                     Message = "Berhasil",
-                    Data = promos
+                    Data = subdistricts
+                    .Select(x => new
+                    {
+                        x.Id,
+                        x.Name,
+                        x.ShippingCharges
+                    })
+                    .ToList()
                 };
 
                 return Ok(response);

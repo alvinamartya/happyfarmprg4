@@ -119,6 +119,19 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             }
         }
 
+        public List<SubDistrict> GetSubDistrictByRegionId(int regionId)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                // get sub district
+                var listSubDistricts = db.SubDistricts
+                    .Where(x=>x.RowStatus == "A" && x.RegionId == regionId)
+                    .ToList();
+
+                return listSubDistricts;
+            }
+        }
+
         /// <summary>
         /// Get sub district by Id
         /// </summary>

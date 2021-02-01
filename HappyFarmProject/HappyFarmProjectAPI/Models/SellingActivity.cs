@@ -17,7 +17,7 @@ namespace HappyFarmProjectAPI.Models
         public int Id { get; set; }
         public int SellingId { get; set; }
         public int SellingStatusid { get; set; }
-        public int CreatedBy { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
         public System.DateTime CreatedAt { get; set; }
     
         public virtual Employee Employee { get; set; }
