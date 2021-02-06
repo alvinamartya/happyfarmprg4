@@ -61,7 +61,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
                         }
                         else if(loginResponse.Result.Role == "Manager")
                         {
-                            return RedirectToAction("Index", "ManagerEmployee");
+                            return RedirectToAction("Index", "ManagerDashboard");
                         }
                         else if(loginResponse.Result.Role == "Admin Produksi")
                         {

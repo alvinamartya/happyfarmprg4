@@ -16,7 +16,7 @@ namespace HappyFarmProjectWebAdmin.Controllers
         #region Get Purchasing History
         // GET: ProductionAdminPurchasing
         [Route("~/PA/RiwayatPembelian")]
-        public ActionResult Index(string Sorting_Order, int? Page_No)
+        public ActionResult Index(string Sorting_Order, int? Page_No, string tgl_awal, string tgl_akhir)
         {
             // session
             Purchasing.ClearDetailPurchasing();
@@ -48,14 +48,42 @@ namespace HappyFarmProjectWebAdmin.Controllers
                 TempData["ErrHeader"] = "Gagal meload data";
             }
 
+            int sizeOfPage = 4;
+            int noOfPage = (Page_No ?? 1);
+            if (tgl_awal != null && tgl_akhir != null)
+            {
+                if (tgl_awal != "" && tgl_akhir != "")
+                {
+                    DateTime tglAwal = DateTime.Now;
+                    DateTime tglAkhir = DateTime.Now;
+                    try
+                    {
+                        tglAwal = DateTime.Parse(tgl_awal);
+                        tglAkhir = DateTime.Parse(tgl_akhir);
+                    }
+                    catch
+                    {
+                        TempData["ErrMessage"] = "Tanggal tidak valid";
+                        TempData["ErrHeader"] = "Gagal meload data";
+                        return View(purchasingHistoryRequest.Data.ToPagedList(noOfPage, sizeOfPage));
+                    }
+
+                    DateTime newTglAwal = new DateTime(tglAwal.Year, tglAwal.Month, tglAwal.Day);
+                    DateTime newTglAkhir = new DateTime(tglAkhir.Year, tglAkhir.Month, tglAkhir.Day).AddDays(1);
+
+                    ViewBag.TglAwal = tgl_awal;
+                    ViewBag.TglAkhir = tgl_akhir;
+
+                    purchasingHistoryRequest.Data = purchasingHistoryRequest.Data.Where(x => x.DateTime >= newTglAwal && x.DateTime <= newTglAkhir).ToList();
+                }
+            }
+
             // data is empty
             if (purchasingHistoryRequest.Data.Count == 0)
             {
                 TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
-            int sizeOfPage = 4;
-            int noOfPage = (Page_No ?? 1);
 
             return View(purchasingHistoryRequest.Data.ToPagedList(noOfPage, sizeOfPage));
         }

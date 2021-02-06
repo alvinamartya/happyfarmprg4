@@ -287,6 +287,7 @@
     <Compile Include="Models\GoodsStockRegion.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HistorySellingModel.cs" />
     <Compile Include="Models\Promo.cs">
       <DependentUpon>DbContext.tt</DependentUpon>
     </Compile>

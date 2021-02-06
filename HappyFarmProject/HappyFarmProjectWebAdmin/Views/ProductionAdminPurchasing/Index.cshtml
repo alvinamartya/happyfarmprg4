@@ -8,6 +8,38 @@
 <h2>Riwayat Pembelian</h2>
 <hr />
 
+@using (Html.BeginForm("Index", "ProductionAdminPurchasing", FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+    <h5>Cari berdasarkan tanggal:</h5>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Tanggal Awal</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    <input type="text" id="tgl_awal" name="tgl_awal" autocomplete="off" value="@ViewBag.TglAwal">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Tanggal Akhir</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    <input type="text" id="tgl_akhir" name="tgl_akhir" autocomplete="off" value="@ViewBag.TglAkhir">
+
+
+                    <input type="submit" name="search-btn" value="Cari" id="search-btn" class="btn btn-primary" style="margin-left: 5px" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<br />
 @Html.ActionLink("Pembelian Produk", "Add", "ProductionAdminPurchasing", new { GoodsId = ViewBag.ProductId }, new { @class = "btn btn-primary", style = "margin-bottom:10px" })
 <table class="table table-bordered table-striped">
     <tr>
@@ -146,3 +178,10 @@
 
     <script src="~/Scripts/data-error.js"></script>
 }
+
+<script>
+    $(function () {
+        $("#tgl_awal").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#tgl_akhir").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+</script>

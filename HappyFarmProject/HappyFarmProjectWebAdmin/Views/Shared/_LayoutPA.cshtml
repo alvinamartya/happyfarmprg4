@@ -21,6 +21,14 @@
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
     <link href="~/Content/main.css" rel="stylesheet">
+
+    <script type="text/javascript" src="~/Scripts/main.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.theme.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-ui.min.js"></script>
 </head>
 <body>
     <!-- The Modal -->
@@ -205,10 +213,6 @@
             modalLogout.style.display = "block";
         }
     </script>
-    <script type="text/javascript" src="~/Scripts/main.js"></script>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 
     <script>
     async function getData() {

@@ -13,15 +13,41 @@
 @using (Html.BeginForm("Index", "HistoryTransaction", FormMethod.Get))
 {
     @Html.AntiForgeryToken()
+    <h5>Cari Data:</h5>
     <div class="search-box">
         <div class="search-box__find">
             @Html.Editor("Search", new { htmlAttributes = new { @class = "form-control search-box__content", placeholder = "Masukkan kata yang dicari" } })
-            <input type="submit" name="search-btn" value="Cari" id="search-btn" class="btn btn-primary" style="margin-left: 5px" />
         </div>
     </div>
+    <br />
+    <h5>Cari berdasarkan tanggal:</h5>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Tanggal Awal</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    <input type="text" id="tgl_awal" name="tgl_awal" autocomplete="off" value="@ViewBag.TglAwal">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Tanggal Akhir</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                    <input type="text" id="tgl_akhir" name="tgl_akhir" autocomplete="off" value="@ViewBag.TglAkhir">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="submit" name="search-btn" value="Cari" id="search-btn" class="btn btn-primary" style="margin-left: 5px" />
 }
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped" style="margin-top: 20px">
     <tr>
         <th align="center">
             @Html.ActionLink("Order Id", "Index", new { Sorting_Order = ViewBag.SortingId })
@@ -86,30 +112,37 @@
 
 @* Paging *@
 <br />
-Halaman @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) dari @Model.PageCount
-@Html.PagedListPager((IPagedList)Model, Page_No => Url.Action("Index", new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder }))
+    Halaman @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) dari @Model.PageCount
+    @Html.PagedListPager((IPagedList)Model, Page_No => Url.Action("Index", new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder }))
 
-@if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
-{
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
+    @if (TempData["ErrMessage"] != null && @TempData["ErrHeader"] != null)
+    {
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
 
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div class="modal-content--header">
-                <span class="close">&times;</span>
-                <p>@TempData["ErrHeader"]</p>
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-content--header">
+                    <span class="close">&times;</span>
+                    <p>@TempData["ErrHeader"]</p>
+                </div>
+                <hr style="width: 100%" />
+                <div class="modal-content--description">
+                    @TempData["ErrMessage"]
+                </div>
+                <hr style="width: 100%" />
+                <div class="modal-content--footer">
+                    <a href="#" class="btn btn-danger" onclick="closeModal();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
+                </div>
             </div>
-            <hr style="width: 100%" />
-            <div class="modal-content--description">
-                @TempData["ErrMessage"]
-            </div>
-            <hr style="width: 100%" />
-            <div class="modal-content--footer">
-                <a href="#" class="btn btn-danger" onclick="closeModal();return false;" style="margin-bottom: 10px; margin-top: -5px">Tutup</a>
-            </div>
+
         </div>
+        <script src="~/Scripts/data-error.js"></script>
+    }
 
-    </div>
-    <script src="~/Scripts/data-error.js"></script>
-}
+    <script>
+        $(function () {
+            $("#tgl_awal").datepicker({ dateFormat: 'yy-mm-dd' });
+            $("#tgl_akhir").datepicker({ dateFormat: 'yy-mm-dd' });
+        });
+    </script>
