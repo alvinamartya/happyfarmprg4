@@ -19,7 +19,7 @@ namespace HappyFarmProject.Controllers
         #region Index
 
         [Route("~/RiwayatTransaksi")]
-        public ActionResult Index(string Sorting_Order, int? Page_No, string Search)
+        public ActionResult Index(string Sorting_Order, int? Page_No, string Search, string tgl_awal, string tgl_akhir)
         {
             // error
             if (Session["ErrMessage"] != null)
@@ -41,18 +41,16 @@ namespace HappyFarmProject.Controllers
 
             // default request paging
             ResponseWithData<List<HistoryTransaction>> historyRequest = GetHistoryTransaction();
+            foreach(HistoryTransaction x in historyRequest.Data)
+            {
+                System.Diagnostics.Debug.WriteLine(x.ShippingCharges);
+            }
 
             // status code
             if (historyRequest.StatusCode != HttpStatusCode.OK)
             {
                 TempData["ErrMessage"] = historyRequest.Message;
                 TempData["ErrHeader"] = "Gagal meload data";
-            }
-
-            // data is empty
-            if (historyRequest.Data.Count == 0)
-            {
-                TempData["ErrMessageData"] = "Data belum tersedia";
             }
 
             // sorting
@@ -116,6 +114,39 @@ namespace HappyFarmProject.Controllers
 
             int sizeOfPage = 4;
             int noOfPage = (Page_No ?? 1);
+            if (tgl_awal != null && tgl_akhir != null)
+            {
+                if(tgl_awal != "" && tgl_akhir != "")
+                {
+                    DateTime tglAwal = DateTime.Now;
+                    DateTime tglAkhir = DateTime.Now;
+                    try
+                    {
+                        tglAwal = DateTime.Parse(tgl_awal);
+                        tglAkhir = DateTime.Parse(tgl_akhir);
+                    }
+                    catch
+                    {
+                        TempData["ErrMessage"] = "Tanggal tidak valid";
+                        TempData["ErrHeader"] = "Gagal meload data";
+                        return View(historyRequest.Data.ToPagedList(noOfPage, sizeOfPage));
+                    }
+
+                    DateTime newTglAwal = new DateTime(tglAwal.Year, tglAwal.Month, tglAwal.Day);
+                    DateTime newTglAkhir = new DateTime(tglAkhir.Year, tglAkhir.Month, tglAkhir.Day);
+
+                    ViewBag.TglAwal = tgl_awal;
+                    ViewBag.TglAkhir = tgl_akhir;
+
+                    historyRequest.Data = historyRequest.Data.Where(x => x.DateTime >= newTglAwal && x.DateTime <= newTglAkhir).ToList();
+                }
+            }
+
+            // data is empty
+            if (historyRequest.Data.Count == 0)
+            {
+                TempData["ErrMessageData"] = "Data belum tersedia";
+            }
 
             return View(historyRequest.Data.ToPagedList(noOfPage, sizeOfPage));
         }
@@ -281,7 +312,6 @@ namespace HappyFarmProject.Controllers
         {
             // get categories
             HttpClient hcCategoryGet = APIHelper.GetHttpClient("HistoryTransaction");
-            System.Diagnostics.Debug.WriteLine(Session["UserId"]);
 
             var apiGet = hcCategoryGet.GetAsync("HistoryTransaction/" + Session["UserId"].ToString());
             apiGet.Wait();

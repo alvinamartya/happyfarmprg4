@@ -246,7 +246,7 @@ namespace HappyFarmProjectAPI.Controllers
                 // validate token
                 if (tokenLogic.ValidateTokenInHeader(Request, "Admin Penjualan"))
                 {
-                    ResponsePagingModel<List<SellingActivity>> listSellingStatusPaging = await Task.Run(() => repo.GetSellingActivityPaging(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
+                    ResponsePagingModel<Object> listSellingStatusPaging = await Task.Run(() => repo.GetSellingActivityPaging(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
                     using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
                     {
                         // response success
@@ -254,17 +254,7 @@ namespace HappyFarmProjectAPI.Controllers
                         {
                             StatusCode = HttpStatusCode.OK,
                             Message = "Berhasil",
-                            Data = listSellingStatusPaging
-                            .Data
-                            .Select(x => new
-                            {
-                                x.Id,
-                                x.SellingId,
-                                SellingStatusName = db.SellingStatus.Where(z => z.Id == x.SellingStatusid).FirstOrDefault() == null ? null : db.SellingStatus.Where(z => z.Id == x.SellingStatusid).FirstOrDefault().Name,
-                                x.SellingStatusid,
-                                x.CreatedAt
-                            })
-                            .ToList(),
+                            Data = listSellingStatusPaging.Data,
                             CurrentPage = listSellingStatusPaging.CurrentPage,
                             TotalPage = listSellingStatusPaging.TotalPage
                         };

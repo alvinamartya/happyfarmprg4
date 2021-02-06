@@ -1,6 +1,7 @@
 ﻿using HappyFarmProjectAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 
@@ -13,32 +14,38 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 List<DashboardModel> dashboardModels = new List<DashboardModel>();
-                var sellings = (from s in db.Sellings
-                                join sa in db.SellingActivities on s.Id equals sa.SellingId
-                                where sa.SellingStatusid == 6
-                                select new
-                                {
-                                    Date = s.DateTime,
-                                    TotalSalePrice = s.TotalSalePrice
-                                })
-                                .ToList()
-                                .GroupBy(x=>x.Date)
-                                .Select(x=> new { 
-                                    Date = x.Key,
-                                    TotalSale = (int)x.ToList().Select(z=>z.TotalSalePrice).Sum()
-                                })
-                                .ToList();
-
-                foreach(var x in sellings)
+                List<Selling> sellings = db.Sellings.ToList();
+                foreach (Selling sale in sellings)
                 {
-                    DateTime newDate = new DateTime(x.Date.Year, x.Date.Month, x.Date.Day);
-                    dashboardModels.Add(new DashboardModel()
-                    {
-                        Date = newDate,
-                        Total = x.TotalSale
-                    });
-                }
+                    int totalSale = 0;
+                    DateTime newDate = new DateTime(sale.DateTime.Year, sale.DateTime.Month, sale.DateTime.Day);
+                    int discount = 0;
+                    int shippingCharges = (int)sale.ShippingCharges;
 
+                    // calculate promo
+                    if (sale.PromoId != null)
+                    {
+                        discount = sale.Promo.Discount > 0 ? (int)((double)sale.TotalSalePrice * sale.Promo.Discount / 100) : 0;
+                    }
+
+                    // calculate total sale and shipping charges
+                    totalSale = (int)sale.TotalSalePrice - (int)discount + (int)shippingCharges;
+                    
+                    // add to model
+                    DashboardModel model = dashboardModels.Where(x => x.Date == newDate).FirstOrDefault();
+                    if (model != null)
+                    {
+                        model.Total += totalSale;
+                    }
+                    else
+                    {
+                        dashboardModels.Add(new DashboardModel()
+                        {
+                            Date = newDate,
+                            Total = totalSale
+                        });
+                    }
+                }
                 return dashboardModels;
             }
         }

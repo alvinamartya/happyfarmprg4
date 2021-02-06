@@ -29,6 +29,7 @@ namespace HappyFarmProjectAPI.Controllers
                 foreach (var x in sellings)
                 {
                     dashboards.Add(new Dashboard() { Date = x.Date, TotalSale = x.Total, TotalPurchase = 0 });
+                    System.Diagnostics.Debug.WriteLine(x.Date.ToString() + " : " + x.Total);
                 }
 
                 foreach(var x in purchasing)

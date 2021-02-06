@@ -23,24 +23,42 @@ namespace HappyFarmProjectAPI.Controllers
         {
             try
             {
-                List<Selling> promos = await Task.Run(() => repo.GetHistoryTransaction(id));
+                List<Selling> sellings = await Task.Run(() => repo.GetHistoryTransaction(id));
 
                 // response success
                 using(HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
                 {
+                    int totalSale = 0;
+                    List<HistorySellingModel> historiesSelling = new List<HistorySellingModel>();
+
+                    foreach (Selling sale in sellings)
+                    {
+                        int discount = 0;
+
+                        if (sale.PromoId != null)
+                        {
+                            Promo promo = db.Promoes.Where(x => x.Id == sale.PromoId).FirstOrDefault();
+                            discount = promo.Discount > 0 ? (int)((double)sale.TotalSalePrice * promo.Discount / 100) : 0;
+                         }
+
+                        // calculate total sale and shipping charges
+                        totalSale = (int)sale.TotalSalePrice - (int)discount;
+
+                        historiesSelling.Add(new HistorySellingModel()
+                        {
+                            Id = sale.Id,
+                            DateTime = sale.DateTime,
+                            TotalSalePrice = (decimal)totalSale,
+                            ShippingCharges = sale.ShippingCharges,
+                            LastSellingActivity = db.SellingActivities.Where(z => z.SellingId == sale.Id).OrderByDescending(z => z.Id).FirstOrDefault().SellingStatu.Name
+                        });
+                    }
+
                     var response = new ResponseWithData<Object>()
                     {
                         StatusCode = HttpStatusCode.OK,
                         Message = "Berhasil",
-                        Data = promos
-                       .Select(x => new
-                       {
-                           x.Id,
-                           x.DateTime,
-                           x.TotalSalePrice,
-                           x.ShippingCharges,
-                           LastSellingActivity = db.SellingActivities.Where(z=>z.SellingId == x.Id).OrderByDescending(z=>z.Id).FirstOrDefault().SellingStatu.Name
-                       })
+                        Data = historiesSelling
                        .ToList(),
                     };
 
