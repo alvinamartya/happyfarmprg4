@@ -1,4 +1,23 @@
+
+
 $(async function () {
+    function formatRupiah(angka, prefix) {
+        var number_string = angka.toString().replace(/[^,\d]/g, '').toString(),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
+
     async function GetData() {
         const url = 'https://localhost:44301/api/v1/Dashboard';
         let date = [];
@@ -22,6 +41,8 @@ $(async function () {
                     date.push(`${da}-${mo}-${ye}`);
                     selling.push(e.TotalSale);
                     purchasing.push(e.TotalPurchase);
+
+                    console.log(formatRupiah(e.TotalPurchase));
                 })
 
             },
@@ -36,8 +57,6 @@ $(async function () {
             purchasing: purchasing
         };
     }
-
-
 
     let dashboardData = await GetData()
         .then(e => {
@@ -68,7 +87,10 @@ $(async function () {
             showGrid: false
         },
         axisY: {
-            offset: 100
+            offset: 100,
+            labelInterpolationFnc: function (value) {
+                return formatRupiah(value);
+            }
         },
         seriesBarDistance: 40,
         chartPadding: {
@@ -78,7 +100,11 @@ $(async function () {
             left: 0
         },
         plugins: [
-            Chartist.plugins.tooltip(),
+            Chartist.plugins.tooltip({
+                valueTransform: function (value) {
+                    return (value / 1000) + 'k';
+                }
+            }),
             Chartist.plugins.legend()
         ],
         width: '100%'
@@ -89,27 +115,27 @@ $(async function () {
             seriesBarDistance: 2,
             axisX: {
                 labelInterpolationFnc: function (value) {
-                    return value[0];
+                    return formatRupiah(value);
                 }
             }
         }]
     ];
     new Chartist.Bar('.net-income', data, options, responsiveOptions);
 
-    // Offset x1 a tiny amount so that the straight stroke gets a bounding box
-    chart.on('draw', function (ctx) {
-        if (ctx.type === 'area') {
-            ctx.element.attr({
-                x1: ctx.x1 + 0.001
-            });
-        }
+    //// Offset x1 a tiny amount so that the straight stroke gets a bounding box
+    //chart.on('draw', function (ctx) {
+    //    if (ctx.type === 'area') {
+    //        ctx.element.attr({
+    //            x1: ctx.x1 + 0.001
+    //        });
+    //    }
 
-        if (ctx.type === 'label') {
-            ctx.element.attr({
-                width: '100px' 
-            });
-        }
-    });
+    //    if (ctx.type === 'label') {
+    //        ctx.element.attr({
+    //            width: '100px' 
+    //        });
+    //    }
+    //});
 
     // Create the gradient definition on created event (always after chart re-render)
     chart.on('created', function (ctx) {

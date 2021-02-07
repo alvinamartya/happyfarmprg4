@@ -37,13 +37,20 @@ namespace HappyFarmProject.Controllers
         #endregion
         #region Add Purchasing Detail
         [HttpGet]
-        public ActionResult Add()
+        public ActionResult Add(int? Category)
         {
             List<Category> categories = new List<Category>();
             ResponseWithData<List<Category>> categoryRequest = GetCategory();
             if (categoryRequest.StatusCode == HttpStatusCode.OK)
             {
-                ViewBag.Categories = new SelectList(categoryRequest.Data, "Id", "Name");
+                if (Category != null)
+                {
+                    ViewBag.Categories = new SelectList(categoryRequest.Data, "Id", "Name", Category);
+                }
+                else
+                {
+                    ViewBag.Categories = new SelectList(categoryRequest.Data, "Id", "Name");
+                }
                 categories = categoryRequest.Data;
             }
             else
@@ -61,7 +68,7 @@ namespace HappyFarmProject.Controllers
                 {
                     ResponseWithData<List<GoodsListModelView>> goodsRegionRequest = GetGoodsRegion(new GoodsRegion()
                     {
-                        CategoryId = categories[0].Id,
+                        CategoryId = Category ?? categories[0].Id,
                         RegionId = (int)Session["RegionId"]
                     });
 

@@ -6,7 +6,7 @@
 }
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<h2>UploadBuktiTransfer</h2>
+<h2>Upload Bukti Transfer</h2>
 
 
 @using (Html.BeginForm("UploadBuktiTransfer", "HistoryTransaction", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -14,7 +14,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>UploadBuktiTransfer</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

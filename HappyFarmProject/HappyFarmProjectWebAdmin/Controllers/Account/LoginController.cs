@@ -79,6 +79,10 @@ namespace HappyFarmProjectWebAdmin.Controllers
                         {
                             return RedirectToAction("Index", "SalesAdminSellingActivity");
                         }
+                        else
+                        {
+                            TempData["ErrMessage"] = "Anda tidak memiliki hak akses";
+                        }
                     }
                     else
                     {

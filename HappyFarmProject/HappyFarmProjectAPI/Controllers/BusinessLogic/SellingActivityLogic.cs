@@ -19,10 +19,11 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 int sellingId = int.Parse(sellingActivityRequest.SellingId.Replace("ORD", ""));
+                System.Diagnostics.Debug.WriteLine(sellingId);
                 // validate namstatus
                 bool statusAlreadyExists = db.SellingActivities.Where(x => x.SellingStatusid >= sellingActivityRequest.SellingStatusid && x.SellingId == sellingId).FirstOrDefault() != null;
                 // validate namstatus
-                bool sellingIdNotExists = db.SellingActivities.Where(x => x.SellingId != sellingId).FirstOrDefault() != null;
+                bool sellingIdNotExists = db.SellingActivities.Where(x => x.SellingId == sellingId).FirstOrDefault() == null;
                 if (statusAlreadyExists)
                 {
                     // name is exists

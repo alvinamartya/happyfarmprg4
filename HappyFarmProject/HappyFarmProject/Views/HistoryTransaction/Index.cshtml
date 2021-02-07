@@ -92,7 +92,7 @@
                 {
                     <a href="@Url.Action("UploadBuktiTransfer","HistoryTransaction", new { id = item.Id })" class="btn btn-success">Upload bukti transfer</a>
                 }
-                else if (item.LastSellingActivity == "Pesanan menunggu diriview")
+                else if (item.LastSellingActivity == "Belum Direview")
                 {
                     <a href="@Url.Action("Feedback","HistoryTransaction", new { id = item.Id })" class="btn btn-success">Review Order</a>
                 }

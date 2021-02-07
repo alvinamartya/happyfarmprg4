@@ -12,6 +12,7 @@ namespace HappyFarmProjectWebAdmin.Models
         public int SellingId { get; set; }
         public int SellingStatusid { get; set; }
         public string SellingStatusName { get; set; }
+        public string Image { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
     }

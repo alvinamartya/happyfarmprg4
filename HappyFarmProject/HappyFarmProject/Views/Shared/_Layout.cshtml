@@ -242,20 +242,20 @@
         //getData();
 
         function changeNav() {
-            const pageArr = window.location.href.split("/");
-           if (pageArr.indexOf("Promo") > -1) {
+            const pageArr = window.location.href;
+            if (pageArr.includes("Promo")) {
                 $("#promo-nav").addClass("mm-active");
-           } else if (pageArr.indexOf("HistoryTransaction") > -1) {
+            } else if (pageArr.includes("HistoryTransaction")) {
                $("#history-nav").addClass("mm-active");
-            } else if (pageArr.indexOf("Kategori") > -1) {
+            } else if (pageArr.includes("Kategori")) {
                 $("#category-nav").addClass("mm-active");
-           } else if (pageArr.indexOf("Product") > -1) {
+            } else if (pageArr.includes("Product")) {
                $("#product-nav").addClass("mm-active");
-           } else if (pageArr.indexOf("ChangePassword") > -1) {
+            } else if (pageArr.includes("ChangePassword")) {
                $("#password-nav").addClass("mm-active");
-           } else if (pageArr.indexOf("UpdateProfile") > -1) {
+            } else if (pageArr.includes("UpdateProfile")) {
                $("#profile-nav").addClass("mm-active");
-           } else if (pageArr.indexOf("Purchasing") > -1) {
+            } else if (pageArr.includes("Purchasing")) {
                $("#purchasing-nav").addClass("mm-active");
            }
         }

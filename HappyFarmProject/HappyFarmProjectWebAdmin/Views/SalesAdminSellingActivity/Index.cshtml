@@ -52,6 +52,10 @@
                 </td>
                 <td>
                     <a href="@Url.Action("SellingDetails","SalesAdminSellingActivity", new { id = item.SellingId })" class="btn btn-primary">Detail Pemesanan</a>
+                    @if (item.SellingStatusName == "Memeriksa Pembayaran")
+                    {
+                        <a href="https://localhost:44323/Images/@(item.Image)" class="btn btn-warning" style="color: white" target="_blank">Lihat Bukti</a>
+                    }
                 </td>
             </tr>
         }
