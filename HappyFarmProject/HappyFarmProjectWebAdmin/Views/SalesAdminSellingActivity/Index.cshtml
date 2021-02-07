@@ -24,7 +24,7 @@
     <thead>
         <tr>
             <th>
-                @Html.ActionLink("Order Id", "Index", new { Sorting_Order = ViewBag.SortingOrderId})
+                @Html.ActionLink("Order Id", "Index", new { Sorting_Order = ViewBag.SortingOrderId })
             </th>
             <th>
                 @Html.ActionLink("Keterangan status", "Index", new { Sorting_Order = ViewBag.SortingName })
@@ -32,22 +32,28 @@
             <th>
                 @Html.ActionLink("Tanggal status", "Index", new { Sorting_Order = ViewBag.SortingDate })
             </th>
+            <th>
+                Aksi
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in (IEnumerable<HappyFarmProjectWebAdmin.Models.SellingActivityModelView>)Model.ModelViews)
         {
-        <tr>
-            <td>
-                @Html.Raw("ORD" + item.SellingId.ToString().PadLeft(4, '0'))
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SellingStatusName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt, new { @Value = item.CreatedAt.ToString("dd-MMM-yyyy HH:mm") })
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.Raw("ORD" + item.SellingId.ToString().PadLeft(4, '0'))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SellingStatusName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt, new { @Value = item.CreatedAt.ToString("dd-MMM-yyyy HH:mm") })
+                </td>
+                <td>
+                    <a href="@Url.Action("SellingDetails","SalesAdminSellingActivity", new { id = item.SellingId })" class="btn btn-primary">Detail Pemesanan</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

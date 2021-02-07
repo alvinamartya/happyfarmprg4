@@ -9,7 +9,7 @@ using System.Net;
 using System.Web.Mvc;
 using PagedList;
 
-namespace HappyFarmProjectWebAdmin.Controllers.SalesAdmin
+namespace HappyFarmProjectWebAdmin.Controllers
 {
     public class SalesAdminSellingActivityController : Controller
     {
@@ -424,6 +424,43 @@ namespace HappyFarmProjectWebAdmin.Controllers.SalesAdmin
         }
         #endregion
 
+        #region SellingDetails
+        [Route("~/SALA/DetailTransaksi")]
+        [HttpGet]
+        public ActionResult SellingDetails(int id)
+        {
+            // error
+            if (Session["ErrMessage"] != null)
+            {
+                TempData["ErrMessage"] = Session["ErrMessage"];
+                TempData["ErrHeader"] = Session["ErrHeader"];
+
+                Session["ErrMessage"] = null;
+                Session["ErrHeader"] = null;
+            }
+
+            // default request paging
+            ResponseWithData<List<SellingDetailModelView>> sellingRequest = GetSellingDetail(id);
+
+            // status code
+            if (sellingRequest.StatusCode != HttpStatusCode.OK)
+            {
+                TempData["ErrMessage"] = sellingRequest.Message;
+                TempData["ErrHeader"] = "Gagal meload data";
+            }
+
+            sellingRequest.Data = sellingRequest.Data.OrderBy(x => x.GoodsName).ToList();
+
+            // data is empty
+            if (sellingRequest.Data.Count == 0)
+            {
+                TempData["ErrMessageData"] = "Data belum tersedia";
+            }
+
+            return View(sellingRequest.Data);
+        }
+        #endregion
+
         #region Request Data
         public ResponseWithData<List<SellingStatusModelView>> GetSellingStatus()
         {
@@ -488,6 +525,38 @@ namespace HappyFarmProjectWebAdmin.Controllers.SalesAdmin
                     Data = new List<SellingActivityModelView>(),
                     CurrentPage = 0,
                     TotalPage = 0
+                };
+            }
+        }
+
+        public ResponseWithData<List<SellingDetailModelView>> GetSellingDetail(int id)
+        {
+            // get categories
+            HttpClient hcCategoryGet = APIHelper.GetHttpClient(APIHelper.SALA + "/SellingDetails");
+
+            var apiGet = hcCategoryGet.GetAsync("SellingDetail/" + id.ToString());
+            apiGet.Wait();
+
+            var data = apiGet.Result;
+            if (data.IsSuccessStatusCode)
+            {
+                var displayData = data.Content.ReadAsAsync<ResponseWithData<List<SellingDetailModelView>>>();
+                displayData.Wait();
+
+                return new ResponseWithData<List<SellingDetailModelView>>()
+                {
+                    StatusCode = displayData.Result.StatusCode,
+                    Message = displayData.Result.Message,
+                    Data = displayData.Result.StatusCode == HttpStatusCode.OK ? displayData.Result.Data : new List<SellingDetailModelView>()
+                };
+            }
+            else
+            {
+                return new ResponseWithData<List<SellingDetailModelView>>()
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    Message = "Terjadi kesalahan pada sistem",
+                    Data = new List<SellingDetailModelView>()
                 };
             }
         }
