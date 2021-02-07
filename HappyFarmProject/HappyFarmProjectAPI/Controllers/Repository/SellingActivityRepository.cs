@@ -73,12 +73,21 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         /// <param name="limitPage"></param>
         /// <param name="search"></param>
         /// <returns></returns>
-        public ResponsePagingModel<List<SellingActivity>> GetSellingActivityPaging(int currentPage, int limitPage, string search)
+        public ResponsePagingModel<Object> GetSellingActivityPaging(int currentPage, int limitPage, string search)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
-                // get SellingStatus
-                var sellingStatus = db.SellingActivities.ToList();
+                var sellingStatus = db.Sellings
+                    .Select(x => new
+                    {
+                        Id = db.SellingActivities.Where(z => z.SellingId == x.Id).OrderByDescending(z => z.Id).FirstOrDefault().Id,
+                        SellingId = x.Id,
+                        Image = x.PaymentImage,
+                        SellingStatusName = db.SellingActivities.Where(z => z.SellingId == x.Id).OrderByDescending(z => z.Id).FirstOrDefault().SellingStatu.Name,
+                        SellingStatusid = db.SellingActivities.Where(z => z.SellingId == x.Id).OrderByDescending(z => z.Id).FirstOrDefault().SellingStatu.Id,
+                        CreatedAt = db.SellingActivities.Where(z => z.SellingId == x.Id).OrderByDescending(z => z.Id).FirstOrDefault().CreatedAt
+                    })
+                    .ToList();
 
                 if (search != null && search != "")
                 {
@@ -98,16 +107,6 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                         .ToList();
                 }
 
-                // filter by row status
-                // with paging
-                //SellingStatuss = SellingStatuss
-                //    .Where(x=>x.RowStatus == "A")
-                //    .OrderBy(x=>x.Name)
-                //    .Skip((currentPage - 1) * limitPage)
-                //    .Take(limitPage)
-                //    .ToList();
-
-                // without paging
                 sellingStatus = sellingStatus
                     .OrderBy(x => x.SellingId)
                     .ToList();
@@ -116,7 +115,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 var totalPages = Math.Ceiling((decimal)db.SellingStatus.Count() / limitPage);
 
                 // return employees
-                return new ResponsePagingModel<List<SellingActivity>>()
+                return new ResponsePagingModel<Object>()
                 {
                     Data = sellingStatus,
                     CurrentPage = currentPage,

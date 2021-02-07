@@ -19,7 +19,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 // get selling status
                 var sellingStatus = db.SellingStatus.ToList();
 
-                sellingStatus = sellingStatus.Where(x => x.Name != "Keranjang" && x.Name != "Menunggu Pembayaran" && x.Name != "Pembayaran Sedang Diproses" && x.Name != "Pesanan menunggu diriview").ToList();
+                sellingStatus = sellingStatus.Where(x => x.Name != "Menunggu Pembayaran" && x.Name != "Memeriksa Pembayaran" && x.Name != "Selesai").ToList();
 
                 // return employees
                 return sellingStatus;

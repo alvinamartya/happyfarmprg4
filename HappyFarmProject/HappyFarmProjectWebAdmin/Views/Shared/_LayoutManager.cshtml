@@ -239,18 +239,18 @@
         getData();
         
         function changeNav() {
-            const pageArr = window.location.href.split("/");
-            if (pageArr.indexOf("Karyawan") > -1) {
+            const pageArr = window.location.href;
+            if (pageArr.includes("Karyawan")) {
                 $("#employee-nav").addClass("mm-active");
-            } else if (pageArr.indexOf("Wilayah") > -1) {
+            } else if (pageArr.includes("Wilayah")) {
                 $("#region-nav").addClass("mm-active");
-            } else if (pageArr.indexOf("Kecamatan") > -1) {
+            } else if (pageArr.includes("Kecamatan")) {
                 $("#subdistrict-nav").addClass("mm-active");
-            } else if (pageArr.indexOf("GantiPassword") > -1) {
+            } else if (pageArr.includes("GantiPassword")) {
                 $("#password-nav").addClass("mm-active");
-            } else if (pageArr.indexOf("Profil") > -1) {
+            } else if (pageArr.includes("Profil")) {
                 $("#profile-nav").addClass("mm-active");
-            } else if (pageArr.indexOf("Dashboard") > -1) {
+            } else if (pageArr.includes("Dashboard")) {
                 $("#dashboard-nav").addClass("mm-active");
             } 
         }
