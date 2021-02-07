@@ -20,13 +20,23 @@ namespace HappyFarmProjectAPI.Controllers.BusinessLogic
             {
                 int sellingId = int.Parse(sellingActivityRequest.SellingId.Replace("ORD", ""));
                 // validate namstatus
-                bool statusAlreadyExists = db.SellingActivities.Where(x => x.SellingStatusid >= sellingActivityRequest.SellingStatusid  && x.SellingId == sellingId).FirstOrDefault() != null;
+                bool statusAlreadyExists = db.SellingActivities.Where(x => x.SellingStatusid >= sellingActivityRequest.SellingStatusid && x.SellingId == sellingId).FirstOrDefault() != null;
+                // validate namstatus
+                bool sellingIdNotExists = db.SellingActivities.Where(x => x.SellingId != sellingId).FirstOrDefault() != null;
                 if (statusAlreadyExists)
                 {
                     // name is exists
                     return new ResponseModel()
                     {
                         Message = "Status sudah tersedia",
+                        StatusCode = HttpStatusCode.BadRequest
+                    };
+                }
+                else if (sellingIdNotExists)
+                {
+                    return new ResponseModel()
+                    {
+                        Message = "Order ID tidak tersedia",
                         StatusCode = HttpStatusCode.BadRequest
                     };
                 }

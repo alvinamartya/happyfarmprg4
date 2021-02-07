@@ -246,7 +246,7 @@ namespace HappyFarmProjectAPI.Controllers
                 // validate token
                 if (tokenLogic.ValidateTokenInHeader(Request, "Admin Penjualan"))
                 {
-                    ResponsePagingModel<Object> listSellingStatusPaging = await Task.Run(() => repo.GetSellingActivityPaging(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
+                    ResponsePagingModel<List<SellingActivity>> listSellingStatusPaging = await Task.Run(() => repo.GetSellingActivityPaging(getListData.CurrentPage, getListData.LimitPage, getListData.Search));
                     using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
                     {
                         // response success
@@ -254,7 +254,17 @@ namespace HappyFarmProjectAPI.Controllers
                         {
                             StatusCode = HttpStatusCode.OK,
                             Message = "Berhasil",
-                            Data = listSellingStatusPaging.Data,
+                            Data = listSellingStatusPaging
+                            .Data
+                            .Select(x => new
+                            {
+                                x.Id,
+                                x.SellingId,
+                                SellingStatusName = db.SellingStatus.Where(z => z.Id == x.SellingStatusid).OrderByDescending(z => z.Id).FirstOrDefault().Name,
+                                x.SellingStatusid,
+                                x.CreatedAt
+                            })
+                            .ToList(),
                             CurrentPage = listSellingStatusPaging.CurrentPage,
                             TotalPage = listSellingStatusPaging.TotalPage
                         };
@@ -272,6 +282,43 @@ namespace HappyFarmProjectAPI.Controllers
                     };
 
                     return Ok(unAuthorizedResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Error: " + ex.Message);
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/v1/SALA/SellingDetail/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetSellingDetail(int id)
+        {
+            try
+            {
+                List<SellingDetail> promos = await Task.Run(() => repo.GetSellingDetail(id));
+
+                // response success
+                using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+                {
+                    var response = new ResponseWithData<Object>()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                        Message = "Berhasil",
+                        Data = promos
+                       .Select(x => new
+                       {
+                           x.Id,
+                           x.GoodsId,
+                           GoodsName = db.Goods.Where(z => z.Id == x.GoodsId).FirstOrDefault().Name,
+                           x.Qty,
+                           x.GoodsPrice
+                       })
+                       .ToList(),
+                    };
+
+                    return Ok(response);
                 }
             }
             catch (Exception ex)

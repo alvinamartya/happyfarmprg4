@@ -57,6 +57,15 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             }
         }
 
+        public List<SellingDetail> GetSellingDetail(int sellingId)
+        {
+            using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
+            {
+                List<SellingDetail> details = db.SellingDetails.Where(x => x.SellingId == sellingId).ToList();
+                return details;
+            }
+        }
+
         /// <summary>
         /// Get Selling Activity with paging
         /// </summary>
@@ -64,19 +73,12 @@ namespace HappyFarmProjectAPI.Controllers.Repository
         /// <param name="limitPage"></param>
         /// <param name="search"></param>
         /// <returns></returns>
-        public ResponsePagingModel<Object> GetSellingActivityPaging(int currentPage, int limitPage, string search)
+        public ResponsePagingModel<List<SellingActivity>> GetSellingActivityPaging(int currentPage, int limitPage, string search)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 // get SellingStatus
-                var sellingStatus = db.Sellings
-                    .Select(x => new
-                    {
-                        SellingId = x.Id,
-                        SellingStatusName = db.SellingActivities.Where(z => z.SellingId == x.Id).OrderByDescending(z => z.Id).FirstOrDefault().SellingStatu.Name,
-                        CreatedAt = db.SellingActivities.Where(z => z.SellingId == x.Id).OrderByDescending(z => z.Id).FirstOrDefault().CreatedAt
-                    })
-                    .ToList();
+                var sellingStatus = db.SellingActivities.ToList();
 
                 if (search != null && search != "")
                 {
@@ -114,7 +116,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                 var totalPages = Math.Ceiling((decimal)db.SellingStatus.Count() / limitPage);
 
                 // return employees
-                return new ResponsePagingModel<Object>()
+                return new ResponsePagingModel<List<SellingActivity>>()
                 {
                     Data = sellingStatus,
                     CurrentPage = currentPage,

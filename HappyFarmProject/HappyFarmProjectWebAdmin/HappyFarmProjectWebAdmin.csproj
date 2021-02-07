@@ -207,6 +207,7 @@
     <Compile Include="Models\ModelView\ChangePassword.cs" />
     <Compile Include="Models\ModelView\CustomerFeedbackModelView.cs" />
     <Compile Include="Models\ModelView\SellingActivityModelView.cs" />
+    <Compile Include="Models\ModelView\SellingDetailModelView.cs" />
     <Compile Include="Models\ModelView\SellingStatusModelView.cs" />
     <Compile Include="Models\ModelView\UserLoginModelView.cs" />
     <Compile Include="Models\Request\AddSellingActivityRequest.cs" />
@@ -521,6 +522,7 @@
     <Content Include="Views\ChangePassword\Edit.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\ManagerDashboard\Index.cshtml" />
+    <Content Include="Views\SalesAdminSellingActivity\SellingDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
