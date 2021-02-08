@@ -54,7 +54,7 @@ namespace HappyFarmProjectAPI.Controllers
                 {
                     Message = "Berhasil",
                     StatusCode = HttpStatusCode.OK,
-                    Data = dashboards
+                    Data = dashboards.OrderBy(x => x.Date).ToList()
                 };
 
                 return Ok(response);
