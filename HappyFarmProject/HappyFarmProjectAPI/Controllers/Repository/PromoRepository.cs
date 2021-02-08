@@ -156,7 +156,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
 
                 // get promos
                 var promoes = db.Promoes
-                    .Where(x => x.RowStatus == "A" && x.EndDate > now && x.StartDate < now)
+                    .Where(x => x.RowStatus == "A" && x.EndDate >= now && x.StartDate <= now)
                     .ToList();
 
                 // return promos
@@ -172,7 +172,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
 
                 // get promo
                 var promo = db.Promoes
-                    .Where(x => x.RowStatus == "A" && x.EndDate > now && x.StartDate < now && x.Code == Code)
+                    .Where(x => x.RowStatus == "A" && x.EndDate >= now && x.StartDate <= now && x.Code == Code)
                     .Select(x => new
                     {
                         x.Id,

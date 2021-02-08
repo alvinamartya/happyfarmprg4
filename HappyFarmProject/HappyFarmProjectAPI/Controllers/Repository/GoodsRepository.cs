@@ -27,7 +27,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
                 var listGoods = db.Goods
-                    .Where(x => x.CategoryId == categoryId)
+                    .Where(x => x.CategoryId == categoryId && x.RowStatus == "A")
                     .ToList();
 
                 return listGoods;

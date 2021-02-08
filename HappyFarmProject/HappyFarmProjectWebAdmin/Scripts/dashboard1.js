@@ -31,7 +31,7 @@ $(async function () {
             dataType: 'json',
             async: true,
             success: async function (result) {
-
+                console.log(result);
                 result.Data.forEach(e => {
                     const d = new Date(e.Date);
                     const ye = new Intl.DateTimeFormat(['in', 'id'], { year: 'numeric' }).format(d);
@@ -76,8 +76,8 @@ $(async function () {
     var data = {
         labels: dashboardData.date,
         series: [
-            { name: 'Penjualan', data: dashboardData.selling },
-            { name: 'Pembelian', data: dashboardData.purchasing },
+            { name: 'Pembelian', data: dashboardData.selling },
+            { name: 'Penjualan', data: dashboardData.purchasing },
         ]
     };
 

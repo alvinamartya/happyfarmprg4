@@ -42,7 +42,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     PromoId = promoId,
                     RecipientName = request.RecipientName,
                     RecipientAddress = request.RecipientAddress,
-                    RecipientPhone = request.RecipientAddress,
+                    RecipientPhone = request.RecipientPhone,
                     SubDistrictId = request.SubdistrictId,
                     ShippingCharges = request.ShippingCharges,
                     TotalSalePrice = request.TotalPurchase,
