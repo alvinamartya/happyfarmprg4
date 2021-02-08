@@ -31,7 +31,7 @@
                 <div class="form-control" style="display: flex; align-items: center; padding: 20px 10px 20px 10px">
                     <input type="text" value="@(Model == null ? "" : Model.HiddenFileName)" id="HiddenFileName" name="HiddenFileName" style="display:none" />
                     @Html.TextBoxFor(model => model.Image, "", new { type = "file" })
-                    <p style="margin-left: -14.5%; margin-top: 15px" id="FileName">@Html.Raw(Model == null || Model.HiddenFileName == null || Model.HiddenFileName == "" ? "No File Choosen" : Model.OriginalFileName)</p>
+                    <p style="margin-left: -25.5%; margin-top: 15px" id="FileName">@Html.Raw(Model == null || Model.HiddenFileName == null || Model.HiddenFileName == "" ? "No File Choosen" : Model.OriginalFileName)</p>
                 </div>
                 @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
             </div>

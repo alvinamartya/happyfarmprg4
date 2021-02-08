@@ -156,7 +156,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
 
                 // get promos
                 var promoes = db.Promoes
-                    .Where(x => x.RowStatus == "A" && x.EndDate > now && x.StartDate < now)
+                    .Where(x => x.RowStatus == "A" && x.EndDate > x.StartDate && x.StartDate > now)
                     .ToList();
 
                 // return promos
