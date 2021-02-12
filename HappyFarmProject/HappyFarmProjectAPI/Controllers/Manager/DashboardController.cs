@@ -16,15 +16,15 @@ namespace HappyFarmProjectAPI.Controllers
         private DashboardRepository repo = new DashboardRepository();
         #endregion
         #region Action
-        [Route("api/v1/Dashboard")]
+        [Route("api/v1/Dashboard/{month}/{year}")]
         [HttpGet]
-        public async Task<IHttpActionResult> DashboardSelling()
+        public async Task<IHttpActionResult> DashboardSelling(int month, int year)
         {
             try
             {
                 List<Dashboard> dashboards = new List<Dashboard>();
-                List<DashboardModel> sellings = await Task.Run(() => repo.GetSumSelling());
-                List<DashboardModel> purchasing = await Task.Run(() => repo.GetSumPurchasing());
+                List<DashboardModel> sellings = await Task.Run(() => repo.GetSumSelling(month, year));
+                List<DashboardModel> purchasing = await Task.Run(() => repo.GetSumPurchasing(month, year));
 
                 foreach (var x in sellings)
                 {

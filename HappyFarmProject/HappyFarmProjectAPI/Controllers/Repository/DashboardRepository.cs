@@ -9,7 +9,7 @@ namespace HappyFarmProjectAPI.Controllers.Repository
 {
     public class DashboardRepository
     {
-        public List<DashboardModel> GetSumSelling()
+        public List<DashboardModel> GetSumSelling(int month, int year)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
@@ -46,11 +46,14 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                         });
                     }
                 }
-                return dashboardModels;
+
+                DateTime startDate = new DateTime(year, month, 1);
+                DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+                return dashboardModels.Where(x=>x.Date >= startDate && x.Date <= endDate).ToList();
             }
         }
 
-        public List<DashboardModel> GetSumPurchasing()
+        public List<DashboardModel> GetSumPurchasing(int month, int year)
         {
             using (HappyFarmPRG4Entities db = new HappyFarmPRG4Entities())
             {
@@ -79,7 +82,9 @@ namespace HappyFarmProjectAPI.Controllers.Repository
                     });
                 }
 
-                return dashboardModels;
+                DateTime startDate = new DateTime(year, month, 1);
+                DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+                return dashboardModels.Where(x=>x.Date >= startDate && x.Date <= endDate).ToList();
             }
         }
     }
